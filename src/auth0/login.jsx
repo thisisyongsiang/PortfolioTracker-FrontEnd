@@ -2,13 +2,14 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Login=()=>{
-    const{isAuthenticated,loginWithRedirect}=useAuth0();
+    const{isAuthenticated,loginWithRedirect,isLoading}=useAuth0();
 
-    return(
-        <React.Fragment>
-        {!isAuthenticated && (loginWithRedirect())}
-    </React.Fragment> 
-    )
+    React.useEffect(()=>{
+        if (isLoading||isAuthenticated)return;
+        else{
+            loginWithRedirect();
+        }
+    })
 
 
 }
