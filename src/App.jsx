@@ -49,7 +49,6 @@ class App extends React.Component{
       <BrowserRouter>
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
-
         <div>
           < Header />
           < Banner />
@@ -60,16 +59,6 @@ class App extends React.Component{
         </div>
 
         <div className="container">
-          <div className="row">
-              <nav className="navbar">
-                <a href="#" className="navbar-brand">APP NAME</a>
-                <ul className="navbar-nav me-auto">
-                  <li className="nav-item">
-                    <a href="#" className="nav-link">User Profile</a>
-                  </li>
-                </ul>
-              </nav>
-          </div>
               <hr />
               {(isAuthenticated &&!isLoading)&&
             <div className="row">
@@ -82,9 +71,6 @@ class App extends React.Component{
               <Users users={this.state.users}/>
             </div>
   }
-                
-
-
         </div>
 
         </React.Fragment>
