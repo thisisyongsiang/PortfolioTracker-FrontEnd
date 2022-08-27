@@ -2,21 +2,19 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import './App.css';
-import LoginButton from "./auth0/loginButton";
-import { withAuth0,useAuth0 } from '@auth0/auth0-react';
+import { withAuth0 } from '@auth0/auth0-react';
 import LogoutButton from "./auth0/logoutButton";
 import Login from "./auth0/login";
 import Loading from "./auth0/loading";
 import { UserPage } from "./auth0/user";
-import { addUser,getAllUsers } from "./users/users";
+import { getAllUsers } from "./users/users";
 import { Users } from "./users/reactUsers";
-import { BrowserRouter, Route } from "react-router-dom";  // import router for 2 page directory
-import Header from "./Components/Header"; // import header object
-import Banner from "./Components/Banner";
-import AssetTable from "./Components/AssetTable";
-import Homepage from "./Pages/Homepage"; // import homepage object
+import { BrowserRouter, Route, Routes } from "react-router-dom";  // import router for 2 page directory
+
 import Assetpage from "./Pages/Assetpage";
-import PortfolioCharts from "./Components/PortfolioCharts";
+import OverallPortfolio from "./Pages/OverallPortfolio";
+import TransactionPage from "./Pages/TransactionPage";
+import Layout from "./Layout";
 
 class App extends React.Component{
   constructor(props){
@@ -47,16 +45,15 @@ class App extends React.Component{
     if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
     return (
       <BrowserRouter>
-      <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
-        <div>
-          < Header />
-          < Banner />
-          < PortfolioCharts />
-          < AssetTable />
-          {/* < Route path = "/" component={Homepage} /> 
-          < Route path = "/asset/:id" component={Assetpage} /> */}
-        </div>
+        <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<OverallPortfolio />} />
+              <Route path="assets" element={<Assetpage />} />
+              <Route path="transactions" element={<TransactionPage />} />
+              {/* <Route path="*" element={<NoPage />} /> */}
+            </Route>
+        </Routes>
 
         <div className="container">
               <hr />
@@ -72,8 +69,6 @@ class App extends React.Component{
             </div>
   }
         </div>
-
-        </React.Fragment>
         </BrowserRouter>
     );
   }
