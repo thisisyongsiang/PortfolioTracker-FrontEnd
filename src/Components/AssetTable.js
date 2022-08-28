@@ -4,6 +4,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { CoinList } from '../Config/api';
 
+function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const AssetTable = () => {
     const [asset, setAsset] = useState ([]);
@@ -12,7 +15,7 @@ const AssetTable = () => {
 
     const fetchAsset = async () => {
         setLoading(true);
-        
+
         const {data} = await axios.get(CoinList("USD"));
         
         setAsset(data);
@@ -26,8 +29,9 @@ const AssetTable = () => {
     },[]);
 
     const handleSearch = () => {
-        return asset.filter( (asset) =>
-        asset.name.toLowercase().includes(search) || asset.symbol.toLowercase().includes(search)
+        return asset.filter( (item) =>
+        item.name.includes(search) || 
+        item.symbol.includes(search)
         )
     }
   return (
@@ -54,7 +58,34 @@ const AssetTable = () => {
                             </TableRow>
                         </TableHead>
 
-                        <TableBody>
+                        <TableBody> 
+                            
+                            {handleSearch().map((item) => {
+                            const profit = item.price_change_percentage_24h > 0;
+
+                            return (
+                                <TableRow>
+                                    <TableCell component="th" scope="row" style={{display:"flex", gap:15, }} >
+                                        <img src={item?.img} alt={item.name} height="50" style ={{ marginBottom: 10 }} />
+                                        <div style={{display:"flex", flexDirection:"column"}}>
+                                            <span style={{textTransform:"uppercase", fontSize: 22}}> { item.symbol } </span>
+                                            <span style={{color:"darkgrey"}}> { item.name } </span>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {numberWithCommas(item.current_price.toFixed(2))}
+                                    </TableCell>
+                                    <TableCell align="right" style={{color: profit > 0 ? "rgb(14, 203, 129)" : "red", fontWeight: 500,}}>
+                                        {profit && "+"}
+                                        {item.price_change_percentage_24h.toFixed(2) + "%"}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {numberWithCommas(item.market_cap.toString().slice(0,-6)) + "M"}
+                                    </TableCell>
+                                </TableRow>
+                            )
+
+                        })}
                         </TableBody>
                     </Table>
                 )
