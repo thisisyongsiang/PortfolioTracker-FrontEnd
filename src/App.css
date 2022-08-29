@@ -34,3 +34,10 @@ a {
     background-color: bisque;
 
 }
+.container{
+    margin: auto;
+}
+svg{
+    display:block;
+    margin:auto;
+}
