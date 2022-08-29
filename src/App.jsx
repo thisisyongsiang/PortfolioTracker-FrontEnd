@@ -61,7 +61,7 @@ class App extends React.Component{
           < Header />
           < Sidebar />
           < PortfolioCharts />
-          < AssetTable />
+          < AssetTable /> 
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
         </div>
