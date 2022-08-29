@@ -17,6 +17,8 @@ import AssetTable from "./Components/AssetTable";
 import Homepage from "./Pages/Homepage"; // import homepage object
 import Assetpage from "./Pages/Assetpage";
 import PortfolioCharts from "./Components/PortfolioCharts";
+import { LineChart } from "./charts/LineChart";
+import { Container } from '@mui/system';
 
 class App extends React.Component{
   constructor(props){
@@ -32,15 +34,8 @@ class App extends React.Component{
     }
     // addUser(userObj);
   }
-  getUsers(){
-    getAllUsers().then(
-      (users)=>{
-          this.setState({users:users});
-      }
-  );
-  }
+
   componentDidMount(){
-    this.getUsers();
   }
   render(){
     const {user, isAuthenticated,isLoading } = this.props.auth0;
@@ -49,14 +44,33 @@ class App extends React.Component{
       <BrowserRouter>
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
-        <div>
+          
           < Header />
           < Banner />
+          <Container>
+            <div className="row">
+              <div className="col">
+                
+              <h2>Portfolio Value:
+                <br />
+                $40,000
+              </h2>
+              <br />
+              <LineChart ticker="spy"
+              displayDiff={false}
+                margin={{right:40,left:40,bottom:50,top:30}}
+                lineWidth='3px'
+                width={1150}
+               endDate={new Date()} startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}/>
+
+              </div>
+            </div>
+          </Container>
+          <hr />
           < PortfolioCharts />
           < AssetTable />
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
-        </div>
 
         <div className="container">
               <hr />
@@ -66,9 +80,10 @@ class App extends React.Component{
               <UserPage />
               <LogoutButton />
               {isLoading &&<Loading />}
+
               </div>
               <hr />
-              <Users users={this.state.users}/>
+              {/* <Users /> */}
             </div>
   }
         </div>

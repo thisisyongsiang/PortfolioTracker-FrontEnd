@@ -1,19 +1,23 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { getAllUsers } from "./users";
 
 export const Users=(props)=>{
-    let usersArray=props.users;
-    // const[users,setUsers]=useState(usersArray);
+    let usersArray=[];
+    const[users,setUsers]=useState(usersArray);
 
-    // getAllUsers().then(
-    //     (users)=>{
-    //         console.log(users);
-    //         setUsers(users);
-    //     }
-    // );
+
+    useEffect(()=>{
+        getAllUsers().then(
+            (users)=>{
+                console.log(users);
+                setUsers(users);
+            }
+        );
+    },[])
     return(
         <React.Fragment>
-            {usersArray.map((user)=>{
+            {users &&
+            users.map((user)=>{
                 return(
                     <React.Fragment key={user.emailAddress}>
                     <div className="row">
@@ -27,5 +31,6 @@ export const Users=(props)=>{
                 )
             })}
         </React.Fragment>
+        
     )
 }

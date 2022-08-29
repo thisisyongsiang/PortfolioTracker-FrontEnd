@@ -12,3 +12,32 @@ a {
     color: gold;
 }
 
+.tick line{
+    stroke:#cecece
+}
+.tick text{
+    fill:#635f5d;
+    font-size: 0.7em;
+}
+
+.axisLabel{
+    font-weight: bold;
+    fill:#635f5d
+}
+.mark{
+    
+    fill:#635f5d;
+    fill-opacity: 0.75;
+    font-weight: bold;
+}
+.mark text{
+    background-color: bisque;
+
+}
+.container{
+    margin: auto;
+}
+svg{
+    display:block;
+    margin:auto;
+}
