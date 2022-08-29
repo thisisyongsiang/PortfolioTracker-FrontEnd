@@ -17,6 +17,7 @@ import AssetTable from "./Components/AssetTable";
 import Homepage from "./Pages/Homepage"; // import homepage object
 import Assetpage from "./Pages/Assetpage";
 import PortfolioCharts from "./Components/PortfolioCharts";
+import { LineChart } from "./charts/LineChart";
 
 class App extends React.Component{
   constructor(props){
@@ -32,15 +33,8 @@ class App extends React.Component{
     }
     // addUser(userObj);
   }
-  getUsers(){
-    getAllUsers().then(
-      (users)=>{
-          this.setState({users:users});
-      }
-  );
-  }
+
   componentDidMount(){
-    this.getUsers();
   }
   render(){
     const {user, isAuthenticated,isLoading } = this.props.auth0;
@@ -50,6 +44,7 @@ class App extends React.Component{
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
         <div>
+          
           < Header />
           < Banner />
           < PortfolioCharts />
@@ -66,9 +61,11 @@ class App extends React.Component{
               <UserPage />
               <LogoutButton />
               {isLoading &&<Loading />}
+              {/* <ChartTest /> */}
+              <LineChart endDate={new Date()} startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}/>
               </div>
               <hr />
-              <Users users={this.state.users}/>
+              {/* <Users /> */}
             </div>
   }
         </div>
