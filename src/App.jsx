@@ -17,6 +17,7 @@ import AssetTable from "./Components/AssetTable";
 import Homepage from "./Pages/Homepage"; // import homepage object
 import Assetpage from "./Pages/Assetpage";
 import PortfolioCharts from "./Components/PortfolioCharts";
+import Sidebar from "./Components/Sidebar";
 
 class App extends React.Component{
   constructor(props){
@@ -39,19 +40,26 @@ class App extends React.Component{
       }
   );
   }
+  toggleSidebar(){
+    var element = document.getElementById("msbo")
+    element.classList.toggle("msb-x")
+  };
   componentDidMount(){
     this.getUsers();
   }
-  render(){
+  
+  render() {
     const {user, isAuthenticated,isLoading } = this.props.auth0;
     if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
     return (
       <BrowserRouter>
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
+    
+
         <div>
           < Header />
-          < Banner />
+          < Sidebar />
           < PortfolioCharts />
           < AssetTable />
           {/* < Route path = "/" component={Homepage} /> 
@@ -63,16 +71,15 @@ class App extends React.Component{
               {(isAuthenticated &&!isLoading)&&
             <div className="row">
               <div className="col-xs-12">
-              <UserPage />
-              <LogoutButton />
-              {isLoading &&<Loading />}
+              {/* <UserPage /> */}
+              {isLoading && <Loading />}
               </div>
               <hr />
-              <Users users={this.state.users}/>
+              {/* <Users users={this.state.users}/> */}
             </div>
   }
         </div>
-
+  
         </React.Fragment>
         </BrowserRouter>
     );
