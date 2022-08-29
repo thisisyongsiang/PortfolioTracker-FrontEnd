@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getHistoricalDailyQuotes } from "./financeAPI";
+import { getHistoricalDailyQuotes } from "../FinanceRoutes/financeAPI";
 import * as d3 from "d3";
 import { PlotLine } from "./PlotLine";
 import { AxisBottom } from "./AxisBottom";
@@ -20,20 +20,25 @@ export const LineChart=({
     ticker='SPY',
     width=1000,
     height=400,
-    margin={horizontal:50,vertical:60},
+    margin={left:25,right:25,top:30,bottom:30},
     trackMouse=true,
     yAxisTicks=4,
     xAxisTicks=12,
     lineWidth='2px',
     quoteInterval='1d',
+    displayTitle=ticker,
+    displayDiff=true,
+    displayXTicks=true,
+    displayYTicks=true,
+    lineColor='#0F8C79',
     endDate,
     startDate
 })=>{
     
     const [dotPosition,setDotPosition]=useState(null);
     const quoteData=useGetQuoteData(ticker,startDate,endDate,quoteInterval);
-    const innerHeight=height-margin.vertical*2;
-    const innerWidth=width-margin.horizontal*2;
+    const innerHeight=height-margin.top-margin.bottom;
+    const innerWidth=width-margin.left-margin.right;
 
 
 
@@ -54,8 +59,8 @@ export const LineChart=({
     const xAxisFormat=d3.timeFormat("%e/%m/%Y")
     
     const handleMouseMove=e=>{
-        let x=e.nativeEvent.offsetX-margin.horizontal;
-        let y= e.nativeEvent.offsetY-(margin.vertical);
+        let x=e.nativeEvent.offsetX-margin.left;
+        let y= e.nativeEvent.offsetY-(margin.top);
         // x = xScale.invert(x);
         // y=yScale.invert(y);
         let least=d3.least(quoteData,d=>Math.hypot(((xScale(xValue(d))-x))));
@@ -65,18 +70,24 @@ export const LineChart=({
 
     return(
         <React.Fragment>
+        {quoteData.length>0 &&
             <svg width={width} height={height}  onMouseMove={handleMouseMove}>
-                <g transform={`translate(${margin.horizontal},${margin.vertical})`}>
+                <g transform={`translate(${margin.left},${margin.top})`}>
+                {displayXTicks&&
                 <AxisBottom 
                     tickCount={xAxisTicks}
                     xScale={xScale}
                     innerHeight={innerHeight}
                     xAxisFormat={xAxisFormat} />
+                }
+                {displayYTicks &&
                 <AxisLeft
                     tickCount={yAxisTicks}
                     yScale={yScale}
                     innerWidth={innerWidth} />
-                <text className="axisLabel"x={innerWidth/2} y={innerHeight+35}>{ticker}</text>
+                }
+
+                <text className="axisLabel"x={innerWidth/2} y={innerHeight+35}>{displayTitle}</text>
                 <PlotLine 
                     data={quoteData}
                     xScale={xScale}
@@ -84,7 +95,7 @@ export const LineChart=({
                     xValue={xValue}
                     yValue={yValue}
                     radius={radius}
-                    color='#0F8C79'
+                    color={displayDiff?(yValue(quoteData[0])>yValue(quoteData[quoteData.length-1])?'#FF0000':'#008000'):lineColor}
                     lineWidth={lineWidth}
                 />
                 {
@@ -109,6 +120,7 @@ export const LineChart=({
                 </g>
 
             </svg>
+            }
 
         </React.Fragment>
     )
