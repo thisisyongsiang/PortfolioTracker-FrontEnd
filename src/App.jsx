@@ -17,6 +17,7 @@ import AssetTable from "./Components/AssetTable";
 import Homepage from "./Pages/Homepage"; // import homepage object
 import Assetpage from "./Pages/Assetpage";
 import PortfolioCharts from "./Components/PortfolioCharts";
+import Sidebar from "./Components/Sidebar";
 import { LineChart } from "./charts/LineChart";
 import { Container } from '@mui/system';
 
@@ -35,17 +36,29 @@ class App extends React.Component{
     // addUser(userObj);
   }
 
+  getUsers(){
+    getAllUsers().then(
+      (users)=>{
+          this.setState({users:users});
+      }
+  );
+  }
+
   componentDidMount(){
   }
-  render(){
+  
+  render() {
     const {user, isAuthenticated,isLoading } = this.props.auth0;
     if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
     return (
       <BrowserRouter>
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
-          
+    
+
+        <div>
           < Header />
+          < Sidebar />
           < Banner />
           <Container>
             <div className="row">
@@ -68,7 +81,7 @@ class App extends React.Component{
           </Container>
           <hr />
           < PortfolioCharts />
-          < AssetTable />
+          < AssetTable /> 
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
 
@@ -77,6 +90,11 @@ class App extends React.Component{
               {(isAuthenticated &&!isLoading)&&
             <div className="row">
               <div className="col-xs-12">
+              {/* <UserPage /> */}
+              {isLoading && <Loading />}
+              </div>
+              <hr />
+              {/* <Users users={this.state.users}/> */}
               <UserPage />
               <LogoutButton />
               {isLoading &&<Loading />}
@@ -87,7 +105,7 @@ class App extends React.Component{
             </div>
   }
         </div>
-
+  
         </React.Fragment>
         </BrowserRouter>
     );
