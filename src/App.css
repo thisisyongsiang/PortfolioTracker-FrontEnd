@@ -54,30 +54,60 @@ a {
 body {
     margin: 0;
     padding: 0;
-  }
-  
-  body {
-    display: flex;
-    flex-flow: row;
-  }
-  
-  aside {
-    width: 20vw;
-    height: 100vh;
-  }
-  
-  main {
-    width: 100vw;
-    height: 100vh;
-    background: cornflowerblue;
-    color: white;
-  }
+}
 
-  .SidebarList .row:hover {
-    cursor: pointer;
-    background-color: #293846;
-  }
+body {
+  display: flex;
+  flex-flow: row;
+}
 
-  .SidebarList #active {
-    background-color: #293846;
-  } 
+aside {
+  width: 20vw;
+  height: 100vh;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  background: cornflowerblue;
+  color: white;
+}
+
+.SidebarList .row:hover {
+  cursor: pointer;
+  background-color: #293846;
+}
+
+.SidebarList #active {
+  background-color: #293846;
+} 
+
+.tick line{
+    stroke:#cecece
+}
+.tick text{
+    fill:#635f5d;
+    font-size: 0.7em;
+}
+
+.axisLabel{
+    font-weight: bold;
+    fill:#635f5d
+}
+.mark{
+    
+    fill:#635f5d;
+    fill-opacity: 0.75;
+    font-weight: bold;
+}
+.mark text{
+    background-color: bisque;
+
+}
+.container{
+    margin: auto;
+}
+svg{
+    display:block;
+    margin:auto;
+}

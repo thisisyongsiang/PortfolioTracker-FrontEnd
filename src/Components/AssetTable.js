@@ -3,6 +3,7 @@ import { Typography, TextField, TableContainer, Table, TableBody, TableCell, Tab
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { CoinList } from '../Config/api';
+import { LineChart } from '../charts/LineChart';
 
 function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -18,7 +19,7 @@ const AssetTable = () => {
 
         const {data} = await axios.get(CoinList("USD"));
         
-        setAsset(data);
+        setAsset(data.splice(0,10));
         setLoading(false);
     };
 
@@ -34,6 +35,7 @@ const AssetTable = () => {
         item.symbol.includes(search)
         )
     }
+    const rowHeight=100;
   return (
     <Container>
         <Typography variant="h4" style={{margin: 18, fontFamily: "Montserrat"}}>
@@ -50,7 +52,7 @@ const AssetTable = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
+                                {["Coin","Chart", "Price", "24h Change", "Market Cap"].map((head) => (
                                     <TableCell key={head}>
                                         {head}
                                     </TableCell>
@@ -64,13 +66,30 @@ const AssetTable = () => {
                             const profit = item.price_change_percentage_24h > 0;
 
                             return (
-                                <TableRow>
-                                    <TableCell component="th" scope="row" style={{display:"flex", gap:15, }} >
+                                <TableRow height={rowHeight}>
+                                    <TableCell component="td" scope="row" 
+                                    >
+                                        <div    style={{display:"flex", gap:15}} >
                                         <img src={item?.img} alt={item.name} height="50" style ={{ marginBottom: 10 }} />
                                         <div style={{display:"flex", flexDirection:"column"}}>
                                             <span style={{textTransform:"uppercase", fontSize: 22}}> { item.symbol } </span>
                                             <span style={{color:"darkgrey"}}> { item.name } </span>
                                         </div>
+                                        </div>
+
+                                    </TableCell>
+                                    <TableCell align='left'>
+                                        <LineChart ticker={item.symbol+'-usd'}  
+                                        displayYTicks={false}
+                                        displayTitle={null}
+                                        trackMouse={false}
+                                        margin={{left:30,right:20,top:10,bottom:25}}
+                                        height={rowHeight}
+                                        width={300}
+                                        quoteInterval='1wk'
+                                        yAxisTicks={0}  xAxisTicks={2} 
+                                        endDate={new Date()}
+                                        startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}/>
                                     </TableCell>
                                     <TableCell align="right">
                                         {numberWithCommas(item.current_price.toFixed(2))}
