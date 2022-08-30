@@ -88,22 +88,19 @@ class App extends React.Component{
         <div className="container">
               <hr />
               {(isAuthenticated &&!isLoading)&&
-            <div className="row">
+            <><div className="row">
               <div className="col-xs-12">
-              {/* <UserPage /> */}
               {isLoading && <Loading />}
               </div>
               <hr />
-              {/* <Users users={this.state.users}/> */}
               <UserPage />
               <LogoutButton />
               {isLoading &&<Loading />}
 
-              </div>
-              <hr />
-              {/* <Users /> */}
-            </div>
-  }
+              </div> <hr /> </>
+            
+            }
+      </div>
         </div>
   
         </React.Fragment>
