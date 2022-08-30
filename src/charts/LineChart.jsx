@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getHistoricalDailyQuotes } from "../FinanceRoutes/financeAPI";
 import * as d3 from "d3";
 import { PlotLine } from "./PlotLine";
@@ -8,8 +8,9 @@ import { AxisLeft } from "./AxisLeft";
 export const useGetQuoteData=(ticker,startDate,endDate,interval)=>{
     const [quoteData,setQuoteData]=useState([]);
     useEffect(()=>{
+        console.log('trigger');
         getHistoricalDailyQuotes(ticker,startDate,endDate,interval)
-            .then((data)=>{
+        .then((data)=>{
                 setQuoteData(data);
             })
     },[ticker,startDate,endDate,interval])
@@ -31,21 +32,44 @@ export const LineChart=({
     displayXTicks=true,
     displayYTicks=true,
     lineColor='#0F8C79',
+    dynamicWidth=false,
     endDate,
     startDate
 })=>{
     
     const [dotPosition,setDotPosition]=useState(null);
+    const containerRef=useRef(width);
+    const [containerWidth,setContainerWidth]=useState(width);
     const quoteData=useGetQuoteData(ticker,startDate,endDate,quoteInterval);
+    width=containerWidth;
     const innerHeight=height-margin.top-margin.bottom;
     const innerWidth=width-margin.left-margin.right;
 
+    useEffect(()=>{
+        const handleResize=()=>{
+            // console.log(containerWidth);
+            setContainerWidth(containerRef.current.offsetWidth);
+            
+        };
+        if (dynamicWidth){
+            let containerWidth=containerRef.current.offsetWidth;
+            if (containerWidth){
+                setContainerWidth(containerWidth);
+            }
+            window.addEventListener('resize',handleResize);
+            return ()=>window.removeEventListener('resize',handleResize);
+        }
 
+    },[containerRef.current]);
 
     if (quoteData.length===0){
-        return <pre>Loading ...</pre>
+        return (
+            <div class="spinner-border text-warning" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+        )
     }
-
+    
     const radius=5;
     const xValue=d=>new Date(d.date);
     const yValue=d=>d.close;
@@ -71,7 +95,8 @@ export const LineChart=({
     return(
         <React.Fragment>
         {quoteData.length>0 &&
-            <svg width={width} height={height}  onMouseMove={handleMouseMove}>
+        <div ref={containerRef}>
+<svg width={containerWidth} height={height}  onMouseMove={handleMouseMove}>
                 <g transform={`translate(${margin.left},${margin.top})`}>
                 {displayXTicks&&
                 <AxisBottom 
@@ -114,12 +139,10 @@ export const LineChart=({
                     </text>
                     </g>
                 }
-
-
-
                 </g>
-
             </svg>
+        </div>
+            
             }
 
         </React.Fragment>

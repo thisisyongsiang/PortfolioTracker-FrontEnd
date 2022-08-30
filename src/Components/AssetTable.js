@@ -93,7 +93,7 @@ const AssetTable = () => {
                             const profit = item.price_change_percentage_24h > 0;
 
                             return (
-                                <TableRow height={rowHeight}>
+                                <TableRow height={rowHeight} key={item.symbol}>
                                     <TableCell component="td" scope="row" 
                                     >
                                         <div    style={{display:"flex", gap:15}} >

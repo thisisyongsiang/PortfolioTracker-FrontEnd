@@ -19,6 +19,7 @@ export function getHistoricalDailyQuotes(symbol,startDate,endDate,interval){
     }).then((res)=>{
         return res.data;
     }).catch(err=>{
-        console.log(err);
+        console.error('error occurred '+err );
+        return [];
     });
 }
