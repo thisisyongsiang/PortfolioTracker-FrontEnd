@@ -24,7 +24,7 @@ export const UserPage=()=>{
                                     <p className="mb-2 pb-1" style={{"color": "#2b2a2a"}}>
                                     Email : {user.email}</p>
                                     <div className="d-flex pt-1">
-                                    <LogoutButton/>
+                                    <LogoutButton />
                                     {/* <button type="button" className="btn btn-primary flex-grow-1">Follow</button> */}
                                     </div>
                                 </div>

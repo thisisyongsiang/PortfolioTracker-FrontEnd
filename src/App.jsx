@@ -34,7 +34,7 @@ class App extends React.Component{
       firstName:user.given_name,
       emailAddress:user.email,
     }
-    // addUser(userObj);
+    addUser(userObj);
   }
 
   getUsers(){
@@ -51,6 +51,9 @@ class App extends React.Component{
   render() {
     const {user, isAuthenticated,isLoading } = this.props.auth0;
     if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
+    if(!isAuthenticated){
+      return <Login />
+    }
     return (
       
       <BrowserRouter>
@@ -104,22 +107,18 @@ class App extends React.Component{
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
 
-        {/* <div className="container">
+        <div className="container">
               <hr />
               {(isAuthenticated &&!isLoading)&&
-            <><div className="row">
+              <><div className="row">
               <div className="col-xs-12">
-              {isLoading && <Loading />}
               </div>
               <hr />
               <UserPage />
-              <LogoutButton />
-              {isLoading &&<Loading />}
-
               </div> <hr /> </>
-            
             }
-      </div> */}
+            {isLoading && <Loading />}
+      </div>
         </div>
   
         </React.Fragment>
