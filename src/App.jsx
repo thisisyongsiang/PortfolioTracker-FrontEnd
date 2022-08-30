@@ -60,7 +60,7 @@ class App extends React.Component{
           < Header />
           < Sidebar />
           < Banner />
-          <Container>
+          {/* <Container>
             <div className="row">
               <div className="col">
                 
@@ -81,7 +81,7 @@ class App extends React.Component{
           </Container>
           <hr />
           < PortfolioCharts />
-          < AssetTable /> 
+          < AssetTable />  */}
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
 
