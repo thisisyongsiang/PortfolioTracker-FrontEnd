@@ -11,7 +11,7 @@ export const PlotLine=({
     return(
         <React.Fragment>
         <path fill='none' className='ChartLine'
-            style={{stroke:color,strokeWidth:lineWidth}}
+            style={{stroke:color,strokeWidth:lineWidth,strokeLinecap:'round',strokeLinejoin:'round'}}
         d={line}/>
         </React.Fragment>
 
