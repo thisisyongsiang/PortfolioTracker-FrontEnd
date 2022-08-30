@@ -70,7 +70,7 @@ class App extends React.Component{
               <hr />
               <Users users={this.state.users}/>
             </div>
-  }
+}
         </div>
 
         </React.Fragment>

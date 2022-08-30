@@ -1,8 +1,17 @@
 import { Container } from '@mui/system';
-import { Typography, TextField, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, LinearProgress } from '@mui/material'
+import { Button, Typography, TextField, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, LinearProgress } from '@mui/material'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { CoinList } from '../Config/api';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Transaction } from '../Components/Transactions/Transaction'
 
 function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -12,6 +21,15 @@ const AssetTable = () => {
     const [asset, setAsset] = useState ([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState([]);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     const fetchAsset = async () => {
         setLoading(true);
@@ -39,6 +57,15 @@ const AssetTable = () => {
         <Typography variant="h4" style={{margin: 18, fontFamily: "Montserrat"}}>
             Portfolio Holdings
         </Typography>
+        <Button variant = "outlined" startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen}> Add Transactions </Button>
+        
+        <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Add Transactions</DialogTitle>
+            <DialogContent> <Transaction /> </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+            </DialogActions>
+        </Dialog>
 
         <TextField label="Search for your asset" variant="outlined" style={{ marginBottom:20, width: "100%"}}
         onChange={(input) => setSearch(input.target.value)} />
@@ -50,7 +77,7 @@ const AssetTable = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
+                                {["Coin", "Price", "24h Change", "Market Cap", " "].map((head) => (
                                     <TableCell key={head}>
                                         {head}
                                     </TableCell>
@@ -81,6 +108,10 @@ const AssetTable = () => {
                                     </TableCell>
                                     <TableCell align="right">
                                         {numberWithCommas(item.market_cap.toString().slice(0,-6)) + "M"}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <AddCircleOutlineIcon />
+                                        <ArrowCircleRightIcon />
                                     </TableCell>
                                 </TableRow>
                             )
