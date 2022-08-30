@@ -18,7 +18,6 @@ export function addUser(user){
     })
 }
 export async function getAllUsers(){
-    console.log('getuser')
     let response= await fetch(process.env.REACT_APP_APIURL+'user/all',
         {
             method:'GET'

@@ -17,6 +17,9 @@ import AssetTable from "./Components/AssetTable";
 import Homepage from "./Pages/Homepage"; // import homepage object
 import Assetpage from "./Pages/Assetpage";
 import PortfolioCharts from "./Components/PortfolioCharts";
+import Sidebar from "./Components/Sidebar";
+import { LineChart } from "./charts/LineChart";
+import { Container } from '@mui/system';
 
 class App extends React.Component{
   constructor(props){
@@ -32,6 +35,7 @@ class App extends React.Component{
     }
     // addUser(userObj);
   }
+
   getUsers(){
     getAllUsers().then(
       (users)=>{
@@ -39,40 +43,66 @@ class App extends React.Component{
       }
   );
   }
+
   componentDidMount(){
-    this.getUsers();
   }
-  render(){
+  
+  render() {
     const {user, isAuthenticated,isLoading } = this.props.auth0;
     if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
     return (
       <BrowserRouter>
       <React.Fragment>
         {(!isAuthenticated &&!isLoading) &&<Login />}
+    
+
         <div>
           < Header />
+          < Sidebar />
           < Banner />
+          <Container>
+            <div className="row">
+              <div className="col">
+                
+              <h2>Portfolio Value:
+                <br />
+                $40,000
+              </h2>
+              <br />
+              <LineChart ticker="spy"
+              displayDiff={false}
+                margin={{right:40,left:40,bottom:50,top:30}}
+                lineWidth='3px'
+                width={1150}
+               endDate={new Date()} startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}/>
+
+              </div>
+            </div>
+          </Container>
+          <hr />
           < PortfolioCharts />
-          < AssetTable />
+          < AssetTable /> 
           {/* < Route path = "/" component={Homepage} /> 
           < Route path = "/asset/:id" component={Assetpage} /> */}
-        </div>
 
         <div className="container">
               <hr />
               {(isAuthenticated &&!isLoading)&&
-            <div className="row">
+            <><div className="row">
               <div className="col-xs-12">
+              {isLoading && <Loading />}
+              </div>
+              <hr />
               <UserPage />
               <LogoutButton />
               {isLoading &&<Loading />}
-              </div>
-              <hr />
-              <Users users={this.state.users}/>
-            </div>
-}
-        </div>
 
+              </div> <hr /> </>
+            
+            }
+      </div>
+        </div>
+  
         </React.Fragment>
         </BrowserRouter>
     );
