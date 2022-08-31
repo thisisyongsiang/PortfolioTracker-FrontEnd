@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { getAllUsers } from "./users";
+import { getAllUsers } from "./userApi";
 
 export const Users=(props)=>{
     let usersArray=[];
