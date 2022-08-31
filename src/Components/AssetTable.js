@@ -41,7 +41,7 @@ const AssetTable = () => {
         setLoading(false);
     };
 
-    console.log(asset);
+    // console.log(asset);
 
     useEffect(() => {
         fetchAsset();
