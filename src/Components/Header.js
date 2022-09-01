@@ -1,40 +1,35 @@
-import {
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
+import ProfileMenu from "./Profilemenu";
 
 const Header = () => {
-
   return (
-    <nav className="navbar-brand h1" style={{backgroundColor: "#484A4F"}}>
-      <div className="container row">
-        <div id="navbar" style={{color: "#FFFFFF"}} className="col align-self-center justify-content-start h5">
-          NavBar
+    <nav className="navbar-brand h1" style={{ backgroundColor: "#484A4F" }}>
+      <div className="container-fluid row">
+        <div
+          id="navbar"
+          style={{ color: "#FFFFFF" }}
+          className="col align-self-center justify-content-start h5"
+        >
+          FinDash
+          <Typography
+            variant="subtitle2"
+            mt={0}
+            style={{
+              color: "darkgrey",
+              textTransform: "capitalize",
+              fontFamily: "Montserrat",
+            }}
+          >
+            Your one-stop, value-added portfolio tracker
+          </Typography>
         </div>
-        <div className="col justify-content-end"></div>
-        <div className="col p-1 align-self-center justify-content-end">
-          <img
-            id="profilepicture"
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-            alt="Generic placeholder image"
-            className="img-fluid"
-            style={{width: "60px", borderRadius: "10px"}}
-          />
+        <div className="col p-2 m-n2 align-self-center">
+          <div style={{ float: "right" }}>
+            <ProfileMenu />
+          </div>
         </div>
       </div>
- 
-      <Typography
-        variant="subtitle2"
-        ml={1.5}
-        mt={-1}
-        style={{
-          color: "darkgrey",
-          textTransform: "capitalize",
-          fontFamily: "Montserrat",
-        }}
-      >
-        Your one-stop, value-added portfolio tracker
-      </Typography>
     </nav>
   );
 };
