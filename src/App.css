@@ -27,16 +27,15 @@
 .SidebarList .row {
     width: 100%;
     height: 50px;
-    /* border: 1px solid darkblue; */
     text-align: center;
     list-style-type: none;
-    margin: 0%;
+    margin: 0;
     display: flex;
     flex-direction: row;
     color: white;
     justify-content: center;
     align-items: center;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.24);
 }
 
 * {
@@ -56,11 +55,6 @@ body {
     padding: 0;
 }
 
-/* body {
-  display: flex;
-  flex-flow: row;
-} */
-
 aside {
   width: 20vw;
   height: 100vh;
@@ -76,10 +70,16 @@ main {
 .SidebarList .row:hover {
   cursor: pointer;
   background-color: #293846;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: larger;
+  
 }
 
 .SidebarList #active {
   background-color: #293846;
+  font-size: larger;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-bottom: 0;
 } 
 
 .tick line{
