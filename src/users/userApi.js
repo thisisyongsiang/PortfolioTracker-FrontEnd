@@ -109,3 +109,22 @@ export function getUserPortfolioValue(email,portfolioName){
         return null;
     })
 }
+export function getUserPortfolioHistoricalValue(email,portfolioName,startDate,endDate){
+    return axios.get(url+'portfolio/selectonevalue/timeperiod',{
+        params:{
+            email:email,
+            portfolioName:portfolioName,
+            startDate:startDate,
+            endDate:endDate},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return [];
+        };
+        console.log(res);
+        return res.data;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
+    })
+}

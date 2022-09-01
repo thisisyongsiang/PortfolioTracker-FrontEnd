@@ -8,7 +8,7 @@ class UserHomepage extends Component {
     super(props);
     this.state = { userAuth0: null, userMongo: null };
   }
-  state = {};
+  // state = {};
   render() {
     return (
       <div>
@@ -25,7 +25,7 @@ class UserHomepage extends Component {
             <div className="col-sm-10 d-flex flex-column h-sm-100">
               <div className="row overflow-auto">
                 <div className="col">
-                  <Overallpage user={this.state.userMongo} />
+                  <Overallpage user={this.props.userMongo} />
                 </div>
               </div>
             </div>

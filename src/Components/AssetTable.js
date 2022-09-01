@@ -14,6 +14,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transaction } from '../Components/Transactions/Transaction'
 import { numberWithCommas } from '../util/util';
+import { useGetQuoteData } from '../util/customHooks';
+import { getHistoricalDailyQuotes } from '../FinanceRoutes/financeAPI';
+import { AssetLineChart } from '../charts/AssetLineChart';
 
 
 const AssetTable = () => {
@@ -21,7 +24,6 @@ const AssetTable = () => {
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState([]);
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -104,7 +106,8 @@ const AssetTable = () => {
 
                                     </TableCell>
                                     <TableCell align='left'>
-                                        <LineChart ticker={item.symbol+'-usd'}  
+                                        <AssetLineChart
+                                        ticker={item.symbol+'-usd'}  
                                         displayYTicks={false}
                                         displayTitle={null}
                                         trackMouse={false}
