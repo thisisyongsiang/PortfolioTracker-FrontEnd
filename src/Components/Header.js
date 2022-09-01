@@ -3,6 +3,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import AccountMenu from "./ProfileDropdown";
 
 
 const Header = () => {
@@ -25,11 +26,12 @@ const Header = () => {
       </Typography>
         </div>
         <div className="col p-2 m-n2 align-self-center">
-          <img
+          <AccountMenu/>
+          {/* <img
             src= {user.picture} //"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
             alt="Generic placeholder image"
             style={{"width": "60px", "borderRadius": "10px", "float": "right"}}
-          />
+          /> */}
         </div>
         
       </div>
