@@ -5,20 +5,8 @@ import { PlotLine } from "./PlotLine";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 
-export const useGetQuoteData=(ticker,startDate,endDate,interval)=>{
-    const [quoteData,setQuoteData]=useState([]);
-    useEffect(()=>{
-        console.log('trigger');
-        getHistoricalDailyQuotes(ticker,startDate,endDate,interval)
-        .then((data)=>{
-                setQuoteData(data);
-            })
-    },[ticker,startDate,endDate,interval])
-    return quoteData;
-}
-
 export const LineChart=({
-    ticker='SPY',
+    data=[],
     width=1000,
     height=400,
     margin={left:25,right:25,top:30,bottom:30},
@@ -26,24 +14,24 @@ export const LineChart=({
     yAxisTicks=4,
     xAxisTicks=12,
     lineWidth='2px',
-    quoteInterval='1d',
-    displayTitle=ticker,
+    displayTitle='',
     displayDiff=true,
     displayXTicks=true,
     displayYTicks=true,
     lineColor='#0F8C79',
     dynamicWidth=false,
-    endDate,
-    startDate
+    xValue=d=>d,
+    yValue=d=>d,
 })=>{
-    
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
     const [containerWidth,setContainerWidth]=useState(width);
-    const quoteData=useGetQuoteData(ticker,startDate,endDate,quoteInterval);
+    // const quoteData=useGetQuoteData(ticker,startDate,endDate,quoteInterval);
     width=containerWidth;
     const innerHeight=height-margin.top-margin.bottom;
     const innerWidth=width-margin.left-margin.right;
+    
+    const radius=5;
 
     useEffect(()=>{
         const handleResize=()=>{
@@ -62,23 +50,20 @@ export const LineChart=({
 
     },[containerRef.current]);
 
-    if (quoteData.length===0){
+    if (data.length===0){
         return (
             <div className="spinner-border text-warning" role="status">
   <span className="visually-hidden">Loading...</span>
 </div>
         )
     }
-    
-    const radius=5;
-    const xValue=d=>new Date(d.date);
-    const yValue=d=>d.close;
+
     const xScale=d3.scaleTime()
-    .domain(d3.extent(quoteData,xValue))
+    .domain(d3.extent(data,xValue))
     .range([0,innerWidth]);
 
     const yScale=d3.scaleLinear()
-    .domain(d3.extent(quoteData,yValue))
+    .domain(d3.extent(data,yValue))
     .range([innerHeight,0]);
     const xAxisFormat=d3.timeFormat("%e/%m/%Y")
     
@@ -87,14 +72,13 @@ export const LineChart=({
         let y= e.nativeEvent.offsetY-(margin.top);
         // x = xScale.invert(x);
         // y=yScale.invert(y);
-        let least=d3.least(quoteData,d=>Math.hypot(((xScale(xValue(d))-x))));
+        let least=d3.least(data,d=>Math.hypot(((xScale(xValue(d))-x))));
         setDotPosition(least);        
             
     }
-
     return(
         <React.Fragment>
-        {quoteData.length>0 &&
+        {data.length>0 &&
         <div ref={containerRef}>
 <svg width={containerWidth} height={height}  onMouseMove={handleMouseMove}>
                 <g transform={`translate(${margin.left},${margin.top})`}>
@@ -114,13 +98,12 @@ export const LineChart=({
 
                 <text className="axisLabel"x={innerWidth/2} y={innerHeight+35}>{displayTitle}</text>
                 <PlotLine 
-                    data={quoteData}
+                    data={data}
                     xScale={xScale}
                     yScale={yScale}
                     xValue={xValue}
                     yValue={yValue}
-                    radius={radius}
-                    color={displayDiff?(yValue(quoteData[0])>yValue(quoteData[quoteData.length-1])?'#FF0000':'#008000'):lineColor}
+                    color={displayDiff?(yValue(data[0])>yValue(data[data.length-1])?'#FF0000':'#008000'):lineColor}
                     lineWidth={lineWidth}
                 />
                 {

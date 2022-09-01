@@ -55,7 +55,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<UserHomepage />} />
+            <Route index element={<UserHomepage userMongo={this.state.userMongo}/>} />
             {/* <Route path="login" element={<Login/>} /> */}
             <Route path="tutorial" element={<Tutorial />} />
             <Route path="user">
