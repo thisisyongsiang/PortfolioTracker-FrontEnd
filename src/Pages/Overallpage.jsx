@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "@mui/system";
-import { LineChart } from "../charts/LineChart";
-import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
