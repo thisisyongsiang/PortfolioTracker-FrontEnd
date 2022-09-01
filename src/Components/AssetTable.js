@@ -13,10 +13,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Transaction } from '../Components/Transactions/Transaction'
+import { numberWithCommas } from '../util/util';
 
-function numberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 const AssetTable = () => {
     const [asset, setAsset] = useState ([]);

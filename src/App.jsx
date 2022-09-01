@@ -36,7 +36,7 @@ class App extends React.Component{
     }
     this.setState({userAuth0:userObj});
     getUser(user.email).then(res=>{
-      if (res.length>0){
+      if (res){
         this.setState({userMongo:res});
         return false
       }
@@ -50,10 +50,8 @@ class App extends React.Component{
     })
   }
 
-  componentDidMount(){
 
-  }
-  
+
   componentDidUpdate(prevProps,prevState){
     if (!prevProps.auth0.isAuthenticated&&this.props.auth0.isAuthenticated){
       this.onLoggedIn(this.props.auth0.user);
@@ -62,6 +60,7 @@ class App extends React.Component{
   }
   render() {
     const {user, isAuthenticated,isLoading } = this.props.auth0;
+    // console.log(this.state.userMongo);
     // if(isAuthenticated&&!isLoading){this.onLoggedIn(user)};
 
     if(!isAuthenticated){
@@ -87,7 +86,7 @@ class App extends React.Component{
             <div className="col-sm-10 d-flex flex-column h-sm-100" >
               <div className="row overflow-auto">
                 <div className="col">
-                  <Overallpage />
+                  <Overallpage user={this.state.userMongo}/>
                 </div>
               </div>
             </div>
