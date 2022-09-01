@@ -65,6 +65,22 @@ export function getUserPortfolios(email){
         return null;
     })
 }
+export function getUserPortfolioNames(email){
+    return axios.get(url+'portfolio/select/name',{
+        params:{email:email},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return null;
+        };
+        console.log(res.data);
+        return res.data;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
+    })
+    
+}
 export function getUserOverallPortfolioValue(email){
     return axios.get(url+'portfolio/overallValue',{
         params:{email:email},
@@ -94,7 +110,7 @@ export function getUserOnePortfolio(email,portfolioName){
         return null;
     })
 }
-export function getUserPortfolioValue(email,portfolioName){
+export function getOneUserPortfolioValue(email,portfolioName){
     return axios.get(url+'portfolio/selectonevalue',{
         params:{email:email,
             portfolioName:portfolioName},
@@ -121,7 +137,6 @@ export function getUserPortfolioHistoricalValue(email,portfolioName,startDate,en
             console.warn('wrong status: '+res.data);
             return [];
         };
-        console.log(res);
         return res.data;
     }).catch(err=>{
         console.error('some error with request :'+err);

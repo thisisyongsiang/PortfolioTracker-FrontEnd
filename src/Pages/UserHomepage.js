@@ -19,7 +19,7 @@ class UserHomepage extends Component {
           <div className="row  overflow-auto" style={{ height: "78vh" }}>
             <div className="col-12 col-sm-2 col-xl-2  d-flex sticky-top p-0">
               <div className="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start text-white">
-                <Sidebar />
+                <Sidebar user={this.props.userMongo} />
               </div>
             </div>
             <div className="col-sm-10 d-flex flex-column h-sm-100">
