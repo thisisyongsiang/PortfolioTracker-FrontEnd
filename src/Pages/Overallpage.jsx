@@ -19,7 +19,6 @@ export const Overallpage=(user)=>{
           new Date(new Date().setFullYear(new Date().getFullYear()-1)),
           new Date()
           ).then(pfHist=>{
-            console.log(pfHist);
             setportfoliosHistory(pfHist);
           });
         });

@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import '../App.css'
+import { getUserPortfolioNames } from '../users/userApi';
 import {SidebarData} from './SidebarData'
 
-function Sidebar() {
+function Sidebar(user) {
+    const userData=user.user;
+    const [sideBarData,setSideBarData]=useState(['Overall']);
+    useEffect(()=>{
+        if (userData){
+            getUserPortfolioNames(userData.emailAddress)
+            .then(d=>{
+                d.unshift('Overall');
+                setSideBarData(d)
+            });
+        }
+    },[userData]);
     return (
     <div className="Sidebar w-100">
         <ul className="SidebarList">
-            {SidebarData.map((val, key) => {
+
+            {sideBarData.map((val, key) => {
             return (
             <li 
             key={key} 
             className="row" 
-            id={window.location.pathname === val.link ? "active" : ""}
+            id={window.location.pathname === `/${val}` ? "active" : ""}
             onClick={() => {
-                window.location.pathname = val.link
+                window.location.pathname =`/${val}`
             }}> 
-            <div>{val.title}</div> 
+            <div>{val}</div> 
             </li>
         ); 
     })}
