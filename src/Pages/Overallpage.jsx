@@ -3,9 +3,25 @@ import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
+import { getUserOverallPortfolioValue ,getUserPortfolios} from "../users/userApi.js";
+import { numberWithCommas } from '../util/util';
 
-export const Overallpage=()=>{
+export const Overallpage=(user)=>{
+    const userData=user.user;
+    const [pverallPfValue,setOverallPfValue]=useState(0);
+    const [portfolios,setPortfolios]=useState([]);
+    useEffect(()=>{
+      if (userData){
+        getUserPortfolios(userData.emailAddress).then(d=>{
+          setPortfolios(d);
+        });
+        getUserOverallPortfolioValue(userData.emailAddress).then(d=>{
+          setOverallPfValue(d);
+        });
+      }
+    },[userData]);
 
+    
 
     return(
         <React.Fragment>
@@ -14,7 +30,7 @@ export const Overallpage=()=>{
               <div >
               <h2>Portfolio Value:
                   <br />
-                  $88,888
+                  ${numberWithCommas(pverallPfValue.toFixed(2))}
                 </h2>
               </div>
               <div className="position-absolute top-0 end-0">

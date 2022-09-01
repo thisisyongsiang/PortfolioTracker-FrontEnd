@@ -19,21 +19,7 @@ export function addUser(user){
         console.error('rejected post '+err);
         return null;
     })
-    // fetch(process.env.REACT_APP_APIURL+'user/add',
-    //     {
-    //         method:'POST',
-    //         headers:{
-    //             'Content-Type':'application/json',
-    //         },
-    //         body:JSON.stringify(user)
-    // }).then((res)=>{
-    //     res.json();
-    // }).then(data=>{
-    //     console.log('successfully added user');
-    //     console.log(data);
-    // }).catch(error=>{
-    //     console.error('error ',error);
-    // })
+
 }
 export async function getAllUsers(){
     try {
@@ -47,12 +33,7 @@ export async function getAllUsers(){
         console.error('some error with request :'+error);
         return [];
     }
-    
-    // let response= await fetch(process.env.REACT_APP_APIURL+'user/all',
-    //     {
-    //         method:'GET'
-    // })
-    // let users=response.json();
+
 }
 export function getUser(email){
     return axios.get(url+'user/select',{
@@ -62,10 +43,69 @@ export function getUser(email){
             console.warn('wrong status: '+res.data);
             return null;
         };
-        return res.data;
+        if (res.data.length>0)return res.data[0];
+        else return null;
     }).catch(err=>{
         console.error('some error with request :'+err);
         return null;
         
+    })
+}
+export function getUserPortfolios(email){
+    return axios.get(url+'portfolio/select',{
+        params:{email:email},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return null;
+        };
+        return res.data;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
+    })
+}
+export function getUserOverallPortfolioValue(email){
+    return axios.get(url+'portfolio/overallValue',{
+        params:{email:email},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return null;
+        };
+        return res.data.value;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
+    })
+}
+export function getUserOnePortfolio(email,portfolioName){
+    return axios.get(url+'portfolio/selectone',{
+        params:{email:email,
+        portfolioName:portfolioName},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return null;
+        };
+        return res.data;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
+    })
+}
+export function getUserPortfolioValue(email,portfolioName){
+    return axios.get(url+'portfolio/selectonevalue',{
+        params:{email:email,
+            portfolioName:portfolioName},
+    }).then(res=>{
+        if(res.status!==200){
+            console.warn('wrong status: '+res.data);
+            return null;
+        };
+        return res.data.value;
+    }).catch(err=>{
+        console.error('some error with request :'+err);
+        return null;
     })
 }
