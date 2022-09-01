@@ -5,7 +5,7 @@ export const Transaction = () => {
 
   return (
     <>
-    <Paper>
+    <Paper style={{margin:10, padding:3}}>
         <TransactionForm />
     </Paper>
     </>
