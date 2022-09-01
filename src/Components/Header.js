@@ -4,7 +4,7 @@ import ProfileMenu from "./Profilemenu";
 
 const Header = () => {
   return (
-    <nav className="navbar-brand h1" style={{ backgroundColor: "#484A4F" }}>
+    <nav className="navbar-brand h1 m-0" style={{ backgroundColor: "#333333" }}>
       <div className="container-fluid row">
         <div
           id="navbar"
