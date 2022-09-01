@@ -8,6 +8,7 @@ import {
   getUserPortfolios,
 } from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
+import CardWidget from "../Components/CardWidget";
 
 export const Overallpage = (user) => {
   const userData = user.user;
@@ -27,7 +28,7 @@ export const Overallpage = (user) => {
   return (
     <React.Fragment>
       <Container id="container">
-        <div className="position-relative">
+        <div className="position-relative mt-2">
           <div>
             <h2>
               Portfolio Value:
@@ -36,18 +37,10 @@ export const Overallpage = (user) => {
           </div>
           <div className="position-absolute top-0 end-0">
             <div className="d-flex h-100 p-1">
-              <div className="card mx-1">
-                <div className="card-body">
-                  <h5 className="card-title">5%</h5>
-                  <h6 className="card-subtitle text-muted">Ann. Return</h6>
-                </div>
-              </div>
-              <div className="card mx-1">
-                <div className="card-body">
-                  <h5 className="card-title">5%</h5>
-                  <h6 className="card-subtitle text-muted">Net. Return</h6>
-                </div>
-              </div>
+              <CardWidget type="annReturn" />
+              <CardWidget type="netReturn" />
+              <CardWidget type="unrealisedPnL" />
+              <CardWidget type="volatility" />
             </div>
           </div>
         </div>
