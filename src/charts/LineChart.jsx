@@ -25,30 +25,26 @@ export const LineChart=({
 })=>{
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
-    const [containerWidth,setContainerWidth]=useState(width);
+    const [containerWidth,setContainerWidth]=useState(null);
     // const quoteData=useGetQuoteData(ticker,startDate,endDate,quoteInterval);
-    width=containerWidth;
+    width=containerWidth?containerWidth:width;
     const innerHeight=height-margin.top-margin.bottom;
     const innerWidth=width-margin.left-margin.right;
-    
     const radius=5;
-
     useEffect(()=>{
         const handleResize=()=>{
-            // console.log(containerWidth);
             setContainerWidth(containerRef.current.offsetWidth);
-            
         };
         if (dynamicWidth){
-            let containerWidth=containerRef.current.offsetWidth;
-            if (containerWidth){
-                setContainerWidth(containerWidth);
+            let cWidth=containerRef.current.offsetWidth;
+            if (cWidth){
+                setContainerWidth(cWidth);
             }
             window.addEventListener('resize',handleResize);
             return ()=>window.removeEventListener('resize',handleResize);
         }
 
-    },[containerRef.current]);
+    },[containerRef.current.offsetWidth,dynamicWidth]);
 
     if (data.length===0){
         return (
@@ -67,20 +63,21 @@ export const LineChart=({
     .range([innerHeight,0]);
     const xAxisFormat=d3.timeFormat("%e/%m/%Y")
     
-    const handleMouseMove=e=>{
-        let x=e.nativeEvent.offsetX-margin.left;
-        let y= e.nativeEvent.offsetY-(margin.top);
-        // x = xScale.invert(x);
-        // y=yScale.invert(y);
-        let least=d3.least(data,d=>Math.hypot(((xScale(xValue(d))-x))));
-        setDotPosition(least);        
-            
+    let handleMouseMove=null;
+    if (trackMouse){
+        handleMouseMove=e=>{
+            let x=e.nativeEvent.offsetX-margin.left;
+            let y= e.nativeEvent.offsetY-(margin.top);
+            let least=d3.least(data,d=>Math.hypot(((xScale(xValue(d))-x))));
+            setDotPosition(least);        
+        }
     }
+
     return(
         <React.Fragment>
         {data.length>0 &&
-        <div ref={containerRef}>
-<svg width={containerWidth} height={height}  onMouseMove={handleMouseMove}>
+        <div className="p-0 m-0" ref={containerRef} >
+<svg width={width} height={height}  onMouseMove={handleMouseMove}>
                 <g transform={`translate(${margin.left},${margin.top})`}>
                 {displayXTicks&&
                 <AxisBottom 
@@ -118,7 +115,7 @@ export const LineChart=({
                     x={0} 
                     y={-6}>
                         <tspan x='0' dy='-1.2em'>  {xAxisFormat(xValue(dotPosition))} </tspan>
-                        <tspan x='0' dy='-1.2em'>  ${yValue(dotPosition)} </tspan>
+                        <tspan x='0' dy='-1.2em'>  ${yValue(dotPosition).toFixed(2)} </tspan>
                     </text>
                     </g>
                 }

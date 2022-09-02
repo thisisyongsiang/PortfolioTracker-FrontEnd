@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
 import PortfolioCharts from "../Components/PortfolioCharts";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
@@ -12,7 +12,12 @@ export const Overallpage=(user)=>{
     const [overallPfValue,setOverallPfValue]=useState(0);
     const [portfolios,setPortfolios]=useState([]);
     const [portfoliosHistory,setportfoliosHistory]=useState([]);
+    const lineChartContainer=useRef(null);
+    const [lineChartWidth,setLineChartWidth]=useState(1000);
     useEffect(()=>{
+      if(lineChartContainer.current){
+        setLineChartWidth(lineChartContainer.current.offsetWidth);
+      }
       if (userData){
         getUserPortfolios(userData.emailAddress).then(d=>{
           setPortfolios(d);
@@ -24,9 +29,9 @@ export const Overallpage=(user)=>{
           });
         });
         getUserOverallPortfolioValue(userData.emailAddress).then(d=>{
-          console.log('hello')
           setOverallPfValue(d);
         });
+
       }
     },[userData]);
 
@@ -50,17 +55,18 @@ export const Overallpage=(user)=>{
           </div>
         </div>
         <div className="row">
-          <div className="col">
+          <div className="col p-0" ref={lineChartContainer}>
             <LineChart
                 data={portfoliosHistory}
                 dynamicWidth={true}
                 displayDiff={false}
                 margin={{right:50,left:50,bottom:50,top:60}}
                 lineWidth='3px'
-                width={1200}    
+                width={lineChartWidth}    
                 xValue={d=>new Date(d.date)}
                 yValue={d=>d.value}
-                displayTitle="Overall Portfolio"
+                yAxisTicks={6}
+                displayTitle="OverallPortfolio"
                />
 
               </div>
