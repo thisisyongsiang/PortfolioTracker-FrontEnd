@@ -5,6 +5,7 @@ import { PlotLine } from "./PlotLine";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 
+
 export const LineChart=({
     data=[],
     width=1000,
