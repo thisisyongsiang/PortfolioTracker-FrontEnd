@@ -4,6 +4,8 @@ import PortfolioCharts from "../Components/PortfolioCharts";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
+import { LineChart } from "../charts/LineChart";
+import AssetTable from "../Components/AssetTable";
 
 
 export const Overallpage=(user)=>{
