@@ -63,8 +63,8 @@ export const PortfolioPage=(portfolio,user)=>{
               </div>
             </div>
           <hr />
-          < PortfolioCharts />
-          < AssetTable data={portfolio}/>
+          {/* < PortfolioCharts /> */}
+          {/* < AssetTable data={portfolio}/> */}
           </Container>
         </React.Fragment>
     )

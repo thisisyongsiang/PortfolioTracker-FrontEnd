@@ -1,11 +1,13 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
 import PortfolioCharts from "../Components/PortfolioCharts";
-import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
+import { getPortfolioAllStats, getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-import AssetTable from "../Components/AssetTable";
 import { LineChart } from "../charts/LineChart";
+import CryptoTable from "../Components/Tables/CryptoTable";
+import UseTable from "../Components/Tables/UseTable"
+
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -14,10 +16,23 @@ export const Overallpage=(user)=>{
     const [portfoliosHistory,setportfoliosHistory]=useState([]);
     const lineChartContainer=useRef(null);
     const [lineChartWidth,setLineChartWidth]=useState(1000);
+    const [tableData, setTableData] = useState([]);
+    const tableHeaders = ["Portfolio", "Total Holding", "PNL", "Ann. Return"];
+
+    
+    // const fetchData = async (userData) => {
+    //   const {data} = await getPortfolioAllStats(userData.emailAddress);
+    //   setTableData(data); 
+    // }
+
+    // console.log(tableData);
+
     useEffect(()=>{
+      
       if(lineChartContainer.current){
         setLineChartWidth(lineChartContainer.current.offsetWidth);
       }
+      
       if (userData){
         getUserPortfolios(userData.emailAddress).then(d=>{
           setPortfolios(d);
@@ -31,9 +46,21 @@ export const Overallpage=(user)=>{
         getUserOverallPortfolioValue(userData.emailAddress).then(d=>{
           setOverallPfValue(d);
         });
+        getPortfolioAllStats(userData.emailAddress).then(d => 
+          {setTableData(d)});
 
       }
     },[userData]);
+
+    // outcome from figma spec: 
+    // name, 
+    // total value of EACH portfolio (), -- reduce
+    // pnl, --> | reduce / sum all transactions - qty*current price (?) |
+    // % of overall portfolio, -- indiv. / overall + "%"
+    
+    // possible steps:
+    // 1. within useeffect, fetch all api, and pass result into object, and into setstate
+    // 2. map into row cells  
 
   return (
     <React.Fragment>
@@ -72,8 +99,11 @@ export const Overallpage=(user)=>{
               </div>
             </div>
           <hr />
+
+          <UseTable data = {tableData} header = {tableHeaders} />
           {/* < PortfolioCharts /> */}
-          < AssetTable />
+          {/* < CryptoTable /> */}
+        
           </Container>
         </React.Fragment>
     )

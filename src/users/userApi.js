@@ -89,6 +89,42 @@ export function getUserPortfolioNames(email) {
       return null;
     });
 }
+
+export function getAllPortfolio () {
+  return axios 
+    .get(url + "portfolio/all")
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return null;        
+      }
+      return res.data.value;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+
+}
+
+export function getPortfolioAllStats (email) {
+  return axios
+  .get(url + "portfolio/overallValue", {
+    params: { email: email },
+  })
+  .then((res) => {
+    if (res.status !== 200) {
+      console.warn("wrong status: " + res.data);
+      return null;
+    }
+    return res.data.value;
+  })
+  .catch((err) => {
+    console.error("some error with request :" + err);
+    return null;
+  });
+}
+
 export function getUserOverallPortfolioValue(email) {
   return axios
     .get(url + "portfolio/overallValue", {
