@@ -24,9 +24,9 @@ function Sidebar(user) {
             <li 
             key={key} 
             className="row" 
-            id={window.location.pathname === `/${val}` ? "active" : ""}
+            id={window.location.pathname === `/portfolio/${val}` ? "active" : ""}
             onClick={() => {
-                window.location.pathname =`/${val}`
+                window.location.pathname =`/portfolio/${val}`
             }}> 
             <div>{val}</div> 
             </li>
