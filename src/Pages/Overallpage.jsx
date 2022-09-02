@@ -4,7 +4,8 @@ import PortfolioCharts from "../Components/PortfolioCharts";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-
+import AssetTable from "../Components/AssetTable";
+import { LineChart } from "../charts/LineChart";
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -65,7 +66,7 @@ export const Overallpage=(user)=>{
               </div>
             </div>
           <hr />
-          < PortfolioCharts />
+          {/* < PortfolioCharts /> */}
           < AssetTable />
           </Container>
         </React.Fragment>
