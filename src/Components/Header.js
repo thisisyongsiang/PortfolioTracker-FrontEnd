@@ -11,7 +11,7 @@ const Header = () => {
           style={{ color: "#FFFFFF" }}
           className="col align-self-center justify-content-start h5"
         >
-          FinDash
+          <h1>FinDash</h1>
           <Typography
             variant="subtitle2"
             mt={0}

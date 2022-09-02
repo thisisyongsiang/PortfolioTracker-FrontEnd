@@ -1,38 +1,30 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
-import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
+import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios, getUserPortfolioValue} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 
 
-export const Overallpage=(user)=>{
-    const userData=user.user;
-    const [overallPfValue,setOverallPfValue]=useState(0);
-    const [portfolios,setPortfolios]=useState([]);
+export const PortfolioPage=(portfolio,user)=>{
+    const portfolioData=portfolio;
+    const userData=user;
+    const [pfValue,setPfValue]=useState(0);
     const [portfoliosHistory,setportfoliosHistory]=useState([]);
-    const lineChartContainer=useRef(null);
-    const [lineChartWidth,setLineChartWidth]=useState(1000);
     useEffect(()=>{
-      if(lineChartContainer.current){
-        setLineChartWidth(lineChartContainer.current.offsetWidth);
-      }
-      if (userData){
-        getUserPortfolios(userData.emailAddress).then(d=>{
-          setPortfolios(d);
-          getUserPortfolioHistoricalValue(userData.emailAddress,d[0]['portfolio'],
-          new Date(new Date().setFullYear(new Date().getFullYear()-1)),
-          new Date()
-          ).then(pfHist=>{
-            setportfoliosHistory(pfHist);
-          });
+      if (portfolioData){
+        getUserPortfolioValue(userData.emailAddress,portfolioData['portfolio']).then(data=>{
+            setPfValue(data);
         });
-        getUserOverallPortfolioValue(userData.emailAddress).then(d=>{
-          setOverallPfValue(d);
+        getUserPortfolioHistoricalValue(userData.emailAddress,portfolioData['portfolio'],
+        new Date(new Date().setFullYear(new Date().getFullYear()-1)),
+        new Date()
+        ).then(pfHist=>{
+        console.log(pfHist);
+        setportfoliosHistory(pfHist);
         });
-
       }
     },[userData]);
 
@@ -43,7 +35,7 @@ export const Overallpage=(user)=>{
           <div>
             <h2>
               Portfolio Value:
-              <br />${numberWithCommas(overallPfValue.toFixed(2))}
+              <br />${numberWithCommas(pfValue.toFixed(2))}
             </h2>
           </div>
           <div className="position-absolute top-0 end-0">
@@ -56,25 +48,23 @@ export const Overallpage=(user)=>{
           </div>
         </div>
         <div className="row">
-          <div className="col p-0" ref={lineChartContainer}>
+          <div className="col">
             <LineChart
                 data={portfoliosHistory}
                 dynamicWidth={true}
                 displayDiff={false}
                 margin={{right:50,left:50,bottom:50,top:60}}
                 lineWidth='3px'
-                width={lineChartWidth}    
+                width={1200}    
                 xValue={d=>new Date(d.date)}
                 yValue={d=>d.value}
-                yAxisTicks={6}
-                displayTitle="OverallPortfolio"
+                displayTitle="Overall Portfolio"
                />
-
               </div>
             </div>
           <hr />
           < PortfolioCharts />
-          < AssetTable />
+          < AssetTable data={portfolio}/>
           </Container>
         </React.Fragment>
     )

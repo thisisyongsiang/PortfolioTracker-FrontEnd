@@ -73,7 +73,6 @@ export function getUserPortfolioNames(email){
             console.warn('wrong status: '+res.data);
             return null;
         };
-        console.log(res.data);
         return res.data;
     }).catch(err=>{
         console.error('some error with request :'+err);
