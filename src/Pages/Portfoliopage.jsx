@@ -2,8 +2,6 @@ import React, { useEffect, useState,useRef } from "react";
 import {useParams} from "react-router-dom"
 import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
-import AssetTable from "../Components/AssetTable";
-import PortfolioCharts from "../Components/PortfolioCharts";
 import { getOneUserPortfolioValue ,getUserPortfolioHistoricalValue} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
