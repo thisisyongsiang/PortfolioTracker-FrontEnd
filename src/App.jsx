@@ -13,6 +13,8 @@ import Tutorial from "./Pages/Tutorial";
 import { Overallpage } from "./Pages/Overallpage";
 import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
+import Assetpage from "./Pages/Assetpage";
+import { PortfolioPage } from "./Pages/Portfoliopage";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,6 +56,7 @@ class App extends React.Component {
       return <Login />;
     }
     return (
+      <BrowserRouter>
       <div>
         <div className="container-fluid overflow-hidden ">
           <div className="row" style={{ boxShadow: "0 0px 5px grey" }}>
@@ -68,32 +71,37 @@ class App extends React.Component {
             <div className="col-sm-10 d-flex flex-column h-sm-100">
               <div className="row overflow-auto">
                 <div className="col">
-                  <BrowserRouter>
+                  
                     <Routes>
-                      <Route path="/">
-                        <Route
-                          index
-                          element={
-                            <Overallpage user={this.state.userMongo} />
-                          }
-                        />
-                        {/* <Route path="login" element={<Login/>} /> */}
-                        <Route path="tutorial" element={<Tutorial />} />
-                        <Route path="user">
-                          <Route index element={<Overallpage user={this.state.userMongo}/>}/>
-                          <Route path="profile" element={<UserProfile />} />
-                          <Route path="settings" element={<UserSettings />} />
-                          <Route path="feedback" element={<Feedback />} />
+                        <Route path="/">
+                          <Route
+                            index
+                            element={
+                              <Overallpage user={this.state.userMongo} />
+                            }/>
+                          <Route path="/overall" element={
+                              <Overallpage user={this.state.userMongo} />} />
+                          <Route path="/portfolio/:portfolioId" element={
+                              <PortfolioPage user={this.state.userMongo} />} />
+                          {/* <Route path="login" element={<Login/>} /> */}
+                          <Route path="tutorial" element={<Tutorial />} />
+                          <Route path="user">
+                            
+                            <Route index element={<Overallpage user={this.state.userMongo}/>}/>
+                            <Route path="profile" element={<UserProfile />} />
+                            <Route path="settings" element={<UserSettings />} />
+                            <Route path="feedback" element={<Feedback />} />
+                          </Route>
                         </Route>
-                      </Route>
+
                     </Routes>
-                  </BrowserRouter>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      </BrowserRouter>
     );
   }
 }
