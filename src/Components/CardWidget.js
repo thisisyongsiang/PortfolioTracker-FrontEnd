@@ -1,35 +1,43 @@
 import React from "react";
 
-const CardWidget = ({ type }) => {
+const CardWidget = ({ type, value }) => {
   let data;
   switch (type) {
     case "netReturn":
       data = {
         subtitle: "Net Return",
-        value: "5%",
+        metric: value + '%',
+        isPositive: value > 0 ? true : false
       };
       break;
     case "annReturn":
       data = {
         subtitle: "Ann. Return",
-        value: "5%",
+        metric: "5%",
+        isPositive: true
       };
       break;
     case "unrealisedPnL":
       data = {
         subtitle: "Unrealised PNL",
-        value: "$2,353",
+        metric: "$2,353",
+        isPositive: true
       };
       break;
     case "volatility":
       data = {
         subtitle: "Volatility",
-        value: "14%",
+        metric: "14%",
+        isPositive: value > 0 ? true : false
       };
       break;
     default:
       break;
   }
+
+  let fColor = "white"
+  data.isPositive ? fColor = "green" : fColor = "red"
+
   return (
     <div className="card mx-1" style={{ width: "auto", border: "none" }}>
       <div
@@ -42,8 +50,8 @@ const CardWidget = ({ type }) => {
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         }}
       >
-        <h5 className="card-title text-white" style={{ fontSize: "40px" }}>
-          {data.value}
+        <h5 className="card-title" style={{ "fontSize": "40px" , "color": data.isPositive ? "#53E827" : "red"}}>
+          {data.metric}
         </h5>
         <h6 className="card-subtitle text-white">{data.subtitle}</h6>
       </div>
