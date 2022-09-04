@@ -1,11 +1,30 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+import { LineChart } from "../charts/LineChart";
+import AssetTable from "../Components/AssetTable";
+>>>>>>> a4ab867 (updated net return)
 import PortfolioCharts from "../Components/PortfolioCharts";
+import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
+import { numberWithCommas } from "../util/util";
+import CardWidget from "../Components/CardWidget";
+<<<<<<< HEAD
+import AssetTable from "../Components/AssetTable";
+import { LineChart } from "../charts/LineChart";
+=======
+=======
+=======
+>>>>>>> Stashed changes
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import AssetTable from "../Components/AssetTable";
 import { LineChart } from "../charts/LineChart";
+import { computeOverallPortfolioNetReturn } from "../util/financeComputations";
+>>>>>>> a4ab867 (updated net return)
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -31,9 +50,17 @@ export const Overallpage=(user)=>{
         getUserOverallPortfolioValue(userData.emailAddress).then(d=>{
           setOverallPfValue(d);
         });
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> a4ab867 (updated net return)
 
       }
     },[userData]);
+
+    let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
+
+    let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
 
   return (
     <React.Fragment>
@@ -48,7 +75,7 @@ export const Overallpage=(user)=>{
           <div className="position-absolute top-0 end-0">
             <div className="d-flex h-100 p-1">
               <CardWidget type="annReturn" />
-              <CardWidget type="netReturn" />
+              <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
               <CardWidget type="unrealisedPnL" />
               <CardWidget type="volatility" />
             </div>
