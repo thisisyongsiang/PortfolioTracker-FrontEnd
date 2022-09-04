@@ -14,8 +14,8 @@ const CardWidget = ({ type, value }) => {
     case "annReturn":
       data = {
         subtitle: "Ann. Return",
-        metric: "5%",
-        isPositive: true
+        metric: value + '%',
+        isPositive: value > 0 ? true : false
       };
       break;
     case "netPnL":

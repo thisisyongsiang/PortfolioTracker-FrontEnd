@@ -8,7 +8,7 @@ import { getOneUserPortfolioValue ,getUserPortfolioHistoricalValue} from "../use
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
-import { computeSinglePortfolioNetReturn, computeOverallPortfolioPnL } from "../util/financeComputations";
+import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns } from "../util/financeComputations";
 
 export const PortfolioPage=(user)=>{
   const userData=user.user;
@@ -40,8 +40,9 @@ export const PortfolioPage=(user)=>{
     }
   },[userData,portfolioId]);
 
-  let netReturn = computeSinglePortfolioNetReturn(portfolio[0], pfValue)
-  let netPnL = computeOverallPortfolioPnL(portfolio, pfValue)
+  let netReturn = computePortfolioNetReturn(portfolio, pfValue)
+  let netPnL = computePortfolioPnL(portfolio, pfValue)
+  let annualisedReturn = computeAnnualisedReturns(portfolio, pfValue)
 
 
 return (
@@ -56,7 +57,7 @@ return (
         </div>
         <div className="position-absolute top-0 end-0">
           <div className="d-flex h-100 p-1">
-            <CardWidget type="annReturn" />
+            <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
             <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
             <CardWidget type="netPnL" value={netPnL.toFixed(0)}/>
             <CardWidget type="volatility" />

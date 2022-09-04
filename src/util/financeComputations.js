@@ -1,6 +1,6 @@
-import { getUserOnePortfolio } from "../users/userApi";
+var xirr = require("xirr");
 
-export function computeOverallPortfolioNetReturn(portfolios, overallPfValue) {
+export function computePortfolioNetReturn(portfolios, overallPfValue) {
   let totalSellCashflow = 0;
   let totalBuyCashflow = 0;
   let netReturn = 0;
@@ -23,28 +23,7 @@ export function computeOverallPortfolioNetReturn(portfolios, overallPfValue) {
   return netReturn;
 }
 
-export function computeSinglePortfolioNetReturn(portfolio, pfValue) {
-  let totalSellCashflow = 0;
-  let totalBuyCashflow = 0;
-  let netReturn = 0;
-  if (portfolio && pfValue) {
-    portfolio.sell.forEach((s) => {
-      totalSellCashflow = totalSellCashflow + s.price * s.quantity;
-    });
-
-    portfolio.buy.forEach((b) => {
-      totalBuyCashflow = totalBuyCashflow + b.price * b.quantity;
-    });
-
-    netReturn =
-      ((totalSellCashflow - totalBuyCashflow + pfValue) / totalBuyCashflow) *
-      100;
-    return netReturn;
-  }
-  return 0;
-}
-
-export function computeOverallPortfolioPnL(portfolios, overallPfValue) {
+export function computePortfolioPnL(portfolios, overallPfValue) {
   let totalSellCashflow = 0;
   let totalBuyCashflow = 0;
   let overallPnL = 0;
@@ -62,4 +41,33 @@ export function computeOverallPortfolioPnL(portfolios, overallPfValue) {
   overallPnL = totalSellCashflow - totalBuyCashflow + overallPfValue;
 
   return overallPnL;
+}
+
+export function computeAnnualisedReturns(portfolios, currentPfValue) {
+  let cashflowAndTiming = [];
+    portfolios.forEach((p) => {
+      p.buy.forEach((b) => {
+        cashflowAndTiming.push({
+          amount: b.quantity * b.price * -1,
+          when: new Date(b.date),
+        });
+      });
+
+      p.sell.forEach((s) => {
+        cashflowAndTiming.push({
+          amount: s.quantity * s.price,
+          when: new Date(s.date),
+        });
+      });
+    });
+
+    cashflowAndTiming.push({
+      amount: currentPfValue,
+      when: new Date(),
+    });
+    if (cashflowAndTiming.length > 1) {
+        let rate = xirr(cashflowAndTiming);
+        return rate * 100;
+    }
+    return 0
 }

@@ -5,7 +5,7 @@ import AssetTable from "../Components/AssetTable";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-import { computeOverallPortfolioNetReturn, computeOverallPortfolioPnL } from "../util/financeComputations";
+import { computeAnnualisedReturns, computePortfolioNetReturn, computePortfolioPnL } from "../util/financeComputations";
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -35,8 +35,9 @@ export const Overallpage=(user)=>{
       }
     },[userData]);
 
-    let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
-    let netPnL = computeOverallPortfolioPnL(portfolios, overallPfValue)
+    let netReturn = computePortfolioNetReturn(portfolios, overallPfValue)
+    let netPnL = computePortfolioPnL(portfolios, overallPfValue)
+    let annualisedReturn = computeAnnualisedReturns(portfolios, overallPfValue)
 
   return (
     <React.Fragment>
@@ -50,7 +51,7 @@ export const Overallpage=(user)=>{
           </div>
           <div className="position-absolute top-0 end-0">
             <div className="d-flex h-100 p-1">
-              <CardWidget type="annReturn" />
+              <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
               <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
               <CardWidget type="netPnL" value={netPnL.toFixed(0)}/>
               <CardWidget type="volatility" />
