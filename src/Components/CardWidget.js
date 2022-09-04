@@ -1,4 +1,5 @@
 import React from "react";
+import { numberWithCommas } from "../util/util";
 
 const CardWidget = ({ type, value }) => {
   let data;
@@ -13,15 +14,15 @@ const CardWidget = ({ type, value }) => {
     case "annReturn":
       data = {
         subtitle: "Ann. Return",
-        metric: "5%",
-        isPositive: true
+        metric: value + '%',
+        isPositive: value > 0 ? true : false
       };
       break;
-    case "unrealisedPnL":
+    case "netPnL":
       data = {
-        subtitle: "Unrealised PNL",
-        metric: "$2,353",
-        isPositive: true
+        subtitle: "Net PNL",
+        metric: value > 0 ? "$" + numberWithCommas(value) : "-$" + numberWithCommas(value*-1),
+        isPositive: value > 0 ? true : false
       };
       break;
     case "volatility":

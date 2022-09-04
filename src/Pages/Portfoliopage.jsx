@@ -7,7 +7,8 @@ import PortfolioCharts from "../Components/PortfolioCharts";
 import { getOneUserPortfolioValue ,getUserPortfolioHistoricalValue} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-
+import { getUserOnePortfolio } from "../users/userApi.js";
+import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns } from "../util/financeComputations";
 
 export const PortfolioPage=(user)=>{
   const userData=user.user;
@@ -17,6 +18,7 @@ export const PortfolioPage=(user)=>{
   const [portfoliosHistory,setportfoliosHistory]=useState([]);
   const lineChartContainer=useRef(null);
   const [lineChartWidth,setLineChartWidth]=useState(1000);
+  const [portfolio, setUserPortfolio] = useState([])
 
   useEffect(()=>{
     if(lineChartContainer.current){
@@ -32,8 +34,16 @@ export const PortfolioPage=(user)=>{
       });
       getOneUserPortfolioValue(userData.emailAddress,portfolioId).then(v=>
         setPfValue(v));
+      getUserOnePortfolio(userData.emailAddress,portfolioId).then((v) => {
+        setUserPortfolio(v)
+      })
     }
   },[userData,portfolioId]);
+
+  let netReturn = computePortfolioNetReturn(portfolio, pfValue)
+  let netPnL = computePortfolioPnL(portfolio, pfValue)
+  let annualisedReturn = computeAnnualisedReturns(portfolio, pfValue)
+
 
 return (
   <React.Fragment>
@@ -47,9 +57,9 @@ return (
         </div>
         <div className="position-absolute top-0 end-0">
           <div className="d-flex h-100 p-1">
-            <CardWidget type="annReturn" />
-            <CardWidget type="netReturn" />
-            <CardWidget type="unrealisedPnL" />
+            <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
+            <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
+            <CardWidget type="netPnL" value={netPnL.toFixed(0)}/>
             <CardWidget type="volatility" />
           </div>
         </div>

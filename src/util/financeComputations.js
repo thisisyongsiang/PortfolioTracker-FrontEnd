@@ -1,37 +1,73 @@
-import { getUserOnePortfolio } from "../users/userApi"
+var xirr = require("xirr");
 
-export function computeOverallPortfolioNetReturn(portfolios, overallPfValue) {
-    let totalSellCashflow = 0
-    let totalBuyCashflow = 0
-    let netReturn = 0
+export function computePortfolioNetReturn(portfolios, overallPfValue) {
+  let totalSellCashflow = 0;
+  let totalBuyCashflow = 0;
+  let netReturn = 0;
 
-    portfolios.forEach((p) => {
-        p.sell.forEach((s) => {
-            totalSellCashflow = totalSellCashflow + (s.price*s.quantity)
-        })
+  portfolios.forEach((p) => {
+    p.sell.forEach((s) => {
+      totalSellCashflow = totalSellCashflow + s.price * s.quantity;
+    });
 
-        p.buy.forEach((b) => {
-            totalBuyCashflow = totalBuyCashflow + (b.price*b.quantity)
-        })
-    })
+    p.buy.forEach((b) => {
+      totalBuyCashflow = totalBuyCashflow + b.price * b.quantity;
+    });
+  });
 
-    netReturn = (totalSellCashflow - totalBuyCashflow + overallPfValue)/totalBuyCashflow * 100
+  netReturn =
+    ((totalSellCashflow - totalBuyCashflow + overallPfValue) /
+      totalBuyCashflow) *
+    100;
 
-    return netReturn
+  return netReturn;
 }
 
-export function computeSinglePortfolioNetReturn(portfolio) {
-    let totalSellCashflow = 0
-    let totalBuyCashflow = 0
-    let netReturn = 0
+export function computePortfolioPnL(portfolios, overallPfValue) {
+  let totalSellCashflow = 0;
+  let totalBuyCashflow = 0;
+  let overallPnL = 0;
 
-    portfolio.sell.forEach((s) => {
-        totalSellCashflow = totalSellCashflow + (s.price*s.quantity)
-    })
+  portfolios.forEach((p) => {
+    p.sell.forEach((s) => {
+      totalSellCashflow = totalSellCashflow + s.price * s.quantity;
+    });
 
-    portfolio.buy.forEach((b) => {
-        totalBuyCashflow = totalBuyCashflow + (b.price*b.quantity)
-    })
+    p.buy.forEach((b) => {
+      totalBuyCashflow = totalBuyCashflow + b.price * b.quantity;
+    });
+  });
 
-    // getUserOnePortfolio(email,portfolio)
+  overallPnL = totalSellCashflow - totalBuyCashflow + overallPfValue;
+
+  return overallPnL;
+}
+
+export function computeAnnualisedReturns(portfolios, currentPfValue) {
+  let cashflowAndTiming = [];
+    portfolios.forEach((p) => {
+      p.buy.forEach((b) => {
+        cashflowAndTiming.push({
+          amount: b.quantity * b.price * -1,
+          when: new Date(b.date),
+        });
+      });
+
+      p.sell.forEach((s) => {
+        cashflowAndTiming.push({
+          amount: s.quantity * s.price,
+          when: new Date(s.date),
+        });
+      });
+    });
+
+    cashflowAndTiming.push({
+      amount: currentPfValue,
+      when: new Date(),
+    });
+    if (cashflowAndTiming.length > 1) {
+        let rate = xirr(cashflowAndTiming);
+        return rate * 100;
+    }
+    return 0
 }
