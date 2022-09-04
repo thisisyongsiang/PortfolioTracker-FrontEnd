@@ -1,18 +1,10 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
-<<<<<<< HEAD
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-=======
-import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
-import { numberWithCommas } from "../util/util";
-import CardWidget from "../Components/CardWidget";
-import AssetTable from "../Components/AssetTable";
-import { LineChart } from "../charts/LineChart";
->>>>>>> 404d87f (resolved merge conflicts)
 import { computeOverallPortfolioNetReturn } from "../util/financeComputations";
 
 export const Overallpage=(user)=>{
