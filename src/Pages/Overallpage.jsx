@@ -1,7 +1,10 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> a4ab8676ff5a8253718c77de0263697905f92877
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 import { LineChart } from "../charts/LineChart";
@@ -12,9 +15,12 @@ import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPo
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AssetTable from "../Components/AssetTable";
 import { LineChart } from "../charts/LineChart";
 =======
+=======
+>>>>>>> a4ab8676ff5a8253718c77de0263697905f92877
 =======
 =======
 >>>>>>> Stashed changes
@@ -24,7 +30,10 @@ import CardWidget from "../Components/CardWidget";
 import AssetTable from "../Components/AssetTable";
 import { LineChart } from "../charts/LineChart";
 import { computeOverallPortfolioNetReturn } from "../util/financeComputations";
+<<<<<<< HEAD
 >>>>>>> a4ab867 (updated net return)
+=======
+>>>>>>> a4ab8676ff5a8253718c77de0263697905f92877
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -51,12 +60,20 @@ export const Overallpage=(user)=>{
           setOverallPfValue(d);
         });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
 >>>>>>> a4ab867 (updated net return)
+=======
+>>>>>>> Stashed changes
+>>>>>>> a4ab8676ff5a8253718c77de0263697905f92877
 
       }
     },[userData]);
+
+    let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
+
+    let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
 
     let netReturn = computeOverallPortfolioNetReturn(portfolios, overallPfValue)
 
