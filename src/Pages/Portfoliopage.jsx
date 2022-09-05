@@ -8,7 +8,8 @@ import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistor
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
-import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns } from "../util/financeComputations";
+
+import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns, computeVolatility } from "../util/financeComputations";
 import { Link } from "react-router-dom";
 export const PortfolioPage=(user)=>{
   const userData=user.user;
@@ -51,7 +52,7 @@ export const PortfolioPage=(user)=>{
   let netReturn = computePortfolioNetReturn(portfolio, pfValue)
   let netPnL = computePortfolioPnL(portfolio, pfValue)
   let annualisedReturn = computeAnnualisedReturns(portfolio, pfValue)
-
+  let portfolioVolatility = computeVolatility(portfoliosHistory)
 
 return (
   <React.Fragment>
@@ -68,7 +69,7 @@ return (
             <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
             <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
             <CardWidget type="netPnL" value={netPnL.toFixed(0)}/>
-            <CardWidget type="volatility" />
+            <CardWidget type="volatility" value={portfolioVolatility.toFixed(1)}/>
           </div>
         </div>
       </div>
