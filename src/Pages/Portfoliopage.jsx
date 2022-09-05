@@ -79,13 +79,14 @@ return (
               data={portfoliosHistory}
               dynamicWidth={true}
               displayDiff={true}
-              margin={{right:50,left:60,bottom:50,top:60}}
+              margin={{right:50,left:70,bottom:50,top:60}}
               lineWidth='3px'
               width={lineChartWidth}    
               xValue={d=>new Date(d.date)}
               yValue={d=>d.value}
               yAxisTicks={6}
               displayTitle={portfolioId}
+              yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
              />
 
             </div>

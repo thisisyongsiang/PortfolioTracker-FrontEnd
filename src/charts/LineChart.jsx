@@ -118,7 +118,7 @@ export const LineChart=({
                     x={0} 
                     y={-6}>
                         <tspan x='0' dy='-1.2em'>  {xAxisFormat(xValue(dotPosition))} </tspan>
-                        <tspan x='0' dy='-1.2em'>  ${yValue(dotPosition).toFixed(2)} </tspan>
+                        <tspan x='0' dy='-1.2em'>  {yAxisFormat(Number(yValue(dotPosition).toFixed(2)))} </tspan>
                     </text>
                     </g>
                 }

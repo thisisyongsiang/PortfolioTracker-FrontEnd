@@ -64,9 +64,7 @@ const AssetTable = () => {
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Add Transactions</DialogTitle>
             <DialogContent> <Transaction /> </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} startIcon={<CancelIcon />}> </Button>
-            </DialogActions>
+                <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
         </Dialog>
 
         <TextField label="Search for your asset" variant="outlined" style={{ marginBottom:20, width: "100%"}}

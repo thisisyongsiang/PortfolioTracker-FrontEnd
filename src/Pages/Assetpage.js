@@ -23,15 +23,6 @@ import {
   computeAssetAnnualisedReturns,
 } from "../util/financeComputations";
 
-export const Assetpage = (user) => {
-  const userData = user.user;
-  const { assetId, portfolioId } = useParams();
-  const [assetValue, setAssetValue] = useState(0);
-  const [transactions, setTransactions] = useState(null);
-  const [assetValueHistory, setAssetValueHistory] = useState([]);
-  const [assetQuote, setAssetQuote] = useState(null);
-  const lineChartContainer = useRef(null);
-  const [lineChartWidth, setLineChartWidth] = useState(1000);
 
 export const Assetpage=(user)=>{
   const userData=user.user;
@@ -145,7 +136,7 @@ export const Assetpage=(user)=>{
               data={assetValueHistory}
               dynamicWidth={true}
               displayDiff={true}
-              margin={{right:50,left:60,bottom:50,top:60}}
+              margin={{right:50,left:70,bottom:50,top:60}}
               lineWidth='3px'
               width={lineChartWidth}    
               xValue={d=>new Date(d.date)}
