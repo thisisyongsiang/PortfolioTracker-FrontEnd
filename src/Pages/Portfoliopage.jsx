@@ -4,17 +4,19 @@ import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
-import { getOneUserPortfolioValue ,getUserPortfolioHistoricalValue} from "../users/userApi.js";
+import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistoricalValue} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
-import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns, computeVolatility } from "../util/financeComputations";
 
+import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns, computeVolatility } from "../util/financeComputations";
+import { Link } from "react-router-dom";
 export const PortfolioPage=(user)=>{
   const userData=user.user;
   const {portfolioId}=useParams();
   
   const [pfValue,setPfValue]=useState(0);
+  const [pfAssets,setPfAssets]=useState([]);
   const [portfoliosHistory,setportfoliosHistory]=useState([]);
   const lineChartContainer=useRef(null);
   const [lineChartWidth,setLineChartWidth]=useState(1000);
@@ -25,10 +27,11 @@ export const PortfolioPage=(user)=>{
       setLineChartWidth(lineChartContainer.current.offsetWidth);
     }
     if (userData && portfolioId){
-      console.log(portfolioId);
+      // let startDate=new Date(new Date().setDate(new Date().getDate()-15));
       getUserPortfolioHistoricalValue(userData.emailAddress,portfolioId,
-      new Date(new Date().setFullYear(new Date().getFullYear()-1)),
-      new Date()
+        new Date(new Date().setFullYear(new Date().getFullYear()-1)),
+          // startDate,
+        new Date()
       ).then(pfHist=>{
         setportfoliosHistory(pfHist);
       });
@@ -36,6 +39,12 @@ export const PortfolioPage=(user)=>{
         setPfValue(v));
       getUserOnePortfolio(userData.emailAddress,portfolioId).then((v) => {
         setUserPortfolio(v)
+      })
+      getUserPortfolioAssets(userData.emailAddress,portfolioId).then(assets=>{
+        let pfAssets=assets.map(asset=>{
+         return {...asset, route:`/portfolio/${portfolioId}/${asset.symbol}`};
+        })
+        setPfAssets(pfAssets);
       })
     }
   },[userData,portfolioId]);
@@ -69,7 +78,7 @@ return (
           <LineChart
               data={portfoliosHistory}
               dynamicWidth={true}
-              displayDiff={false}
+              displayDiff={true}
               margin={{right:50,left:50,bottom:50,top:60}}
               lineWidth='3px'
               width={lineChartWidth}    
@@ -82,6 +91,18 @@ return (
             </div>
           </div>
         <hr />
+        <ul className="list-group">
+          {pfAssets.map(asset=>{
+            return(
+              <li   key={asset.symbol} className="list-group-item">
+                <Link to={asset.route} className='w-100'>
+              {asset.shortName}
+                </Link>
+            </li>
+            )
+          })}
+
+        </ul>
         {/* < AssetTable /> insert portfolio table herer!! */}
         </Container>
       </React.Fragment>

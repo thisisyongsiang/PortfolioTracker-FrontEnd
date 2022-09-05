@@ -86,7 +86,10 @@ main {
   transform: scale(1.05);
   transition: transform 0.3s;
 }
+.SidebarList .addPortfolio {
+    color: rgba(255, 255, 255, 0.589);
 
+  }
 .SidebarList #active {
   background-color: #293846;
   transform: scale(1.02);

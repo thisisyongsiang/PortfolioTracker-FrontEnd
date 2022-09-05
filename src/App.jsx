@@ -13,7 +13,7 @@ import Tutorial from "./Pages/Tutorial";
 import { Overallpage } from "./Pages/Overallpage";
 import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
-import Assetpage from "./Pages/Assetpage";
+import {Assetpage} from "./Pages/Assetpage";
 import { PortfolioPage } from "./Pages/Portfoliopage";
 class App extends React.Component {
   constructor(props) {
@@ -83,6 +83,8 @@ class App extends React.Component {
                               <Overallpage user={this.state.userMongo} />} />
                           <Route path="/portfolio/:portfolioId" element={
                               <PortfolioPage user={this.state.userMongo} />} />
+                            <Route path="/portfolio/:portfolioId/:assetId" element={
+                                  <Assetpage user={this.state.userMongo} />} />
                           {/* <Route path="login" element={<Login/>} /> */}
                           <Route path="tutorial" element={<Tutorial />} />
                           <Route path="user">

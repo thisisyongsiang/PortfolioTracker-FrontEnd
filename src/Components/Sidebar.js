@@ -1,7 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import '../App.css'
 import { getUserPortfolioNames } from '../users/userApi';
-import {SidebarData} from './SidebarData'
+import {SidebarData} from './SidebarData';
+import { AiFillPlusCircle } from "react-icons/ai";
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,6 +52,10 @@ function Sidebar(user) {
             </li>
         ); 
     })}
+                <li className='addPortfolio row'>
+                    Add Portfolio
+                <AiFillPlusCircle />
+            </li>
     </ul>
     </div>
 

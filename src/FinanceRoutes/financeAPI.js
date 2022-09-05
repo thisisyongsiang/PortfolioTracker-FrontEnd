@@ -23,3 +23,14 @@ export function getHistoricalDailyQuotes(symbol,startDate,endDate,interval){
         return [];
     });
 }
+export function getAssetQuote(symbol){
+    return axiosInstance.request({
+        url:'financeapi/quote/'+symbol,
+        method:'get',
+    }).then((res)=>{
+        return res.data;
+    }).catch(err=>{
+        console.error('error occurred '+err );
+        return [];
+    });
+}
