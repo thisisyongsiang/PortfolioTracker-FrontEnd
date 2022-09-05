@@ -65,7 +65,7 @@ export const Overallpage=(user)=>{
                 data={portfoliosHistory}
                 dynamicWidth={true}
                 displayDiff={false}
-                margin={{right:50,left:50,bottom:50,top:60}}
+                margin={{right:50,left:60,bottom:50,top:60}}
                 lineWidth='3px'
                 width={lineChartWidth}    
                 xValue={d=>new Date(d.date)}

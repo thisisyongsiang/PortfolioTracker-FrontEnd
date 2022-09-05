@@ -131,3 +131,19 @@ svg{
         height: 100%;
     }
 }
+#assetPage #portfolioName{
+    color:#a1a1a1
+}
+#assetPage .bdisplay{
+    min-width: 200px;
+    background-color: #FBFCFF;
+}
+#assetPage .bdisplay:hover{
+    min-width: 200px;
+    transform: scale(1.05);
+    background-color: #B9C4E2;
+}
+#assetPage .bdisplay.bactive{
+    min-width: 200px;
+    background-color: #B9C4E2;
+}

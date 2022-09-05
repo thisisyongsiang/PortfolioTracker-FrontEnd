@@ -23,6 +23,7 @@ export const LineChart=({
     dynamicWidth=false,
     xValue=d=>d,
     yValue=d=>d,
+    yAxisFormat=d=>d
 })=>{
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
@@ -89,6 +90,7 @@ export const LineChart=({
                 }
                 {displayYTicks &&
                 <AxisLeft
+                    yAxisFormat={yAxisFormat}
                     tickCount={yAxisTicks}
                     yScale={yScale}
                     innerWidth={innerWidth} />

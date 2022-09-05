@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect,useState,useRef } from 'react'
 import '../App.css'
 import { getUserPortfolioNames } from '../users/userApi';
 import {SidebarData} from './SidebarData';
@@ -14,6 +14,7 @@ function Sidebar(user) {
     const userData=user.user;
     const overall={name:'Overall',route:'/Overall'};
     const [sideBarData,setSideBarData]=useState([]);
+    let activeObj=useRef(null);
     let activeElem=null;
     useEffect(()=>{
         if (userData){
@@ -28,20 +29,28 @@ function Sidebar(user) {
         }
     },[userData]);
     const onLinkSelected=(e)=>{
+        if (activeObj){
+            activeObj.current.id=''
+        }
+        activeObj=null;
         if(activeElem)activeElem.id='';
         activeElem=e.target.parentElement;
         e.target.parentElement.id="active";
     }
+    let path=window.location.pathname.split('/');
+    path.length>2?path=path[2]:path=path[0];
+    path=path.replaceAll('%20',' ');
     return (
                 <div className="Sidebar w-100">
         <ul className="SidebarList">
-
             {sideBarData.map((val, key) => {
             return (
             <li 
             key={key} 
             className="row" 
-            id={window.location.pathname === `${val.route}` ? "active" : ""}
+            id={path === `${val.name}` ? "active" : ""}
+            ref={path === `${val.name}` ? activeObj:null}
+
             // onClick={() => {
             //     window.location.pathname =`${val.route}`
             // }}
