@@ -23,18 +23,22 @@ import {
   computeAssetAnnualisedReturns,
 } from "../util/financeComputations";
 
-export const Assetpage = (user) => {
-  const userData = user.user;
-  const { assetId, portfolioId } = useParams();
-  const [assetValue, setAssetValue] = useState(0);
-  const [transactions, setTransactions] = useState(null);
-  const [assetValueHistory, setAssetValueHistory] = useState([]);
-  const [assetQuote, setAssetQuote] = useState(null);
-  const lineChartContainer = useRef(null);
-  const [lineChartWidth, setLineChartWidth] = useState(1000);
 
-  useEffect(() => {
-    if (lineChartContainer.current) {
+export const Assetpage=(user)=>{
+  const userData=user.user;
+  const {assetId,portfolioId}=useParams();
+  const [assetValue,setAssetValue]=useState(0);
+  const [transactions,setTransactions]=useState(null);
+  const [assetValueHistory,setAssetValueHistory]=useState([]);
+  const [assetQuote,setAssetQuote]=useState(null);
+  const lineChartContainer=useRef(null);
+  const [lineChartWidth,setLineChartWidth]=useState(1000);
+
+  const[displayChartType,setDisplayChartType]=useState(true);
+
+  const selectDisplay=useRef(null);
+  useEffect(()=>{
+    if(lineChartContainer.current){
       setLineChartWidth(lineChartContainer.current.offsetWidth);
     }
     if (userData && assetId && portfolioId) {
@@ -73,11 +77,30 @@ export const Assetpage = (user) => {
   let annualisedReturn = computeAssetAnnualisedReturns(transactions?transactions.transactions:backup_transactions, assetValue)
   let assetVolatility = computeVolatility(assetValueHistory)
 
+ const handleChangeDisplay=(e)=>{   
+  for(let child of selectDisplay.current.childNodes){
+    if(child===e.target){
+      child.classList.add("bactive");
+    }
+    else{
+      child.classList.remove("bactive");
+    }
+  }
+  if (e.target.id==='value'){
+    setDisplayChartType(true);
+  }
+  else{
+    setDisplayChartType(false);
+  }
+ };
   return (
     <React.Fragment>
-      <Container id="container">
+      <Container id="assetPage">
         <div className="position-relative mt-2">
           <div>
+          <h3 id="portfolioName">
+            Portfolio {portfolioId}
+          </h3>
             <h2>
               {assetQuote ? assetQuote["shortName"] : "Asset"} Value:
               <br />${numberWithCommas(assetValue.toFixed(2))}
@@ -98,22 +121,49 @@ export const Assetpage = (user) => {
             </div>
           </div>
         </div>
+      <div className="d-flex" ref={selectDisplay}>
+        <button  className="btn btn-light me-1 bdisplay bactive" id="value" onClick={handleChangeDisplay}>
+          Value in Portfolio
+        </button>    
+        <button className="btn btn-light me-1 bdisplay" id="price"  onClick={handleChangeDisplay}>
+          Price
+        </button>    
+      </div>
         <div className="row">
           <div className="col p-0" ref={lineChartContainer}>
-            <LineChart
+          {displayChartType?        
+              <LineChart
               data={assetValueHistory}
               dynamicWidth={true}
               displayDiff={true}
-              margin={{ right: 50, left: 50, bottom: 50, top: 60 }}
-              lineWidth="3px"
-              width={lineChartWidth}
-              xValue={(d) => new Date(d.date)}
-              yValue={(d) => d.value}
+              margin={{right:50,left:70,bottom:50,top:60}}
+              lineWidth='3px'
+              width={lineChartWidth}    
+              xValue={d=>new Date(d.date)}
+              yValue={d=>d.value}
               yAxisTicks={6}
+              yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
               displayTitle={`${assetId} Value in ${portfolioId}`}
-            />
+             />:
+             <AssetLineChart
+             ticker={assetId}  
+             dynamicWidth={true}
+             displayDiff={true}
+             displayTitle={`${assetId} Price`}
+             trackMouse={true}
+             margin={{right:50,left:60,bottom:50,top:60}}
+             lineWidth='3px'
+             width={lineChartWidth}   
+             quoteInterval='1d'
+             yAxisTicks={6}
+             yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
+             endDate={new Date()}
+             startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}
+             />
+             }
+
+            </div>
           </div>
-        </div>
         <hr />
         <h4>
           Current Price: $

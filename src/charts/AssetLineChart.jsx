@@ -19,6 +19,7 @@ export function AssetLineChart({
     displayYTicks=true,
     lineColor='#0F8C79',
     dynamicWidth=false,
+    yAxisFormat=d=>d,
     endDate,
     startDate}){
     const data = useGetQuoteData(ticker,startDate,endDate,quoteInterval);
@@ -41,5 +42,6 @@ export function AssetLineChart({
         startDate={startDate}
         xValue={d=>new Date(d.date)}
         yValue={d=>d.close}
+        yAxisFormat={yAxisFormat}
     />
 }
