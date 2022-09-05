@@ -29,7 +29,7 @@ const CardWidget = ({ type, value }) => {
       data = {
         subtitle: "Volatility",
         metric: value + "%",
-        isPositive: value > 0.5 ? true : false
+        isPositive: value > 0.5 ? false : true
       };
       break;
     default:
