@@ -9,7 +9,7 @@ import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
 
-import { computePortfolioPnL, computePortfolioNetReturn, computeAnnualisedReturns, computeVolatility } from "../util/financeComputations";
+import { computePortfolioPnL, computePortfolioNetReturn, computePortfolioAnnualisedReturns, computeVolatility } from "../util/financeComputations";
 import { Link } from "react-router-dom";
 export const PortfolioPage=(user)=>{
   const userData=user.user;
@@ -51,7 +51,7 @@ export const PortfolioPage=(user)=>{
 
   let netReturn = computePortfolioNetReturn(portfolio, pfValue)
   let netPnL = computePortfolioPnL(portfolio, pfValue)
-  let annualisedReturn = computeAnnualisedReturns(portfolio, pfValue)
+  let annualisedReturn = computePortfolioAnnualisedReturns(portfolio, pfValue)
   let portfolioVolatility = computeVolatility(portfoliosHistory)
 
 return (

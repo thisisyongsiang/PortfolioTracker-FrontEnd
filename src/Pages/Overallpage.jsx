@@ -5,7 +5,7 @@ import AssetTable from "../Components/AssetTable";
 import { getUserOverallPortfolioHistoricalValue, getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
-import { computeAnnualisedReturns, computePortfolioNetReturn, computePortfolioPnL, computeVolatility } from "../util/financeComputations";
+import { computePortfolioAnnualisedReturns, computePortfolioNetReturn, computePortfolioPnL, computeVolatility } from "../util/financeComputations";
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -37,7 +37,7 @@ export const Overallpage=(user)=>{
 
     let netReturn = computePortfolioNetReturn(portfolios, overallPfValue)
     let netPnL = computePortfolioPnL(portfolios, overallPfValue)
-    let annualisedReturn = computeAnnualisedReturns(portfolios, overallPfValue)
+    let annualisedReturn = computePortfolioAnnualisedReturns(portfolios, overallPfValue)
     let portfolioVolatility = computeVolatility(portfoliosHistory)
 
   return (
