@@ -86,7 +86,10 @@ main {
   font-size: larger;
   
 }
+.SidebarList .addPortfolio {
+    color: rgba(255, 255, 255, 0.589);
 
+  }
 .SidebarList #active {
   background-color: #293846;
   font-size: larger;

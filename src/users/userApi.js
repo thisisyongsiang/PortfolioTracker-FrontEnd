@@ -145,11 +145,142 @@ export function getUserPortfolioHistoricalValue(
   startDate,
   endDate
 ) {
+
   return axios
     .get(url + "portfolio/selectonevalue/timeperiod", {
       params: {
         email: email,
         portfolioName: portfolioName,
+        startDate: startDate,
+        endDate: endDate,
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return [];
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+}
+export function getUserOverallPortfolioHistoricalValue(
+  email,
+  startDate,
+  endDate
+) {
+
+  return axios
+    .get(url + "portfolio/overallValue/timeperiod", {
+      params: {
+        email: email,
+        startDate: startDate,
+        endDate: endDate,
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return [];
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+}
+
+export function getUserPortfolioAssets(
+  email,
+  portfolioName
+) {
+  return axios
+    .get(url + "portfolio/selectone/assets", {
+      params: {
+        email: email,
+        portfolioName: portfolioName,
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return [];
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+}
+export function getUserPortfolioAssetsTransactions(
+  email,
+  portfolioName,
+  assetSymbol,
+) {
+  return axios
+    .get(url + "portfolio/selectone/asset/transactions", {
+      params: {
+        email: email,
+        portfolioName: portfolioName,
+        assetSymbol:assetSymbol
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return [];
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+}
+
+export function getUserPortfolioOneAssetValue(
+  email,
+  portfolioName,
+  assetSymbol){
+    return axios.get(url+"portfolio/selectone/asset/value",{
+      params:{
+        email: email,
+        portfolioName: portfolioName,
+        assetSymbol:assetSymbol,
+      }
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return [];
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("some error with request :" + err);
+      return null;
+    });
+  }
+
+
+export function getUserPortfolioOneAssetHistoricalValue(
+  email,
+  portfolioName,
+  assetSymbol,       
+  startDate,
+  endDate,
+) {
+  return axios
+    .get(url + "portfolio/selectoneasset/timeperiod", {
+      params: {
+        email: email,
+        portfolioName: portfolioName,
+        assetSymbol:assetSymbol,
         startDate: startDate,
         endDate: endDate,
       },

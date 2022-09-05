@@ -2,7 +2,7 @@ import React, { useEffect, useState,useRef } from "react";
 import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
-import { getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
+import { getUserOverallPortfolioHistoricalValue, getUserOverallPortfolioValue ,getUserPortfolioHistoricalValue,getUserPortfolios} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { computeAnnualisedReturns, computePortfolioNetReturn, computePortfolioPnL } from "../util/financeComputations";
@@ -21,7 +21,7 @@ export const Overallpage=(user)=>{
       if (userData){
         getUserPortfolios(userData.emailAddress).then(d=>{
           setPortfolios(d);
-          getUserPortfolioHistoricalValue(userData.emailAddress,d[0]['portfolio'],
+          getUserOverallPortfolioHistoricalValue(userData.emailAddress,
           new Date(new Date().setFullYear(new Date().getFullYear()-1)),
           new Date()
           ).then(pfHist=>{
