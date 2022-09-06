@@ -6,6 +6,7 @@ import { getUserOverallPortfolioHistoricalValue, getUserOverallPortfolioValue ,g
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { computePortfolioAnnualisedReturns, computePortfolioNetReturn, computePortfolioPnL, computeVolatility } from "../util/financeComputations";
+import { useParams } from "react-router-dom";
 
 export const Overallpage=(user)=>{
     const userData=user.user;
@@ -14,6 +15,8 @@ export const Overallpage=(user)=>{
     const [portfoliosHistory,setportfoliosHistory]=useState([]);
     const lineChartContainer=useRef(null);
     const [lineChartWidth,setLineChartWidth]=useState(1000);
+    const { assetId, portfolioId } = useParams()
+
     useEffect(()=>{
       if(lineChartContainer.current){
         setLineChartWidth(lineChartContainer.current.offsetWidth);
@@ -79,7 +82,7 @@ export const Overallpage=(user)=>{
             </div>
           <hr />
           {/* < PortfolioCharts /> */}
-          < AssetTable />
+          < AssetTable currURL={window.location.pathname.substring(1)} content={{portfolios, userData}} mode="Overall Portfolio"/>
           </Container>
         </React.Fragment>
     )
