@@ -3,6 +3,7 @@ import '../App.css'
 import { getUserPortfolioNames } from '../users/userApi';
 import {SidebarData} from './SidebarData';
 import { AiFillPlusCircle } from "react-icons/ai";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
     BrowserRouter as Router,
     Switch,
