@@ -187,10 +187,25 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
         </div>
 
         <Dialog open={open} onClose={handleClose}>
+
             <DialogTitle>Add Transactions</DialogTitle>
             <DialogContent> <Transaction /> </DialogContent>
                 <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+            <DialogTitle>Add Transactions</DialogTitle>
+            <DialogContent> <Transaction /> </DialogContent>
+                <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+          <DialogTitle>Add Transactions</DialogTitle>
+          <DialogContent>
+            {" "}
+            <Transaction />{" "}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} startIcon={<CancelIcon />}>
+              {" "}
+            </Button>
+          </DialogActions>
         </Dialog>
+
 
         <div>
           <TextField

@@ -71,10 +71,9 @@ export const Assetpage=(user)=>{
     }
   }, [userData, assetId, portfolioId]);
 
-  let backup_transactions = [] //temporary workaround for when transaction data is missing in between renders - need to find permanent fix
-  let netReturn = computeAssetNetReturn(transactions?transactions.transactions:backup_transactions, assetValue)
-  let netPnL = computeAssetPnL(transactions?transactions.transactions:backup_transactions, assetValue)
-  let annualisedReturn = computeAssetAnnualisedReturns(transactions?transactions.transactions:backup_transactions, assetValue)
+  let netReturn = computeAssetNetReturn(transactions?transactions.transactions:[], assetValue)
+  let netPnL = computeAssetPnL(transactions?transactions.transactions:[], assetValue)
+  let annualisedReturn = computeAssetAnnualisedReturns(transactions?transactions.transactions:[], assetValue)
   let assetVolatility = computeVolatility(assetValueHistory)
 
  const handleChangeDisplay=(e)=>{   

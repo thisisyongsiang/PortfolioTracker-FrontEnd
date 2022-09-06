@@ -104,7 +104,7 @@ return (
           })}
 
         </ul>
-        {/* < AssetTable /> insert portfolio table herer!! */}
+        < AssetTable currURL={window.location.pathname.substring(1)} content={{pfAssets, userData}} mode="Single Portfolio"/>
         </Container>
       </React.Fragment>
   )
