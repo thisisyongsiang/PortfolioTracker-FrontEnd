@@ -188,10 +188,13 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
 
         <Dialog open={open} onClose={handleClose}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <DialogTitle>Add Transactions</DialogTitle>
             <DialogContent> <Transaction /> </DialogContent>
                 <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
 =======
+=======
+>>>>>>> abeef56ede619b6ef5b2f6d0735fb1be196d21d3
           <DialogTitle>Add Transactions</DialogTitle>
           <DialogContent>
             {" "}
@@ -202,7 +205,10 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
               {" "}
             </Button>
           </DialogActions>
+<<<<<<< HEAD
 >>>>>>> abeef56 (updated asset table - partial)
+=======
+>>>>>>> abeef56ede619b6ef5b2f6d0735fb1be196d21d3
         </Dialog>
 
         <div>
