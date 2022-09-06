@@ -9,9 +9,9 @@ RUN apk add --update npm
 WORKDIR /usr/nodeapp
 COPY ./ ./  
 RUN npm install
-#RUN npm rebuild
+RUN npm run build
 
 # step 2.5: Configure the software
-   
-#step 3: Set default commands. List of command as strings aeparated by space
-CMD ["npm", "start"]
+
+#step 3: Set default commands. List of command as strings separated by space
+CMD ["npm", "run", "prod"]
