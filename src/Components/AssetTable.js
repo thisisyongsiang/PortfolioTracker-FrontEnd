@@ -191,7 +191,9 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
             <DialogTitle>Add Transactions</DialogTitle>
             <DialogContent> <Transaction /> </DialogContent>
                 <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
-
+            <DialogTitle>Add Transactions</DialogTitle>
+            <DialogContent> <Transaction /> </DialogContent>
+                <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
           <DialogTitle>Add Transactions</DialogTitle>
           <DialogContent>
             {" "}
@@ -202,7 +204,6 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
               {" "}
             </Button>
           </DialogActions>
-
         </Dialog>
 
         <div>
