@@ -206,6 +206,7 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
           </DialogActions>
         </Dialog>
 
+
         <div>
           <TextField
             label={searchLabel}
