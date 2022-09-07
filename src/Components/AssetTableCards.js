@@ -1,15 +1,5 @@
-import React, { useEffect, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-} from "@mui/material";
-import { Transaction } from "../Components/Transactions/Transaction";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { numberWithCommas } from "../util/util";
 
 
@@ -27,9 +17,10 @@ const AssetTableCard = ({ content }) => {
     width: "20%",
     verticalAlign: "middle",
     justifyContent: "center",
-    textAlign: "right",
+    textAlign: "center",
     padding: "0",
     margin: "auto",
+    fontSize: "20px"
   };
   return (
     
@@ -43,13 +34,12 @@ const AssetTableCard = ({ content }) => {
           margin: "10px",
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
-        //   backgroundImage: "linear-gradient(to bottom, #F1F1F1, #C1C1C1)",
           borderRadius: "10px",
         }}
       >
         <div
           className="card-body mainName"
-          style={{ width: "20%", verticalAlign: "middle", margin: "auto" }}
+          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
           {content.portfolioName ? content.portfolioName : ""}
         </div>
@@ -58,20 +48,20 @@ const AssetTableCard = ({ content }) => {
           style={{
             width: "80%",
             display: "flex",
-            justifyContent: "end",
+            justifyContent: "center",
             alignContent: "center",
           }}
         >
           <div className="subHeader" style={cardStyle}>
             Chart Placeholder
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red"}}>
+          <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             ${numberWithCommas(content.value.toFixed(0))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netPnL>0? "#2C7E12" : "red"}}>
+          <div className="subHeader" style={{...cardStyle, color: content.netPnL>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             ${numberWithCommas(content.netPnL.toFixed(0))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netReturn>0? "#2C7E12" : "red"}}>
+          <div className="subHeader" style={{...cardStyle, color: content.netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             {content.netReturn.toFixed(1)}%
           </div>
 
