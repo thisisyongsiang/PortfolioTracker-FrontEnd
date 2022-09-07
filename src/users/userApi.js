@@ -217,6 +217,30 @@ export function getUserPortfolioAssets(
       return null;
     });
 }
+
+export function getUserPortfolioAllAssetTableStats(
+  email,
+  portfolioName
+) {
+  return axios
+  .get(url + "portfolio/selectone/allassettablestats", {
+    params: {
+      email: email,
+      portfolioName: portfolioName
+    }
+  })
+  .then((res) => {
+    if (res.status !== 200) {
+      console.warn("wrong status: " + res.data)
+      return []
+    }
+    return res.data
+  })
+  .catch((err) => {
+    console.error("some error with request: " + err)
+  })
+}
+
 export function getUserPortfolioAssetsTransactions(
   email,
   portfolioName,

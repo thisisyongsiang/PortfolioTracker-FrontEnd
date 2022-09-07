@@ -1,10 +1,9 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { numberWithCommas } from "../util/util";
-import { Link } from "react-router-dom";
+import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
 
-
-const AssetTableCard = ({ content }) => {
+const AssetTableCardForPortfolio = ({ content }) => {
 //   const [open, setOpen] = React.useState(false);
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -14,6 +13,8 @@ const AssetTableCard = ({ content }) => {
 //     setOpen(false);
 //   };
 
+let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = content
+
   let cardStyle = {
     width: "20%",
     verticalAlign: "middle",
@@ -21,10 +22,16 @@ const AssetTableCard = ({ content }) => {
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px"
+    fontSize: "20px",
+    fontSize: "1.2vw"
   };
+
+  let {width, margin, ...cardStyleWithoutWidthOrMargin} = cardStyle
+
+  let netReturn = computeAssetNetReturn(transactions?transactions.transactions:[], value)
+  let netPnL = computeAssetPnL(transactions?transactions.transactions:[], value)
+
   return (
-    
       <div
         className="card mx-1"
         style={{
@@ -42,10 +49,7 @@ const AssetTableCard = ({ content }) => {
           className="card-body mainName"
           style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
-          <Link to={content.route} style={{background: "rgba(130, 130, 130, 0.81", boxShadow: "rgba(0, 0, 0, 0.16) 0px 3px 6px", borderRadius: "10px", padding: "12px"}}>
-          {content.portfolioName ? content.portfolioName : ""}
-                </Link>
-          
+          {shortName ? `${shortName} (${symbol})`: ""}
         </div>
         <div
           className="remainingHeaders"
@@ -59,14 +63,20 @@ const AssetTableCard = ({ content }) => {
           <div className="subHeader" style={cardStyle}>
             Chart Placeholder
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            ${numberWithCommas(content.value.toFixed(0))}
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
+            ${numberWithCommas(regularMarketPrice.toFixed(2))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netPnL>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            ${numberWithCommas(content.netPnL.toFixed(0))}
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            {numberWithCommas(quantity.toFixed(1))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            {content.netReturn.toFixed(1)}%
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            ${numberWithCommas(value.toFixed(2))}
+          </div>
+          <div className="subHeader" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
+            {netPnL>0?`$${numberWithCommas(netPnL.toFixed(0))}`:`-$${numberWithCommas(netPnL.toFixed(0)*-1)}`}
+          </div>
+          <div className="subHeader" style={{...cardStyleWithoutWidthOrMargin, margin: "auto 0px auto 15px", width: "15%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
+            {numberWithCommas(netReturn.toFixed(1))}%
           </div>
 
           <div
@@ -90,4 +100,4 @@ const AssetTableCard = ({ content }) => {
   );
 };
 
-export default AssetTableCard;
+export default AssetTableCardForPortfolio;

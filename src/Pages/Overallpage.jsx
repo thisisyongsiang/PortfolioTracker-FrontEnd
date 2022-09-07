@@ -51,6 +51,8 @@ export const Overallpage = (user) => {
       Promise.all(promises).then(values => {
         setIndividualPortfolioStats(values)
       })
+
+      
     }
   }, [userData, overallPfValue]);
 
@@ -67,12 +69,14 @@ export const Overallpage = (user) => {
         // startDate,
         new Date()
       );
+      const route = `/portfolio/${portfolio.portfolio}`
       let output = {
         value: pfValue,
         netPnL: computePortfolioPnL([portfolio], pfValue),
         netReturn: computePortfolioNetReturn([portfolio], pfValue),
         portfolioName: portfolio.portfolio,
         portfolioHistory: chartData,
+        route: route
       }
       return output
     })
@@ -131,7 +135,6 @@ export const Overallpage = (user) => {
           </div>
         </div>
         <hr />
-        {/* < PortfolioCharts /> */}
         <AssetTable
           data={individualPortfolioStats}
           mode="Overall Portfolio"

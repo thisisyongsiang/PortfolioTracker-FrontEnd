@@ -1,7 +1,4 @@
-import {
-  Button,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useState, useRef } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -12,11 +9,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Transaction } from "../Components/Transactions/Transaction";
 import { LineChart } from "../charts/LineChart";
 import AssetTableCard from "./AssetTableCards";
+import AssetTableCardForPortfolio from "./AssetTableCard_Portfolio";
+import AssetTableCardForAsset from "./AssetTableCard_Asset"
 
 const AssetTable = ({ mode, data }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = React.useState(false);
-//   const [individualPortfolioStats, setIndividualPortfolioStats] = useState(null);
+  //   const [individualPortfolioStats, setIndividualPortfolioStats] = useState(null);
 
   let assetTableTitle = "Portfolio Holdings";
   let buttonText = "ADD TRANSACTIONS";
@@ -35,16 +34,24 @@ const AssetTable = ({ mode, data }) => {
       "Net PnL",
       "Net Return",
     ];
-  } else if (mode === "Single Portfolios") {
-    assetTableTitle = `Asset Transactions`;
+  } else if (mode === "Single Asset") {
+    assetTableTitle = "Asset Transactions";
     buttonText = "ADD TRANSACTION";
     searchLabel = "Search for your asset";
-    tableHeaders = ["Asset Name", "Chart", "Value", "Net Pnl", "Net Return"];
+    tableHeaders = ["Transaction", "Quantity", "Price", "Date"];
   } else {
     assetTableTitle = "Portfolio Holdings";
     buttonText = "ADD TRANSACTION";
     searchLabel = "Search for your asset";
-    tableHeaders = ["Transaction", "Quantity", "Price", "Date"];
+    tableHeaders = [
+      "Asset Name",
+      "Chart",
+      "Price",
+      "Quantity",
+      "Value",
+      "Net PnL",
+      "Net Return",
+    ];
   }
 
   const handleClickOpen = () => {
@@ -57,9 +64,19 @@ const AssetTable = ({ mode, data }) => {
 
   const handleSearch = () => {
     if (mode === "Overall Portfolio") {
-      return data.filter((p) => p.portfolioName.toLowerCase().includes(search.toLowerCase()));
-    } else {
-      return data;
+      return data.filter((p) =>
+        p.portfolioName.toLowerCase().includes(search.toLowerCase())
+      );
+    } else if (mode === "Single Portfolio") {
+      return data.filter(
+        (p) =>
+          p.shortName.toLowerCase().includes(search.toLowerCase()) ||
+          p.symbol.toLowerCase().includes(search.toLowerCase())
+      );
+    } else if (mode === "Single Asset") {
+      return data.filter(
+          (p) => p.price.toString().includes(search) || p.type.toLowerCase().includes(search.toLowerCase()) || p.quantity.toString().includes(search)
+      );
     }
   };
 
@@ -67,7 +84,6 @@ const AssetTable = ({ mode, data }) => {
 
   return (
     <div>
-      {console.log(data)}
       <div
         className="assetTableHeader"
         style={{
@@ -109,13 +125,30 @@ const AssetTable = ({ mode, data }) => {
         </div>
 
         <Dialog open={open} onClose={handleClose}>
-
-            <DialogTitle>Add Transactions</DialogTitle>
-            <DialogContent> <Transaction /> </DialogContent>
-                <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
-            <DialogTitle>Add Transactions</DialogTitle>
-            <DialogContent> <Transaction /> </DialogContent>
-                <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+          <DialogTitle>Add Transactions</DialogTitle>
+          <DialogContent>
+            {" "}
+            <Transaction />{" "}
+          </DialogContent>
+          <Button
+            className="position-absolute end-0 top-0"
+            onClick={handleClose}
+            startIcon={<CancelIcon />}
+          >
+            {" "}
+          </Button>
+          <DialogTitle>Add Transactions</DialogTitle>
+          <DialogContent>
+            {" "}
+            <Transaction />{" "}
+          </DialogContent>
+          <Button
+            className="position-absolute end-0 top-0"
+            onClick={handleClose}
+            startIcon={<CancelIcon />}
+          >
+            {" "}
+          </Button>
           <DialogTitle>Add Transactions</DialogTitle>
           <DialogContent>
             {" "}
@@ -127,7 +160,6 @@ const AssetTable = ({ mode, data }) => {
             </Button>
           </DialogActions>
         </Dialog>
-
 
         <div>
           <TextField
@@ -213,13 +245,20 @@ const AssetTable = ({ mode, data }) => {
                 color: "rgba(54, 56, 60, 0.8)",
               }}
             >
-            {" "}
+              {" "}
             </div>
           </div>
         </div>
-        {data&&handleSearch().map((e) => (
-          <AssetTableCard content={e} />
-        ))}
+        {data &&
+          handleSearch().map((e) => {
+            if (mode === "Overall Portfolio") {
+              return <AssetTableCard content={e} />;
+            } else if (mode === "Single Portfolio") {
+                return <AssetTableCardForPortfolio content={e} />;
+            } else if (mode === "Single Asset") {
+                return <AssetTableCardForAsset content={e} />;
+            }
+          })}
       </div>
     </div>
   );
