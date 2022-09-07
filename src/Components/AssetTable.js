@@ -1,59 +1,27 @@
 import {
   Button,
   TextField,
-  TableContainer,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  LinearProgress,
-  Paper,
 } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState, componentDidMount } from "react";
-import { CoinList } from "../Config/api";
+import React, { useState, useRef } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Transaction } from "../Components/Transactions/Transaction";
-import { numberWithCommas } from "../util/util";
-import { AssetLineChart } from "../charts/AssetLineChart";
-import { useParams } from "react-router-dom";
-import {
-  computePortfolioNetReturn,
-  computePortfolioPnL,
-} from "../util/financeComputations";
-import {
-  getOneUserPortfolioValue,
-  getUserPortfolioHistoricalValue,
-} from "../users/userApi";
 import { LineChart } from "../charts/LineChart";
 import AssetTableCard from "./AssetTableCards";
 
-const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
-  const [asset, setAsset] = useState([]);
-  const [loading, setLoading] = useState(false);
+const AssetTable = ({ mode, data }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = React.useState(false);
-  //   const [assetTableTitle, setAssetTableTitle] = useState("")
-  //   const [buttonText, setButtonText] = useState("")
-  //   const [searchLabel, setSearchLabel] = useState("")
-  //   const [tableHeaders, setTableHeaders] = useState([])
-  //   const [tableMode, setTableMode] = useState("Overall Portfolio")
-  const [individualPortfolioStats, setIndividualPortfolioStats] = useState([]);
-  const [pfVal, setPfVal] = useState(null);
-  const [chartData, setChartData] = useState([]);
+//   const [individualPortfolioStats, setIndividualPortfolioStats] = useState(null);
 
   let assetTableTitle = "Portfolio Holdings";
   let buttonText = "ADD TRANSACTIONS";
   let searchLabel = "Search for your asset";
   let tableHeaders = [];
-  let tableMode = "";
 
   if (mode === "Overall Portfolio") {
     //check table mode instead
@@ -87,65 +55,19 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
     setOpen(false);
   };
 
-  const fetchAsset = async () => {
-    setLoading(true);
-
-    const { data } = await axios.get(CoinList("USD"));
-
-    setAsset(data.splice(0, 10));
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    (async function () {
-      if (mode === "Overall Portfolio") {
-        let individualPfStats = [];
-
-        for (let portfolio of content.portfolios) {
-          let pfValue;
-          let chartData;
-
-          pfValue = await getOneUserPortfolioValue(
-            content.userData.emailAddress,
-            portfolio.portfolio
-          );
-          chartData = await getUserPortfolioHistoricalValue(
-            content.userData.emailAddress,
-            portfolio.portfolio,
-            new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-            // startDate,
-            new Date()
-          );
-          individualPfStats.push({
-            value: pfValue,
-            netPnL: computePortfolioPnL([portfolio], pfValue),
-            netReturn: computePortfolioNetReturn([portfolio], pfValue),
-            portfolioName: portfolio.portfolio,
-            portfolioHistory: chartData,
-          });
-        }
-        setIndividualPortfolioStats(individualPfStats);
-      } else {
-      }
-    })();
-  }, [currURL, portfolioId, assetId]);
-
   const handleSearch = () => {
     if (mode === "Overall Portfolio") {
-      return individualPortfolioStats.filter((p) => p.portfolioName.toLowerCase().includes(search.toLowerCase()));
+      return data.filter((p) => p.portfolioName.toLowerCase().includes(search.toLowerCase()));
     } else {
-      return individualPortfolioStats;
+      return data;
     }
   };
-
-  console.log(mode)
-  console.log(mode === "Overall Portfolio")
 
   const rowHeight = 100;
 
   return (
     <div>
-      {console.log(individualPortfolioStats)}
+      {console.log(data)}
       <div
         className="assetTableHeader"
         style={{
@@ -232,17 +154,18 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
-            margin: "10px",
+            margin: "0px",
             height: "15px",
           }}
         >
           <div
             className="card-body mainName"
             style={{
-              width: "20%",
+              width: "40%",
               verticalAlign: "middle",
               margin: "auto",
               fontSize: "14px",
+              paddingLeft: "16px",
               color: "rgba(54, 56, 60, 0.8)",
             }}
           >
@@ -255,6 +178,7 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
               display: "flex",
               justifyContent: "center",
               alignContent: "center",
+              paddingLeft: "5px",
               fontSize: "14px",
               color: "rgba(54, 56, 60, 0.8)",
             }}
@@ -293,7 +217,7 @@ const AssetTable = ({ currURL, portfolioId, assetId, content, mode }) => {
             </div>
           </div>
         </div>
-        {handleSearch().map((e) => (
+        {data&&handleSearch().map((e) => (
           <AssetTableCard content={e} />
         ))}
       </div>
