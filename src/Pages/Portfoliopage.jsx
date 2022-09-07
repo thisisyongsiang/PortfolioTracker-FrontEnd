@@ -4,7 +4,7 @@ import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
-import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistoricalValue} from "../users/userApi.js";
+import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistoricalValue, getUserPortfolioAllAssetTableStats} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
@@ -21,6 +21,7 @@ export const PortfolioPage=(user)=>{
   const lineChartContainer=useRef(null);
   const [lineChartWidth,setLineChartWidth]=useState(1000);
   const [portfolio, setUserPortfolio] = useState([])
+  const [allAssetTableStats, setAllAssetTableStats] = useState(null)
 
   useEffect(()=>{
     if(lineChartContainer.current){
@@ -45,6 +46,13 @@ export const PortfolioPage=(user)=>{
          return {...asset, route:`/portfolio/${portfolioId}/${asset.symbol}`};
         })
         setPfAssets(pfAssets);
+      })
+      getUserPortfolioAllAssetTableStats(
+        userData.emailAddress,
+        portfolioId
+      )
+      .then(assets => {
+        setAllAssetTableStats(assets)
       })
     }
   },[userData,portfolioId]);
@@ -92,7 +100,7 @@ return (
             </div>
           </div>
         <hr />
-        <ul className="list-group">
+        {/* <ul className="list-group">
           {pfAssets.map(asset=>{
             return(
               <li   key={asset.symbol} className="list-group-item">
@@ -103,8 +111,8 @@ return (
             )
           })}
 
-        </ul>
-        < AssetTable currURL={window.location.pathname.substring(1)} content={{pfAssets, userData}} mode="Single Portfolio"/>
+        </ul> */}
+        < AssetTable data={allAssetTableStats} mode="Single Portfolio"/>
         </Container>
       </React.Fragment>
   )

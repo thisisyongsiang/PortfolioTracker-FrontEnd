@@ -1,10 +1,9 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { numberWithCommas } from "../util/util";
-import { Link } from "react-router-dom";
+import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
 
-
-const AssetTableCard = ({ content }) => {
+const AssetTableCardForAsset = ({ content }) => {
 //   const [open, setOpen] = React.useState(false);
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -14,6 +13,8 @@ const AssetTableCard = ({ content }) => {
 //     setOpen(false);
 //   };
 
+let {date, price, quantity, ticker, type} = content
+
   let cardStyle = {
     width: "20%",
     verticalAlign: "middle",
@@ -21,10 +22,15 @@ const AssetTableCard = ({ content }) => {
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px"
+    fontSize: "20px",
+    fontSize: "1.5vw"
   };
+
+  let {width, margin, ...cardStyleWithoutWidthOrMargin} = cardStyle
+
+  const dateFormat = new Date(date)
+
   return (
-    
       <div
         className="card mx-1"
         style={{
@@ -40,12 +46,9 @@ const AssetTableCard = ({ content }) => {
       >
         <div
           className="card-body mainName"
-          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
+          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : "red"}}
         >
-          <Link to={content.route} style={{background: "rgba(130, 130, 130, 0.81", boxShadow: "rgba(0, 0, 0, 0.16) 0px 3px 6px", borderRadius: "10px", padding: "12px"}}>
-          {content.portfolioName ? content.portfolioName : ""}
-                </Link>
-          
+          {type ? type.toUpperCase() : ""}
         </div>
         <div
           className="remainingHeaders"
@@ -56,17 +59,14 @@ const AssetTableCard = ({ content }) => {
             alignContent: "center",
           }}
         >
-          <div className="subHeader" style={cardStyle}>
-            Chart Placeholder
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
+            {numberWithCommas(quantity.toFixed(1))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            ${numberWithCommas(content.value.toFixed(0))}
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            ${numberWithCommas(price.toFixed(2))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netPnL>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            ${numberWithCommas(content.netPnL.toFixed(0))}
-          </div>
-          <div className="subHeader" style={{...cardStyle, color: content.netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
-            {content.netReturn.toFixed(1)}%
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            {`${dateFormat.getDate()}/${dateFormat.getMonth()}/${dateFormat.getFullYear()}`}
           </div>
 
           <div
@@ -81,7 +81,6 @@ const AssetTableCard = ({ content }) => {
             }}
           >
             <AddCircleOutlineIcon />
-            <ArrowCircleRightIcon />
           </div>
         </div>
       </div>
@@ -90,4 +89,4 @@ const AssetTableCard = ({ content }) => {
   );
 };
 
-export default AssetTableCard;
+export default AssetTableCardForAsset;

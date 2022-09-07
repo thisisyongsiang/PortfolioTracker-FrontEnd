@@ -97,9 +97,9 @@ export const Assetpage=(user)=>{
       <Container id="assetPage">
         <div className="position-relative mt-2">
           <div>
-          <h3 id="portfolioName">
+          <h5 id="portfolioName">
             Portfolio {portfolioId}
-          </h3>
+          </h5>
             <h2>
               {assetQuote ? assetQuote["shortName"] : "Asset"} Value:
               <br />${numberWithCommas(assetValue.toFixed(2))}
@@ -168,8 +168,8 @@ export const Assetpage=(user)=>{
           Current Price: $
           {assetQuote ? assetQuote["regularMarketPrice"].toFixed(2) : "0.00"}
         </h4>
-        {/* < AssetTable /> insert portfolio table herer!! */}
-        <ul className="list-group">
+        < AssetTable data={transactions?transactions.transactions:[]} mode={"Single Asset"}/>
+        {/* <ul className="list-group">
           {transactions &&
             transactions.transactions.map((t) => {
               let date = new Date(t.date);
@@ -180,7 +180,7 @@ export const Assetpage=(user)=>{
                 </li>
               );
             })}
-        </ul>
+        </ul> */}
       </Container>
     </React.Fragment>
   );
