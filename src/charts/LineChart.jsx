@@ -25,6 +25,7 @@ export const LineChart=({
     yValue=d=>d,
     yAxisFormat=d=>d
 })=>{
+    if(!data)data=[];
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
     const [containerWidth,setContainerWidth]=useState(null);
@@ -35,10 +36,10 @@ export const LineChart=({
     const radius=5;
     useEffect(()=>{
         const handleResize=()=>{
-            setContainerWidth(containerRef.current.offsetWidth);
+            setContainerWidth(containerRef.current?.offsetWidth);
         };
         if (dynamicWidth){
-            let cWidth=containerRef.current.offsetWidth;
+            let cWidth=containerRef.current?.offsetWidth;
             if (cWidth){
                 setContainerWidth(cWidth);
             }
@@ -46,8 +47,7 @@ export const LineChart=({
             return ()=>window.removeEventListener('resize',handleResize);
         }
 
-    },[containerRef.current.offsetWidth,dynamicWidth]);
-
+    },[containerRef.current?.offsetWidth,dynamicWidth]);
     if (data.length===0){
         return (
             <div className="spinner-border text-warning" role="status">

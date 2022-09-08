@@ -1,52 +1,88 @@
 import React, { useEffect, useState,useRef } from "react";
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
-import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistoricalValue, getUserPortfolioAllAssetTableStats} from "../users/userApi.js";
+import { getOneUserPortfolioValue ,getUserPortfolioAssets,getUserPortfolioHistoricalValue, getUserPortfolioAllAssetTableStats, deleteUserPortfolio} from "../users/userApi.js";
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { getUserOnePortfolio } from "../users/userApi.js";
-
+import { BsFillTrashFill,BsFillGearFill } from "react-icons/bs";
+import {Navigate} from "react-router-dom";
 import { computePortfolioPnL, computePortfolioNetReturn, computePortfolioAnnualisedReturns, computeVolatility } from "../util/financeComputations";
 import { Link } from "react-router-dom";
+import { Menu, MenuItem } from "@mui/material";
+import { useContext } from "react";
+import { UserContext } from "../util/context";
 export const PortfolioPage=(user)=>{
+  const{userEmail,portfolios,updatePortfolio}=useContext(UserContext);
   const userData=user.user;
   const {portfolioId}=useParams();
-  
-  const [pfValue,setPfValue]=useState(0);
-  const [pfAssets,setPfAssets]=useState([]);
-  const [portfoliosHistory,setportfoliosHistory]=useState([]);
   const lineChartContainer=useRef(null);
-  const [lineChartWidth,setLineChartWidth]=useState(1000);
-  const [portfolio, setUserPortfolio] = useState([])
   const [allAssetTableStats, setAllAssetTableStats] = useState(null)
+  const[anchorEl,setAnchorEl]=useState(null);
+  const navigate=useNavigate();
 
-  useEffect(()=>{
-    if(lineChartContainer.current){
-      setLineChartWidth(lineChartContainer.current.offsetWidth);
+  const[{portfolio,portfoliosHistory,lineChartWidth,pfValue},setPfObject]=useState({portfolio:[],
+    portfoliosHistory:[],
+    lineChartWidth:1000,
+    pfValue:0});
+
+  const open=!!anchorEl;
+  const handleSettingsClicked=(e)=>{
+    setAnchorEl(e.target);
+  };
+  const handleSettingsClose=()=>{
+    setAnchorEl(null);
+  }
+
+  const onDeletePortfolio=()=>{
+    let index=portfolios.indexOf(portfolioId);
+    portfolios.splice(index,1);
+    if(index>=portfolios.length){
+      index-=1;
     }
+    deleteUserPortfolio(userEmail,portfolioId).then(
+      ()=>{
+        updatePortfolio(portfolios);
+        if (index>=0){
+          navigate(`/portfolio/${portfolios[index]}`,{replace:true});
+        }
+        else{
+          navigate(`/overall`,{replace:true});
+        }
+      }
+    );
+   
+  }
+  const onEditPortfolio=()=>{
+  }
+  useEffect(()=>{
     if (userData && portfolioId){
+    (async()=>{
+      console.log('run');
+      let lineWidth=1000;
+      if(lineChartContainer.current){
+        lineWidth=lineChartContainer.current.offsetWidth;
+      }
       // let startDate=new Date(new Date().setDate(new Date().getDate()-15));
-      getUserPortfolioHistoricalValue(userData.emailAddress,portfolioId,
+      let pfHist = await getUserPortfolioHistoricalValue(userData.emailAddress,portfolioId,
         new Date(new Date().setFullYear(new Date().getFullYear()-1)),
           // startDate,
         new Date()
-      ).then(pfHist=>{
-        setportfoliosHistory(pfHist);
-      });
-      getOneUserPortfolioValue(userData.emailAddress,portfolioId).then(v=>
-        setPfValue(v));
-      getUserOnePortfolio(userData.emailAddress,portfolioId).then((v) => {
-        setUserPortfolio(v)
+      );
+
+      let pfVal=await getOneUserPortfolioValue(userEmail,portfolioId)
+      let portfolio = await getUserOnePortfolio(userEmail,portfolioId)
+
+      setPfObject({portfolio:portfolio,
+        portfoliosHistory:pfHist,
+        lineChartWidth:lineWidth,
+        pfValue:pfVal
       })
-      getUserPortfolioAssets(userData.emailAddress,portfolioId).then(assets=>{
-        let pfAssets=assets.map(asset=>{
-         return {...asset, route:`/portfolio/${portfolioId}/${asset.symbol}`};
-        })
-        setPfAssets(pfAssets);
-      })
+    })()
+      
       getUserPortfolioAllAssetTableStats(
         userData.emailAddress,
         portfolioId
@@ -56,22 +92,39 @@ export const PortfolioPage=(user)=>{
       })
     }
   },[userData,portfolioId]);
+  let portfolioExists=false;
 
-  let netReturn = computePortfolioNetReturn(portfolio, pfValue)
-  let netPnL = computePortfolioPnL(portfolio, pfValue)
-  let annualisedReturn = computePortfolioAnnualisedReturns(portfolio, pfValue)
-  let portfolioVolatility = computeVolatility(portfoliosHistory)
+let netReturn = 0;
+let netPnL = 0;
+let annualisedReturn = 0;
+let portfolioVolatility = 0;
+if(portfolios.includes(portfolioId)){
+  portfolioExists=true;
+  if (portfolio && pfValue){
+   netReturn = computePortfolioNetReturn(portfolio, pfValue)
+   netPnL = computePortfolioPnL(portfolio, pfValue)
+   annualisedReturn = computePortfolioAnnualisedReturns(portfolio, pfValue)
+   portfolioVolatility = computeVolatility(portfoliosHistory)
+}
+}
 
 return (
   <React.Fragment>
+    {portfolioExists&&
     <Container id="container">
       <div className="position-relative mt-2">
         <div>
           <h2>
+            {portfolioId}
+            <br />
+          </h2>
+        <h3>
             Portfolio Value:
             <br />${numberWithCommas(pfValue.toFixed(2))}
-          </h2>
+        </h3>
+
         </div>
+        
         <div className="position-absolute top-0 end-0">
           <div className="d-flex h-100 p-1">
             <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
@@ -100,6 +153,32 @@ return (
             </div>
           </div>
         <hr />
+        <div className="d-flex flex-row-reverse p-2">
+          <div className="dropdown">
+          <BsFillGearFill 
+          onClick={handleSettingsClicked} 
+          style={{cursor:'pointer'}} 
+          id="setting-button"
+          aria-controls={open ? 'setting-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          />
+          <Menu id="setting-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleSettingsClose}
+          onClick={handleSettingsClose}
+          MenuListProps={{
+            'aria-labelledby': 'setting-button',
+          }}
+          >
+          <MenuItem onClick={onEditPortfolio}>Edit Portfolio</MenuItem>
+          <MenuItem onClick={onDeletePortfolio}>Delete Portfolio</MenuItem>
+
+          </Menu>
+          </div>
+        </div>
+
         {/* <ul className="list-group">
           {pfAssets.map(asset=>{
             return(
@@ -114,6 +193,7 @@ return (
         </ul> */}
         < AssetTable data={allAssetTableStats} mode="Single Portfolio"/>
         </Container>
+}
       </React.Fragment>
   )
 

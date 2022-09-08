@@ -17,77 +17,79 @@ import {
   computePortfolioPnL,
   computeVolatility,
 } from "../util/financeComputations";
+import { useContext } from "react";
+import { UserContext } from "../util/context";
 
-export const Overallpage = (user) => {
-  const userData = user.user;
-  const [overallPfValue, setOverallPfValue] = useState(0);
-  const [portfolios, setPortfolios] = useState([]);
-  const [portfoliosHistory, setportfoliosHistory] = useState([]);
+export const Overallpage = () => {
+
   const lineChartContainer = useRef(null);
-  const [lineChartWidth, setLineChartWidth] = useState(1000);
   const [individualPortfolioStats, setIndividualPortfolioStats] =
     useState(null);
- 
+  const[{overallPfValue,portfoliosHistory,portfolioList,lineChartWidth},setPfInfo]=
+  useState({overallPfValue:0,portfoliosHistory:[],portfolioList:[],lineChartWidth:1000});
+
+  const {userEmail,portfolios}=useContext(UserContext);
   useEffect(() => {
-    if (lineChartContainer.current) {
-      setLineChartWidth(lineChartContainer.current.offsetWidth);
-    }
-    if (userData) {
-      getUserPortfolios(userData.emailAddress).then((d) => {
-        setPortfolios(d);
-        getUserOverallPortfolioHistoricalValue(
-          userData.emailAddress,
+
+    const getIndividualPfStats = (portfolioList) => {
+      const pfArray = portfolioList.map(async (portfolio) => {
+        let pfValue = await getOneUserPortfolioValue(
+          userEmail,
+          portfolio.portfolio
+        );
+        let chartData = await getUserPortfolioHistoricalValue(
+          userEmail,
+          portfolio.portfolio,
           new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          // startDate,
           new Date()
-        ).then((pfHist) => {
-          setportfoliosHistory(pfHist);
-        });
-      });
-      getUserOverallPortfolioValue(userData.emailAddress).then((d) => {
-        setOverallPfValue(d);
-      });
-
-      const promises = getIndividualPfStats();
-      Promise.all(promises).then(values => {
-        setIndividualPortfolioStats(values)
+        );
+        const route = `/portfolio/${portfolio.portfolio}`
+        let output = {
+          value: pfValue,
+          netPnL: computePortfolioPnL([portfolio], pfValue),
+          netReturn: computePortfolioNetReturn([portfolio], pfValue),
+          portfolioName: portfolio.portfolio,
+          portfolioHistory: chartData,
+          route: route
+        }
+        return output
       })
+      return pfArray
+    } 
+    // console.log('linechart',lineChartContainer.current);
+    // console.log('email',userEmail);
+    // console.log('portfolios',portfolios);
+    if (userEmail &&lineChartContainer.current && portfolios.length>0) {
+      (async()=>{
+        console.log('runoverallpage');
+        let userVal=await getUserOverallPortfolioValue(userEmail);      
+        let histVal=await getUserOverallPortfolioHistoricalValue(
+          userEmail,
+            new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+            new Date()
+          );
+        let pfList=await getUserPortfolios(userEmail);
 
-      
+          setPfInfo({overallPfValue:userVal,
+            portfoliosHistory:histVal,
+            portfolioList:pfList, 
+            lineChartWidth:lineChartContainer.current.offsetWidth});
+          const promises = getIndividualPfStats(pfList);
+          Promise.all(promises).then(values => {
+            setIndividualPortfolioStats(values)
+          })
+      })()
+
     }
-  }, [userData, overallPfValue]);
-
-  const getIndividualPfStats = () => {
-    const pfArray = portfolios.map(async (portfolio) => {
-      let pfValue = await getOneUserPortfolioValue(
-        userData.emailAddress,
-        portfolio.portfolio
-      );
-      let chartData = await getUserPortfolioHistoricalValue(
-        userData.emailAddress,
-        portfolio.portfolio,
-        new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-        // startDate,
-        new Date()
-      );
-      const route = `/portfolio/${portfolio.portfolio}`
-      let output = {
-        value: pfValue,
-        netPnL: computePortfolioPnL([portfolio], pfValue),
-        netReturn: computePortfolioNetReturn([portfolio], pfValue),
-        portfolioName: portfolio.portfolio,
-        portfolioHistory: chartData,
-        route: route
-      }
-      return output
-    })
-    return pfArray
-  }
+  }, [userEmail,lineChartContainer.current?.offsetWidth,portfolios]);
+  
       
 
-  let netReturn = computePortfolioNetReturn(portfolios, overallPfValue);
-  let netPnL = computePortfolioPnL(portfolios, overallPfValue);
+  let netReturn = computePortfolioNetReturn(portfolioList, overallPfValue);
+  let netPnL = computePortfolioPnL(portfolioList, overallPfValue);
   let annualisedReturn = computePortfolioAnnualisedReturns(
-    portfolios,
+    portfolioList,
     overallPfValue
   );
   let portfolioVolatility = computeVolatility(portfoliosHistory);
@@ -98,7 +100,7 @@ export const Overallpage = (user) => {
         <div className="position-relative mt-2">
           <div>
             <h2>
-              Portfolio Value:
+              Overall Value:
               <br />${numberWithCommas(overallPfValue.toFixed(2))}
             </h2>
           </div>

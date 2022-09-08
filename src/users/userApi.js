@@ -23,6 +23,50 @@ export function addUser(user) {
       return null;
     });
 }
+export function addUserPortfolio(email,portfolioName,buy=[],sell=[]) {
+  let pf={emailAddress:email,
+    portfolio: portfolioName,
+    buy:buy,
+    sell: sell
+  }
+  return axiosInstance
+    .post(url + "portfolio/add", pf, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return null;
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("rejected post " + err);
+      return null;
+    });
+}
+export function deleteUserPortfolio(email,portfolioName) {
+
+  return axiosInstance
+    .delete(url + "portfolio/del", {
+      params:{     
+        email :email,
+        portfolioName :portfolioName}
+      })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return null;
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("deletion fail " + err);
+      return null;
+    });
+}
 export async function getAllUsers() {
   try {
     let response = await axios.get(url + "user/all");
@@ -62,13 +106,14 @@ export function getUserPortfolios(email) {
     .then((res) => {
       if (res.status !== 200) {
         console.warn("wrong status: " + res.data);
-        return null;
+        return [];
       }
+      if (!res.data)return [];
       return res.data;
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return [];
     });
 }
 export function getUserPortfolioNames(email) {
@@ -79,13 +124,13 @@ export function getUserPortfolioNames(email) {
     .then((res) => {
       if (res.status !== 200) {
         console.warn("wrong status: " + res.data);
-        return null;
+        return [];
       }
       return res.data;
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return [];
     });
 }
 export function getUserOverallPortfolioValue(email) {
@@ -96,13 +141,13 @@ export function getUserOverallPortfolioValue(email) {
     .then((res) => {
       if (res.status !== 200) {
         console.warn("wrong status: " + res.data);
-        return null;
+        return 0;
       }
       return res.data.value;
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return 0;
     });
 }
 export function getUserOnePortfolio(email, portfolioName) {
@@ -122,6 +167,32 @@ export function getUserOnePortfolio(email, portfolioName) {
       return null;
     });
 }
+export function addUserPortfolioTransaction(email,portfolioName,transactionType,transaction) {
+  let body={
+    emailAddress:email,
+    portfolio:portfolioName,
+    transactionType:transactionType,
+    transaction:transaction
+  }
+  console.log(body);
+  return axiosInstance
+    .put(url + "portfolio/transaction/update", body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return null;
+      }
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("rejected update " + err);
+      return null;
+    });
+}
 export function getOneUserPortfolioValue(email, portfolioName) {
   return axios
     .get(url + "portfolio/selectonevalue", {
@@ -130,13 +201,13 @@ export function getOneUserPortfolioValue(email, portfolioName) {
     .then((res) => {
       if (res.status !== 200) {
         console.warn("wrong status: " + res.data);
-        return null;
+        return 0;
       }
       return res.data.value;
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return 0;
     });
 }
 export function getUserPortfolioHistoricalValue(
@@ -164,7 +235,7 @@ export function getUserPortfolioHistoricalValue(
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return [];
     });
 }
 export function getUserOverallPortfolioHistoricalValue(
@@ -190,7 +261,7 @@ export function getUserOverallPortfolioHistoricalValue(
     })
     .catch((err) => {
       console.error("some error with request :" + err);
-      return null;
+      return [];
     });
 }
 
