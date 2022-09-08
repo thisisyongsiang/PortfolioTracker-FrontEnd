@@ -69,7 +69,6 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     if (validate()) {
       let transaction={
         price:values.price,
@@ -82,9 +81,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
       }     
       addUserPortfolioTransaction(userEmail,portfolioName,"buy",transaction).then(success=>{
         if (success){
-          console.log(transactionTrigger);
           let trigger=!transactionTrigger;
-          console.log(trigger);
           setTransactionTrigger(trigger);
           closeFn();
         }

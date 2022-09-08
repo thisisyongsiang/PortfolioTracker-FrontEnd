@@ -65,7 +65,6 @@ export const AddPortfolioForm = ({closeFn}) => {
             let pfName = portfolioName.trim();
             addUserPortfolio(userEmail,pfName).then(
                 pf=>{
-                    console.log(pf);
                     updatePortfolio([...portfolios,pfName])
                 }
             );
@@ -79,7 +78,6 @@ export const AddPortfolioForm = ({closeFn}) => {
             let pfName = portfolioName.trim();
             addUserPortfolio(userEmail,pfName).then(
                 pf=>{
-                    console.log(pf);
                     updatePortfolio([...portfolios,pfName])
                 }
             );
