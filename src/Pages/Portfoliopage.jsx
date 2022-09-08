@@ -15,17 +15,15 @@ import { Link } from "react-router-dom";
 import { Menu, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../util/context";
-export const PortfolioPage=(user)=>{
-  const{userEmail,portfolios,updatePortfolio}=useContext(UserContext);
-  const userData=user.user;
+export const PortfolioPage=()=>{
+  const{userEmail,portfolios,updatePortfolio,transactionTrigger}=useContext(UserContext);
   const {portfolioId}=useParams();
   const lineChartContainer=useRef(null);
   const [allAssetTableStats, setAllAssetTableStats] = useState(null)
   const[anchorEl,setAnchorEl]=useState(null);
   const navigate=useNavigate();
-
   const[{portfolio,portfoliosHistory,lineChartWidth,pfValue},setPfObject]=useState({portfolio:[],
-    portfoliosHistory:[],
+    portfoliosHistory:null,
     lineChartWidth:1000,
     pfValue:0});
 
@@ -59,7 +57,7 @@ export const PortfolioPage=(user)=>{
   const onEditPortfolio=()=>{
   }
   useEffect(()=>{
-    if (userData && portfolioId){
+    if (userEmail && portfolioId){
     (async()=>{
       console.log('run');
       let lineWidth=1000;
@@ -67,7 +65,7 @@ export const PortfolioPage=(user)=>{
         lineWidth=lineChartContainer.current.offsetWidth;
       }
       // let startDate=new Date(new Date().setDate(new Date().getDate()-15));
-      let pfHist = await getUserPortfolioHistoricalValue(userData.emailAddress,portfolioId,
+      let pfHist = await getUserPortfolioHistoricalValue(userEmail,portfolioId,
         new Date(new Date().setFullYear(new Date().getFullYear()-1)),
           // startDate,
         new Date()
@@ -84,14 +82,14 @@ export const PortfolioPage=(user)=>{
     })()
       
       getUserPortfolioAllAssetTableStats(
-        userData.emailAddress,
+        userEmail,
         portfolioId
       )
       .then(assets => {
         setAllAssetTableStats(assets)
       })
     }
-  },[userData,portfolioId]);
+  },[userEmail,portfolioId,transactionTrigger]);
   let portfolioExists=false;
 
 let netReturn = 0;

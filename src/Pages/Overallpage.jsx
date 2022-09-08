@@ -26,7 +26,7 @@ export const Overallpage = () => {
   const [individualPortfolioStats, setIndividualPortfolioStats] =
     useState(null);
   const[{overallPfValue,portfoliosHistory,portfolioList,lineChartWidth},setPfInfo]=
-  useState({overallPfValue:0,portfoliosHistory:[],portfolioList:[],lineChartWidth:1000});
+  useState({overallPfValue:0,portfoliosHistory:null,portfolioList:[],lineChartWidth:1000});
 
   const {userEmail,portfolios}=useContext(UserContext);
   useEffect(() => {
@@ -57,12 +57,13 @@ export const Overallpage = () => {
       })
       return pfArray
     } 
-    // console.log('linechart',lineChartContainer.current);
+    // console.log('linechart',lineChartContainer.current.offsetWidth);
     // console.log('email',userEmail);
     // console.log('portfolios',portfolios);
     if (userEmail &&lineChartContainer.current && portfolios.length>0) {
       (async()=>{
         console.log('runoverallpage');
+
         let userVal=await getUserOverallPortfolioValue(userEmail);      
         let histVal=await getUserOverallPortfolioHistoricalValue(
           userEmail,
@@ -82,7 +83,7 @@ export const Overallpage = () => {
       })()
 
     }
-  }, [userEmail,lineChartContainer.current?.offsetWidth,portfolios]);
+  }, [userEmail,portfolios]);
   
       
 
