@@ -36,23 +36,27 @@ export const PortfolioPage=()=>{
   }
 
   const onDeletePortfolio=()=>{
-    let index=portfolios.indexOf(portfolioId);
-    portfolios.splice(index,1);
-    if(index>=portfolios.length){
-      index-=1;
-    }
-    deleteUserPortfolio(userEmail,portfolioId).then(
-      ()=>{
-        updatePortfolio(portfolios);
-        if (index>=0){
-          navigate(`/portfolio/${portfolios[index]}`,{replace:true});
-        }
-        else{
-          navigate(`/overall`,{replace:true});
-        }
+    let confirmDelete=window.confirm(`Delete portfolio : ${portfolioId}?
+    This action is not reversible!
+    `)
+    if (confirmDelete){
+      let index=portfolios.indexOf(portfolioId);
+      portfolios.splice(index,1);
+      if(index>=portfolios.length){
+        index-=1;
       }
-    );
-   
+      deleteUserPortfolio(userEmail,portfolioId).then(
+        ()=>{
+          updatePortfolio(portfolios);
+          if (index>=0){
+            navigate(`/portfolio/${portfolios[index]}`,{replace:true});
+          }
+          else{
+            navigate(`/overall`,{replace:true});
+          }
+        }
+      );
+    }
   }
   const onEditPortfolio=()=>{
   }
