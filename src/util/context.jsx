@@ -6,5 +6,4 @@ export const UserContext=React.createContext({
     updatePortfolio:()=>{},
     transactionTrigger:false,
     setTransactionTrigger:()=>{},
-    portfolioUpdateTrigger:false,
 })

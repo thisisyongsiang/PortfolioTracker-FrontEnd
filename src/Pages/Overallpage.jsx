@@ -57,12 +57,13 @@ export const Overallpage = () => {
       })
       return pfArray
     } 
-    // console.log('linechart',lineChartContainer.current);
+    // console.log('linechart',lineChartContainer.current.offsetWidth);
     // console.log('email',userEmail);
     // console.log('portfolios',portfolios);
     if (userEmail &&lineChartContainer.current && portfolios.length>0) {
       (async()=>{
         console.log('runoverallpage');
+
         let userVal=await getUserOverallPortfolioValue(userEmail);      
         let histVal=await getUserOverallPortfolioHistoricalValue(
           userEmail,
@@ -82,7 +83,7 @@ export const Overallpage = () => {
       })()
 
     }
-  }, [userEmail,lineChartContainer.current?.offsetWidth,portfolios]);
+  }, [userEmail,portfolios]);
   
       
 
