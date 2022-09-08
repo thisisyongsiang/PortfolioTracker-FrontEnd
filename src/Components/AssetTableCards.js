@@ -13,7 +13,6 @@ const AssetTableCard = ({ content }) => {
 //   const handleClose = () => {
 //     setOpen(false);
 //   };
-
   let cardStyle = {
     width: "20%",
     verticalAlign: "middle",

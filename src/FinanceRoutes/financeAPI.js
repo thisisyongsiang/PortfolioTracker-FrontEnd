@@ -34,3 +34,14 @@ export function getAssetQuote(symbol){
         return [];
     });
 }
+export function searchAsset(search){
+    return axiosInstance.request({
+        url:'financeapi/searchsymbols/'+search,
+        method:'get',
+    }).then((res)=>{
+        return res.data;
+    }).catch(err=>{
+        console.error('error occurred '+err );
+        return [];
+    });
+}
