@@ -11,6 +11,7 @@ import { LineChart } from "../charts/LineChart";
 import AssetTableCard from "./AssetTableCards";
 import AssetTableCardForPortfolio from "./AssetTableCard_Portfolio";
 import AssetTableCardForAsset from "./AssetTableCard_Asset"
+import { TransactionButton } from './Transactions/TransactionButton';
 
 const AssetTable = ({ mode, data }) => {
   const [search, setSearch] = useState("");
@@ -21,7 +22,6 @@ const AssetTable = ({ mode, data }) => {
   let buttonText = "ADD TRANSACTIONS";
   let searchLabel = "Search for your asset";
   let tableHeaders = [];
-
   if (mode === "Overall Portfolio") {
     //check table mode instead
     assetTableTitle = "Summary of Portfolios";
@@ -103,63 +103,13 @@ const AssetTable = ({ mode, data }) => {
           <h2 className="assetTableTitle" style={{ paddingTop: "5px" }}>
             {assetTableTitle}
           </h2>
-
-          <Button
-            variant="contained"
-            style={{
-              paddingRight: "10px",
-              marginRight: "10px",
-              height: "50%",
-              justifyContent: "right",
-              backgroundImage:
-                "linear-gradient(to bottom right, #2858FE, #7B1DFF)",
-              borderRadius: "10px",
-              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-            }}
-            startIcon={<AddCircleOutlineIcon />}
-            onClick={handleClickOpen}
-          >
-            {" "}
-            {buttonText}{" "}
-          </Button>
+          <TransactionButton 
+          
+          buttonText={buttonText}/>
         </div>
 
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Add Transactions</DialogTitle>
-          <DialogContent>
-            {" "}
-            <Transaction />{" "}
-          </DialogContent>
-          <Button
-            className="position-absolute end-0 top-0"
-            onClick={handleClose}
-            startIcon={<CancelIcon />}
-          >
-            {" "}
-          </Button>
-          <DialogTitle>Add Transactions</DialogTitle>
-          <DialogContent>
-            {" "}
-            <Transaction />{" "}
-          </DialogContent>
-          <Button
-            className="position-absolute end-0 top-0"
-            onClick={handleClose}
-            startIcon={<CancelIcon />}
-          >
-            {" "}
-          </Button>
-          <DialogTitle>Add Transactions</DialogTitle>
-          <DialogContent>
-            {" "}
-            <Transaction />{" "}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} startIcon={<CancelIcon />}>
-              {" "}
-            </Button>
-          </DialogActions>
-        </Dialog>
+
+
 
         <div>
           <TextField
