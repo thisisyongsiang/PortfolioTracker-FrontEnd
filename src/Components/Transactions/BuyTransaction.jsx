@@ -28,12 +28,10 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
   const [errors, setErrors] = useState({});
   const[addRecurring,setAddRecurring]=useState(false);
   const[searchOptions,setSearchOptions]=useState([]);
-  const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
+  const {userEmail,portfolios,updatePortfolio,setTransactionTrigger,transactionTrigger}=useContext(UserContext);
   // on element change, unwrapped the element into name and value, the set values, while the rest remains the same
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
     setValues({
       ...values,
       [name]: value,
@@ -82,8 +80,15 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
         currency:"usd",
         fxRate:"1"
       }     
-      addUserPortfolioTransaction(userEmail,portfolioName,"buy",transaction); 
-      // closeFn();
+      addUserPortfolioTransaction(userEmail,portfolioName,"buy",transaction).then(success=>{
+        if (success){
+          console.log(transactionTrigger);
+          let trigger=!transactionTrigger;
+          console.log(trigger);
+          setTransactionTrigger(trigger);
+          closeFn();
+        }
+      }); 
     }
   };
   const handleSearch=deBounce((query)=>{

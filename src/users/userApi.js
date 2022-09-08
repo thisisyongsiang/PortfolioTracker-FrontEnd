@@ -174,7 +174,6 @@ export function addUserPortfolioTransaction(email,portfolioName,transactionType,
     transactionType:transactionType,
     transaction:transaction
   }
-  console.log(body);
   return axiosInstance
     .put(url + "portfolio/transaction/update", body, {
       headers: {
@@ -184,15 +183,41 @@ export function addUserPortfolioTransaction(email,portfolioName,transactionType,
     .then((res) => {
       if (res.status !== 200) {
         console.warn("wrong status: " + res.data);
-        return null;
+        return false;
       }
-      return res.data;
+      return true;
     })
     .catch((err) => {
       console.error("rejected update " + err);
-      return null;
+      return false;
     });
 }
+export function deleteUserPortfolioTransaction(email,portfolioName,transactionType,transaction) {
+  let body={
+    emailAddress:email,
+    portfolio:portfolioName,
+    transactionType:transactionType,
+    transaction:transaction
+  }
+  return axiosInstance
+    .put(url+"portfolio/transaction/del",body,{
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("wrong status: " + res.data);
+        return false;
+      }
+      return true;
+    })
+    .catch((err) => {
+      console.error("rejected delete " + err);
+      return false;
+    });
+}
+
 export function getOneUserPortfolioValue(email, portfolioName) {
   return axios
     .get(url + "portfolio/selectonevalue", {

@@ -69,6 +69,8 @@ class App extends React.Component {
       <UserContext.Provider value={{
         userEmail:this.props.auth0.user.email,
         portfolios:this.state.portfolios,
+        transactionTrigger:this.state.transactionTrigger,
+        setTransactionTrigger:this.onSetTransactionTrigger,
         updatePortfolio:this.onUpdatePortfolioList}}>
         <div className="container-fluid overflow-hidden ">
           <div className="row" style={{ boxShadow: "0 0px 5px grey",height: "10vh" }}>

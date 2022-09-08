@@ -16,15 +16,14 @@ import { Menu, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../util/context";
 export const PortfolioPage=()=>{
-  const{userEmail,portfolios,updatePortfolio}=useContext(UserContext);
+  const{userEmail,portfolios,updatePortfolio,transactionTrigger}=useContext(UserContext);
   const {portfolioId}=useParams();
   const lineChartContainer=useRef(null);
   const [allAssetTableStats, setAllAssetTableStats] = useState(null)
   const[anchorEl,setAnchorEl]=useState(null);
   const navigate=useNavigate();
-
   const[{portfolio,portfoliosHistory,lineChartWidth,pfValue},setPfObject]=useState({portfolio:[],
-    portfoliosHistory:[],
+    portfoliosHistory:null,
     lineChartWidth:1000,
     pfValue:0});
 
@@ -90,7 +89,7 @@ export const PortfolioPage=()=>{
         setAllAssetTableStats(assets)
       })
     }
-  },[userEmail,portfolioId]);
+  },[userEmail,portfolioId,transactionTrigger]);
   let portfolioExists=false;
 
 let netReturn = 0;

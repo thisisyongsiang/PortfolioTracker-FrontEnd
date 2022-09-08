@@ -26,7 +26,7 @@ export const Overallpage = () => {
   const [individualPortfolioStats, setIndividualPortfolioStats] =
     useState(null);
   const[{overallPfValue,portfoliosHistory,portfolioList,lineChartWidth},setPfInfo]=
-  useState({overallPfValue:0,portfoliosHistory:[],portfolioList:[],lineChartWidth:1000});
+  useState({overallPfValue:0,portfoliosHistory:null,portfolioList:[],lineChartWidth:1000});
 
   const {userEmail,portfolios}=useContext(UserContext);
   useEffect(() => {

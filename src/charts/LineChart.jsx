@@ -25,7 +25,6 @@ export const LineChart=({
     yValue=d=>d,
     yAxisFormat=d=>d
 })=>{
-    if(!data)data=[];
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
     const [containerWidth,setContainerWidth]=useState(null);
@@ -48,7 +47,7 @@ export const LineChart=({
         }
 
     },[containerRef.current?.offsetWidth,dynamicWidth]);
-    if (data.length===0){
+    if (!data){
         return (
             <div className="spinner-border text-warning" role="status">
   <span className="visually-hidden">Loading...</span>
