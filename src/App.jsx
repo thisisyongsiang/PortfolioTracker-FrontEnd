@@ -5,7 +5,7 @@ import "./App.css";
 import { withAuth0 } from "@auth0/auth0-react";
 import Login from "./auth0/login";
 import { addUser, getUser } from "./users/userApi";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import UserProfile from "./Pages/UserProfile";
 import UserSettings from "./Pages/UserSettings";
 import Feedback from "./Pages/Feedback";
@@ -16,6 +16,8 @@ import Sidebar from "./Components/Sidebar";
 import {Assetpage} from "./Pages/Assetpage";
 import { PortfolioPage } from "./Pages/Portfoliopage";
 import { UserContext } from "./util/context";
+import Landingpage from "./Pages/Landingpage";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -64,8 +66,8 @@ class App extends React.Component {
     }
     return (
 
-      <BrowserRouter>
       <div>
+        <Landingpage />
       <UserContext.Provider value={{
         userEmail:this.props.auth0.user.email,
         portfolios:this.state.portfolios,
@@ -117,7 +119,6 @@ class App extends React.Component {
         
       </UserContext.Provider>
       </div>
-      </BrowserRouter>
     );
   }
 }
