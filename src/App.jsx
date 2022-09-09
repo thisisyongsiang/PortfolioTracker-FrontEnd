@@ -62,12 +62,13 @@ class App extends React.Component {
   render() {
     const { isAuthenticated } = this.props.auth0;
     if (!isAuthenticated) {
-      return <Login />;
+      
+      return         <Landingpage />
+
     }
     return (
 
       <div>
-        <Landingpage />
       <UserContext.Provider value={{
         userEmail:this.props.auth0.user.email,
         portfolios:this.state.portfolios,
