@@ -30,7 +30,6 @@ export const Overallpage = () => {
 
   const {userEmail,portfolios}=useContext(UserContext);
   useEffect(() => {
-
     const getIndividualPfStats = (portfolioList) => {
       const pfArray = portfolioList.map(async (portfolio) => {
         let pfValue = await getOneUserPortfolioValue(
@@ -62,7 +61,7 @@ export const Overallpage = () => {
     // console.log('portfolios',portfolios);
     if (userEmail &&lineChartContainer.current && portfolios.length>0) {
       (async()=>{
-        console.log('runoverallpage');
+        console.log('run api calls in overallpage');
 
         let userVal=await getUserOverallPortfolioValue(userEmail);      
         let histVal=await getUserOverallPortfolioHistoricalValue(
@@ -86,14 +85,21 @@ export const Overallpage = () => {
   }, [userEmail,portfolios]);
   
       
-
-  let netReturn = computePortfolioNetReturn(portfolioList, overallPfValue);
-  let netPnL = computePortfolioPnL(portfolioList, overallPfValue);
-  let annualisedReturn = computePortfolioAnnualisedReturns(
-    portfolioList,
-    overallPfValue
-  );
-  let portfolioVolatility = computeVolatility(portfoliosHistory);
+  let netReturn = 0;
+  let netPnL = 0;
+  let annualisedReturn = 0;
+  let portfolioVolatility = 0;
+  if(portfolioList){
+     netReturn = computePortfolioNetReturn(portfolioList, overallPfValue);
+     netPnL = computePortfolioPnL(portfolioList, overallPfValue);
+     annualisedReturn = computePortfolioAnnualisedReturns(
+      portfolioList,
+      overallPfValue
+    );
+  }
+  if(portfoliosHistory){
+    portfolioVolatility = computeVolatility(portfoliosHistory);
+  }
 
   return (
     <React.Fragment>

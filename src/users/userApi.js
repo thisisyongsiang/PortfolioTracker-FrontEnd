@@ -67,6 +67,29 @@ export function deleteUserPortfolio(email,portfolioName) {
       return null;
     });
 }
+export function editUserPortfolioName(email,portfolioName,newName) {
+  let pf={email:email,
+    portfolioName: portfolioName,
+    newName:newName,
+  }
+  return axiosInstance
+    .put(url + "portfolio/edit", pf, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.warn("Unable to update");
+        return false;
+      }
+      return true;
+    })
+    .catch((err) => {
+      console.error("rejected post " + err);
+      return false;
+    });
+}
 export async function getAllUsers() {
   try {
     let response = await axios.get(url + "user/all");

@@ -147,7 +147,6 @@ svg{
     margin:0;
     padding:3px;
     width:500px;
-
 }
 @media (min-width: 576px) {
     .h-sm-100 {
@@ -161,4 +160,13 @@ svg{
         width:300px;
     
     }
+}
+#transactionCloseButton{
+    position:absolute;
+    top:20px;
+    right:10px;
+}
+#deleteCardIcon:hover{
+    cursor: pointer;
+    color:rgb(228, 0, 0)
 }

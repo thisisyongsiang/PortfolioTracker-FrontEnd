@@ -35,7 +35,7 @@ export const TransactionButton=({buttonText,asset})=>{
     <Dialog open={open} onClose={handleClose}>
         <DialogContent> <Transaction 
           closeFn={handleClose}/> </DialogContent>
-            <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+            <Button id="transactionCloseButton" onClick={handleClose} startIcon={<CancelIcon />}> </Button>
     </Dialog>
     </>
     )
