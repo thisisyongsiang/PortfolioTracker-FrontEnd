@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Dialog from "@mui/material/Dialog";
@@ -12,12 +12,13 @@ import AssetTableCard from "./AssetTableCards";
 import AssetTableCardForPortfolio from "./AssetTableCard_Portfolio";
 import AssetTableCardForAsset from "./AssetTableCard_Asset"
 import { TransactionButton } from './Transactions/TransactionButton';
+import { UserContext } from "../util/context";
 
 const AssetTable = ({ mode, data }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = React.useState(false);
+  const {portfolios}=useContext(UserContext);
   //   const [individualPortfolioStats, setIndividualPortfolioStats] = useState(null);
-
   let assetTableTitle = "Portfolio Holdings";
   let buttonText = "ADD TRANSACTIONS";
   let searchLabel = "Search for your asset";

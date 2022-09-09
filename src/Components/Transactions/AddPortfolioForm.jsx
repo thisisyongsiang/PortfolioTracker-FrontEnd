@@ -25,17 +25,18 @@ import { TransactionForm } from "./TransactionForm";
 import { addUserPortfolio, getUserPortfolioNames } from "../../users/userApi";
 import { useContext } from "react";
 import { UserContext } from "../../util/context";
+import { useNavigate } from "react-router-dom";
 
 
 export const AddPortfolioForm = ({closeFn}) => {
     const [portfolioName, setPortfolioName] = useState("");
-    const [portfolioCreated,setPortfolioCreated]=useState(false);
     const [addTransactions,setAddTransactions]=useState(false);
     const[nameInputError,setNameInputError]=useState({error:false});
     const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
     const handleNameChange = (event) => {
         setPortfolioName(event.target.value);
     };
+    const navigate=useNavigate();
     const checkInput=()=>{
         let pfName = portfolioName.trim();
         if(pfName!==""){
@@ -66,10 +67,11 @@ export const AddPortfolioForm = ({closeFn}) => {
             addUserPortfolio(userEmail,pfName).then(
                 pf=>{
                     updatePortfolio([...portfolios,pfName])
+                    navigate(`/portfolio/${pfName}`);
+                    closeFn();
                 }
             );
-            setPortfolioCreated(true);
-            closeFn();
+            
         }
     }
     const handleAddTransactionsClicked=(e)=>{
@@ -79,9 +81,10 @@ export const AddPortfolioForm = ({closeFn}) => {
             addUserPortfolio(userEmail,pfName).then(
                 pf=>{
                     updatePortfolio([...portfolios,pfName])
+                    navigate(`/portfolio/${pfName}`);
+                    setAddTransactions(true);
                 }
             );
-            setAddTransactions(true);
         }
     }
   return (
@@ -98,7 +101,7 @@ export const AddPortfolioForm = ({closeFn}) => {
         <TextField
         {...nameInputError}
           fullWidth
-          sx={{ marginTop: "10px" }}
+          sx={{ marginTop: "10px" ,marginBottom: "10px"  }}
           variant="outlined"
           label="Portfolio Name"
           name="PortfolioName"
@@ -130,7 +133,7 @@ export const AddPortfolioForm = ({closeFn}) => {
         </Container>
     </form>
     :
-    <TransactionForm portfolioName={portfolioName} userEmail={userEmail}/>
+    <TransactionForm portfolioName={portfolioName} closeFn={closeFn}/>
 }
     </>
     

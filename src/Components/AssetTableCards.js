@@ -1,7 +1,12 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { numberWithCommas } from "../util/util";
 import { Link } from "react-router-dom";
+import { Tooltip } from "@mui/material";
+import { useContext, useState } from "react";
+import { UserContext } from "../util/context";
+import { deleteUserPortfolio } from "../users/userApi";
 
 
 const AssetTableCard = ({ content }) => {
@@ -13,6 +18,27 @@ const AssetTableCard = ({ content }) => {
 //   const handleClose = () => {
 //     setOpen(false);
 //   };
+  const [deleted,setDeleted]=useState(false);
+  const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
+  const handleDelete=()=>{
+    let confirmDelete=window.confirm(`Delete portfolio : ${content.portfolioName}?
+This action is not reversible!
+    `)
+    if(confirmDelete){  
+      let index=portfolios.indexOf(content.portfolioName);
+      portfolios.splice(index,1);
+      if(index>=portfolios.length){
+        index-=1;
+      }
+      deleteUserPortfolio(userEmail,content.portfolioName).then(
+        ()=>{
+          updatePortfolio([...portfolios]);
+          setDeleted(true);
+        }
+      );
+    }
+  }
+  
   let cardStyle = {
     width: "20%",
     verticalAlign: "middle",
@@ -23,7 +49,7 @@ const AssetTableCard = ({ content }) => {
     fontSize: "20px"
   };
   return (
-    
+      deleted?<></>:
       <div
         className="card mx-1"
         style={{
@@ -79,12 +105,14 @@ const AssetTableCard = ({ content }) => {
               margin: "auto",
             }}
           >
-            <AddCircleOutlineIcon />
             <ArrowCircleRightIcon />
+            <Tooltip title="Delete Portfolio">
+            <CancelIcon id="deleteCardIcon" onClick={handleDelete}/>
+            </Tooltip>
+
           </div>
         </div>
       </div>
-      
 
   );
 };

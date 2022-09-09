@@ -12,9 +12,12 @@ import { BsFillTrashFill,BsFillGearFill } from "react-icons/bs";
 import {Navigate} from "react-router-dom";
 import { computePortfolioPnL, computePortfolioNetReturn, computePortfolioAnnualisedReturns, computeVolatility } from "../util/financeComputations";
 import { Link } from "react-router-dom";
-import { Menu, MenuItem } from "@mui/material";
+import { Button, Dialog, DialogContent, Menu, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../util/context";
+import { EditPortfolioForm } from "../Components/Transactions/EditPortfolioForm";
+
+
 export const PortfolioPage=()=>{
   const{userEmail,portfolios,updatePortfolio,transactionTrigger}=useContext(UserContext);
   const {portfolioId}=useParams();
@@ -22,6 +25,8 @@ export const PortfolioPage=()=>{
   const [allAssetTableStats, setAllAssetTableStats] = useState(null)
   const[anchorEl,setAnchorEl]=useState(null);
   const navigate=useNavigate();
+  const [openEditDialog,setOpenEditDialog]=useState(false);
+
   const[{portfolio,portfoliosHistory,lineChartWidth,pfValue},setPfObject]=useState({portfolio:[],
     portfoliosHistory:null,
     lineChartWidth:1000,
@@ -34,10 +39,15 @@ export const PortfolioPage=()=>{
   const handleSettingsClose=()=>{
     setAnchorEl(null);
   }
-
+  const handleCloseEditDialog=()=>{
+    setOpenEditDialog(false);
+  }
+  const onEditPortfolioClicked=()=>{
+    setOpenEditDialog(true);
+  }
   const onDeletePortfolio=()=>{
     let confirmDelete=window.confirm(`Delete portfolio : ${portfolioId}?
-    This action is not reversible!
+This action is not reversible!
     `)
     if (confirmDelete){
       let index=portfolios.indexOf(portfolioId);
@@ -47,7 +57,7 @@ export const PortfolioPage=()=>{
       }
       deleteUserPortfolio(userEmail,portfolioId).then(
         ()=>{
-          updatePortfolio(portfolios);
+          updatePortfolio([...portfolios]);
           if (index>=0){
             navigate(`/portfolio/${portfolios[index]}`,{replace:true});
           }
@@ -58,8 +68,7 @@ export const PortfolioPage=()=>{
       );
     }
   }
-  const onEditPortfolio=()=>{
-  }
+
   useEffect(()=>{
     if (userEmail && portfolioId){
     (async()=>{
@@ -109,7 +118,6 @@ if(portfolios.includes(portfolioId)){
    portfolioVolatility = computeVolatility(portfoliosHistory)
 }
 }
-
 return (
   <React.Fragment>
     {portfolioExists&&
@@ -174,7 +182,7 @@ return (
             'aria-labelledby': 'setting-button',
           }}
           >
-          <MenuItem onClick={onEditPortfolio}>Edit Portfolio</MenuItem>
+          <MenuItem onClick={onEditPortfolioClicked}>Edit Portfolio Name</MenuItem>
           <MenuItem onClick={onDeletePortfolio}>Delete Portfolio</MenuItem>
 
           </Menu>
@@ -194,7 +202,14 @@ return (
 
         </ul> */}
         < AssetTable data={allAssetTableStats} mode="Single Portfolio"/>
+        {openEditDialog&&
+        <EditPortfolioForm 
+        closeFn={handleCloseEditDialog} 
+        open={openEditDialog}
+        portfolioId={portfolioId}/>
+}
         </Container>
+
 }
       </React.Fragment>
   )

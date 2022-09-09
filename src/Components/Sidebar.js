@@ -22,8 +22,9 @@ import { UserContext } from '../util/context';
 function Sidebar() {
     const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
     const [open, setOpen] = React.useState(false);
-    let activeObj=useRef(null);
-    let activeElem=null;
+    const [activeElem, setActiveElem] = React.useState(null);
+    let listRef=useRef(null);
+
     useEffect(()=>{
         if (userEmail){
             getUserPortfolioNames(userEmail)
@@ -32,6 +33,18 @@ function Sidebar() {
             });
         }
     },[userEmail]);
+
+    useEffect(()=>{
+        if(listRef.current){
+           let childNodes= listRef.current.childNodes;
+           for(let child of childNodes){
+            if(child.id==="active"){
+                setActiveElem(child);
+            }
+           }
+        }
+    },[listRef,portfolios]);
+
     let sbData=portfolios.map(name=>{
         return {name:name,route:`/portfolio/${name}`}
     });
@@ -40,47 +53,43 @@ function Sidebar() {
     const handleClickOpen = () => {
         setOpen(true);
       };
-    
+
       const handleClose = () => {
         setOpen(false);
       };
-  
+
 
     const onLinkSelected=(e)=>{
-        if (activeObj.current){
-            activeObj.current.id=''
+        // if (activeObj.current){
+        //     activeObj.current.id=''
+        // }
+
+        // // activeObj=null;
+        if(activeElem){
+            activeElem.id='';
         }
-        // activeObj=null;
-        if(activeElem)activeElem.id='';
-        activeElem=e.target.parentElement;
-        e.target.parentElement.id="active";
+        setActiveElem(e.target.parentElement);
+        // e.target.parentElement.id="active";
     }
     let path=window.location.pathname.split('/');
-
     path.length>2?path=path[2]:path=path[1];
     path=path.replaceAll('%20',' ');
     return (
-                <div className="Sidebar w-100">
-        <ul className="SidebarList">
+        <div className="Sidebar w-100">
+        <ul className="SidebarList" ref={listRef}>
             {sbData.map((val, key) => {
             return (
-            <li 
-            key={key} 
-            className="row" 
+            <li
+            key={key}
+            className="row"
             id={path === `${val.name}` ? "active" : ""}
-            ref={path === `${val.name}` ? activeObj:null}
-
-            // onClick={() => {
-            //     window.location.pathname =`${val.route}`
-            // }}
-            
-            > 
+            >
             <Link to={val.route} onClick={onLinkSelected}>{val.name}</Link>
             {/* <div>{val.name}</div>  */}
             </li>
-        ); 
-    })}
-                <li className='addPortfolio row' 
+            );
+            })}
+                <li className='addPortfolio row'
                  onClick={handleClickOpen}>
                     Add Portfolio
                 <AiFillPlusCircle />
@@ -88,11 +97,11 @@ function Sidebar() {
     </ul>
     <Dialog open={open} onClose={handleClose}>
         <DialogContent>{userEmail&& <Transaction userEmail={userEmail} closeFn={handleClose}/> }</DialogContent>
-            <Button className='position-absolute end-0 top-0' onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+            <Button id="transactionCloseButton" onClick={handleClose} startIcon={<CancelIcon />}> </Button>
     </Dialog>
     </div>
 
 )}
 
- 
+
 export default Sidebar;
