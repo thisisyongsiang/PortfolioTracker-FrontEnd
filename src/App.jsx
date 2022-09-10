@@ -60,12 +60,11 @@ class App extends React.Component {
     }
   }
   render() {
-    const { isAuthenticated } = this.props.auth0;
-    if (!isAuthenticated) {
-      
+    const { isAuthenticated ,isLoading } = this.props.auth0;
+    if (!isAuthenticated&&!isLoading ) {
       return         <Landingpage />
-
     }
+    if(isAuthenticated&&!isLoading){
     return (
 
       <div>
@@ -122,6 +121,7 @@ class App extends React.Component {
       </div>
     );
   }
+}
 }
 
 export default withAuth0(App);
