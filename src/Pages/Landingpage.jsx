@@ -2,8 +2,8 @@ import React from 'react'
 import "../StylingAssets/bootstrap.min.css"
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LinkedIn from '@mui/icons-material/LinkedIn';
+import LoginButton from '../auth0/loginButton';
 
 function Landingpage() {
   return (
@@ -32,6 +32,9 @@ function Landingpage() {
           <a className="nav-link js-scroll-trigger" href="#contact">Contact</a>
         </li>
       </ul>
+    </div>
+    <div>
+      <LoginButton />
     </div>
   </div>
 </nav>
