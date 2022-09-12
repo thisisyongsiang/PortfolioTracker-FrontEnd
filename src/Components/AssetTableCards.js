@@ -2,22 +2,14 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { numberWithCommas } from "../util/util";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { useContext, useState } from "react";
 import { UserContext } from "../util/context";
 import { deleteUserPortfolio } from "../users/userApi";
 
-
 const AssetTableCard = ({ content }) => {
-//   const [open, setOpen] = React.useState(false);
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
 
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
   const [deleted,setDeleted]=useState(false);
   const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
   const handleDelete=()=>{
@@ -38,6 +30,11 @@ This action is not reversible!
       );
     }
   }
+
+  let navigate = useNavigate()
+  const routeChange = (path) => {
+    navigate(path);
+  }
   
   let cardStyle = {
     width: "20%",
@@ -52,6 +49,7 @@ This action is not reversible!
       deleted?<></>:
       <div
         className="card mx-1"
+        onClick={() => routeChange(content.route)}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -61,16 +59,16 @@ This action is not reversible!
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",
+          cursor: "pointer"
         }}
       >
+        
         <div
           className="card-body mainName"
           style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
-          <Link to={content.route} style={{background: "rgba(130, 130, 130, 0.81", boxShadow: "rgba(0, 0, 0, 0.16) 0px 3px 6px", borderRadius: "10px", padding: "12px"}}>
           {content.portfolioName ? content.portfolioName : ""}
-                </Link>
-          
+
         </div>
         <div
           className="remainingHeaders"
@@ -107,7 +105,10 @@ This action is not reversible!
           >
             <ArrowCircleRightIcon />
             <Tooltip title="Delete Portfolio">
-            <CancelIcon id="deleteCardIcon" onClick={handleDelete}/>
+            <CancelIcon id="deleteCardIcon" onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}/>
             </Tooltip>
 
           </div>

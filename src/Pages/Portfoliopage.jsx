@@ -99,7 +99,10 @@ This action is not reversible!
         portfolioId
       )
       .then(assets => {
-        setAllAssetTableStats(assets)
+        let assetsWithRoutes = assets.map((a) => {
+          return {...a, route: `/portfolio/${portfolioId}/${a.symbol}`}
+        })
+        setAllAssetTableStats(assetsWithRoutes)
       })
     }
   },[userEmail,portfolioId,transactionTrigger]);
@@ -189,18 +192,7 @@ return (
           </div>
         </div>
 
-        {/* <ul className="list-group">
-          {pfAssets.map(asset=>{
-            return(
-              <li   key={asset.symbol} className="list-group-item">
-                <Link to={asset.route} className='w-100'>
-              {asset.shortName}
-                </Link>
-            </li>
-            )
-          })}
 
-        </ul> */}
         < AssetTable data={allAssetTableStats} mode="Single Portfolio"/>
         {openEditDialog&&
         <EditPortfolioForm 

@@ -1,28 +1,25 @@
-import React, { useEffect,useState,useRef, useContext } from 'react'
+import React, { useEffect ,useRef, useContext } from 'react'
 import '../App.css'
 import { getUserPortfolioNames } from '../users/userApi';
-import {SidebarData} from './SidebarData';
 import { AiFillPlusCircle } from "react-icons/ai";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useLocation } from 'react-router-dom';
 
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
     Link
   } from "react-router-dom";
-import { TransactionButton } from './Transactions/TransactionButton';
 import { Transaction } from './Transactions/Transaction';
 import { UserContext } from '../util/context';
 
-function Sidebar() {
+function Sidebar(props) {
     const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
     const [open, setOpen] = React.useState(false);
     const [activeElem, setActiveElem] = React.useState(null);
+    const location = useLocation();
     let listRef=useRef(null);
 
     useEffect(()=>{
@@ -43,7 +40,7 @@ function Sidebar() {
             }
            }
         }
-    },[listRef,portfolios]);
+    },[listRef, portfolios, location.pathname]);
 
     let sbData=portfolios.map(name=>{
         return {name:name,route:`/portfolio/${name}`}
@@ -60,16 +57,10 @@ function Sidebar() {
 
 
     const onLinkSelected=(e)=>{
-        // if (activeObj.current){
-        //     activeObj.current.id=''
-        // }
-
-        // // activeObj=null;
         if(activeElem){
             activeElem.id='';
         }
         setActiveElem(e.target.parentElement);
-        // e.target.parentElement.id="active";
     }
     let path=window.location.pathname.split('/');
     path.length>2?path=path[2]:path=path[1];
@@ -85,7 +76,6 @@ function Sidebar() {
             id={path === `${val.name}` ? "active" : ""}
             >
             <Link to={val.route} onClick={onLinkSelected}>{val.name}</Link>
-            {/* <div>{val.name}</div>  */}
             </li>
             );
             })}
