@@ -7,6 +7,7 @@ import { UserContext } from '../../util/context';
 export const Transaction = ({closeFn}) => {
   const {userEmail}=useContext(UserContext); 
   const routeParam=useParams();
+
   let ht=routeParam["portfolioId"]?'500px':"200px";
   return (
     <>

@@ -21,10 +21,18 @@ import { searchAsset } from "../../FinanceRoutes/financeAPI";
 import { useContext } from "react";
 import { UserContext } from "../../util/context";
 import { addUserPortfolioTransaction, getUserPortfolioAssets } from "../../users/userApi";
+import { useParams } from "react-router-dom";
 
 
-export const SellTransaction = ({closeFn,portfolioName}) => {
-  const [values, setValues] = useState({date:new Date()});
+export const SellTransaction = ({closeFn,portfolioName}) => {  
+  const routeParam=useParams();
+
+  const [values, setValues] = useState({
+      price:"",
+      ticker:routeParam.assetId?routeParam.assetId: "",
+      fees:"",
+      quantity:0,
+      date:new Date()});
   const [errors, setErrors] = useState({});
   const[pfAssets,setPfAssets]=useState([]);
   const {userEmail,portfolios,updatePortfolio,setTransactionTrigger,transactionTrigger}=useContext(UserContext);
@@ -65,7 +73,8 @@ export const SellTransaction = ({closeFn,portfolioName}) => {
 
   useEffect(()=>{
     getUserPortfolioAssets(userEmail,portfolioName).then(d=>{
-      setPfAssets(d);
+      console.log(d);
+      setPfAssets(d.map(f=>{return `${f.symbol},${f.shortName}`}));
     })
   },[userEmail,portfolioName]);
   const handleSubmit = (e) => {
@@ -103,12 +112,12 @@ export const SellTransaction = ({closeFn,portfolioName}) => {
       <Box sx={{ margin: "0px 20px 20px 20px", fontWeight: "bold" }}> Sell Order </Box>
       <Container>
       <Autocomplete
+          defaultValue={values.ticker}
           fullWidth
           disablePortal
           disableCloseOnSelect
           sx={{ marginBottom: "7px" }}
           options={pfAssets}
-          getOptionLabel={(f)=> `${f.symbol},${f.shortName}`}
           onClose={handleTicker}
           renderInput={(params)=>{
             return <TextField {...params}

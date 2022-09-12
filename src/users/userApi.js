@@ -411,7 +411,31 @@ export function getUserPortfolioOneAssetValue(
       return null;
     });
   }
-
+  export function deleteUserPortfolioOneAsset(
+    email,
+    portfolioName,
+    assetSymbol){
+      console.log(portfolioName);
+      console.log(assetSymbol);
+      return axios.delete(url+"portfolio/selectone/assets/delete",{
+        params:{
+          email: email,
+          portfolioName: portfolioName,
+          assetSymbol:assetSymbol,
+        }
+      })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.warn("wrong status: " + res.data);
+          return [];
+        }
+        return res.data;
+      })
+      .catch((err) => {
+        console.error("some error with request :" + err);
+        return null;
+      });
+    }
 
 export function getUserPortfolioOneAssetHistoricalValue(
   email,

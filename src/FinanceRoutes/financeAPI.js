@@ -70,6 +70,6 @@ export function getDividend(symbol,startDate){
         return res.data;
     }).catch(err=>{
         console.error('error occurred '+err );
-        return [];
+        return null;
     });
 }
