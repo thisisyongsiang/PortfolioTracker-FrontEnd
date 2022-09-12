@@ -110,7 +110,7 @@ export function computePortfolioAnnualisedReturns(portfolios, currentPfValue) {
 
 export function computeAssetAnnualisedReturns(transactions, assetValue) {
   let cashflowAndTiming = [];
-
+try {
   transactions.forEach((t) => {
     t.type && t.type === "buy"
       ? cashflowAndTiming.push({
@@ -132,6 +132,11 @@ export function computeAssetAnnualisedReturns(transactions, assetValue) {
     return rate * 100;
   }
   return 0;
+} catch (error) {
+  console.error(error);
+  return 0;
+}
+
 }
 
 export function computeVolatility(portfoliosHistory) {

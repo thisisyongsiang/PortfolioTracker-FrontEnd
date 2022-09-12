@@ -58,7 +58,9 @@ function Sidebar(props) {
 
     const onLinkSelected=(e)=>{
         if(activeElem){
-            activeElem.id='';
+            if (e.target.parentElement!==activeElem){
+                activeElem.id='';
+            }
         }
         setActiveElem(e.target.parentElement);
     }

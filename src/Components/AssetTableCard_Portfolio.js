@@ -4,8 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { numberWithCommas } from "../util/util";
 import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
 import { useNavigate } from "react-router-dom";
+import { Tooltip } from "@mui/material";
+import CancelIcon from '@mui/icons-material/Cancel';
 
-const AssetTableCardForPortfolio = ({ content }) => {
+const AssetTableCardForPortfolio = ({ content,portfolioName }) => {
 //   const [open, setOpen] = React.useState(false);
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -37,7 +39,14 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
   const routeChange = (path) => {
       navigate(path)
   }
+  const handleDelete=()=>{
+    let confirmDelete=window.confirm(`Delete Asset : ${shortName} in ${portfolioName}}?
+This action is not reversible!
+    `)
+    if(confirmDelete){  
 
+    }
+  }
   return (
       <div
         className="card mx-1"
@@ -99,9 +108,13 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
               margin: "auto",
             }}
           >
-            <AddCircleOutlineIcon />
-            <ArrowCircleRightIcon />
-            <DeleteIcon />
+             <AddCircleOutlineIcon />
+            <Tooltip title="Delete Asset">
+            <CancelIcon id="deleteCardIcon" onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}/>
+            </Tooltip>
           </div>
         </div>
       </div>

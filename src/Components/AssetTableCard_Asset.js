@@ -1,9 +1,14 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { numberWithCommas } from "../util/util";
 import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
+import { Tooltip } from "@mui/material";
+import { deleteUserPortfolioTransaction } from "../users/userApi";
+import { useContext } from "react";
+import { UserContext } from "../util/context";
 
-const AssetTableCardForAsset = ({ content }) => {
+const AssetTableCardForAsset = ({ content,portfolioName }) => {
 //   const [open, setOpen] = React.useState(false);
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -12,9 +17,21 @@ const AssetTableCardForAsset = ({ content }) => {
 //   const handleClose = () => {
 //     setOpen(false);
 //   };
-
-let {date, price, quantity, ticker, type} = content
-
+const {userEmail,transactionTrigger,setTransactionTrigger}=useContext(UserContext);
+let {date, price, quantity, ticker, type} = content;
+const handleDelete=()=>{
+  let confirmDelete=window.confirm(`Delete Transaction : ${ticker}: ${type} | ${new Date(date).toDateString()}?
+This action is not reversible!
+  `)
+  if(confirmDelete){  
+    deleteUserPortfolioTransaction(userEmail,portfolioName,type,content).then(
+      ()=>{
+        let trigger=!transactionTrigger;
+        setTransactionTrigger(trigger);
+      }
+    );
+  }
+}
   let cardStyle = {
     width: "20%",
     verticalAlign: "middle",
@@ -77,10 +94,15 @@ let {date, price, quantity, ticker, type} = content
               justifyContent: "center",
               textAlign: "right",
               padding: "20px",
-              margin: "auto",
+              margin: "0",
             }}
           >
-            <AddCircleOutlineIcon />
+            <Tooltip title="Delete Transaction">
+            <CancelIcon id="deleteCardIcon" onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}/>
+            </Tooltip>
           </div>
         </div>
       </div>

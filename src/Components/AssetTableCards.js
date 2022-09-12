@@ -103,7 +103,6 @@ This action is not reversible!
               margin: "auto",
             }}
           >
-            <ArrowCircleRightIcon />
             <Tooltip title="Delete Portfolio">
             <CancelIcon id="deleteCardIcon" onClick={(e) => {
               e.stopPropagation();
