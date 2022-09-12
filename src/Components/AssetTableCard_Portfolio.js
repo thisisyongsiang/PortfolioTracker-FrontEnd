@@ -1,5 +1,6 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { numberWithCommas } from "../util/util";
 import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
 import { useNavigate } from "react-router-dom";
@@ -93,13 +94,14 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
               width: "20%",
               verticalAlign: "middle",
               justifyContent: "center",
-              textAlign: "right",
+              textAlign: "center",
               padding: "20px",
               margin: "auto",
             }}
           >
             <AddCircleOutlineIcon />
             <ArrowCircleRightIcon />
+            <DeleteIcon />
           </div>
         </div>
       </div>
