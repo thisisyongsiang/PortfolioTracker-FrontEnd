@@ -83,7 +83,7 @@ This action is not reversible!
             ${numberWithCommas(price.toFixed(2))}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
-            {`${dateFormat.getDate()}/${dateFormat.getMonth()}/${dateFormat.getFullYear()}`}
+            {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()}`}
           </div>
 
           <div

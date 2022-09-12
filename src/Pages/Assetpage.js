@@ -14,7 +14,7 @@ import {
 import { numberWithCommas } from "../util/util";
 import CardWidget from "../Components/CardWidget";
 import { AssetLineChart } from "../charts/AssetLineChart";
-import { getAssetQuote } from "../FinanceRoutes/financeAPI";
+import { getAssetQuote, getDividend, getStockSplit } from "../FinanceRoutes/financeAPI";
 import {
   computeAssetNetReturn,
   computeAssetPnL,
@@ -30,7 +30,7 @@ export const Assetpage=()=>{
   const {assetId,portfolioId}=useParams();
   const lineChartContainer=useRef(null);
   const navigate= useNavigate();
-  const[{assetQuote,assetValueHistory,transactions,lineChartWidth,assetValue},setAssetObj]=useState({
+  const[{assetQuote,assetValueHistory,transactions,lineChartWidth,assetValue,dividends},setAssetObj]=useState({
     assetQuote:null,
     assetValueHistory:null,
     transactions:null,
@@ -63,13 +63,24 @@ export const Assetpage=()=>{
           portfolioId,
           assetId
         );
-          
+        let splits=await getStockSplit(assetId,
+          new Date(new Date().setFullYear(new Date().getFullYear() - 1)));
+        if (splits){
+          splits = splits.map(s=>{
+            let [numer,denom]=s.stockSplits.split(':');
+            return {date:s.date,ratio:(+numer)/(+denom)}
+          })
+        }
+        let dividendList=await getDividend(assetId,
+          new Date(new Date().setFullYear(new Date().getFullYear() - 1)));
         setAssetObj({
           assetQuote:quote,
           assetValueHistory:histVal,
           transactions:t,
           lineChartWidth:lineChartContainer.current.offsetWidth,
-          assetValue:aVal.value
+          assetValue:aVal.value,
+          stocksplits:splits,
+          dividends:dividendList,
         })
 
       })();
@@ -152,6 +163,9 @@ export const Assetpage=()=>{
               yAxisTicks={6}
               yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
               displayTitle={`${assetId} Value in ${portfolioId}`}
+              verticalMarkers={dividends}
+              vertMarkerFormat={x=>`Dividends per share: ${x.dividends}`}
+
              />:
              <AssetLineChart
              ticker={assetId}  
@@ -167,6 +181,8 @@ export const Assetpage=()=>{
              yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
              endDate={new Date()}
              startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}
+             verticalMarkers={dividends}
+             vertMarkerFormat={x=>`Dividends per share: ${x.dividends}`}
              />
              }
 

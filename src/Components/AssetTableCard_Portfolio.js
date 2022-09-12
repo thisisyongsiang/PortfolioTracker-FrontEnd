@@ -6,8 +6,13 @@ import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputati
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
+import { deleteUserPortfolioOneAsset } from "../users/userApi";
+import { useContext } from "react";
+import { UserContext } from "../util/context";
 
 const AssetTableCardForPortfolio = ({ content,portfolioName }) => {
+  let navigate = useNavigate()
+  const{userEmail,transactionTrigger,setTransactionTrigger}=useContext(UserContext);
 //   const [open, setOpen] = React.useState(false);
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -35,7 +40,6 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
   let netReturn = computeAssetNetReturn(transactions?transactions.transactions:[], value)
   let netPnL = computeAssetPnL(transactions?transactions.transactions:[], value)
 
-  let navigate = useNavigate()
   const routeChange = (path) => {
       navigate(path)
   }
@@ -44,7 +48,12 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
 This action is not reversible!
     `)
     if(confirmDelete){  
-
+      deleteUserPortfolioOneAsset(userEmail,portfolioName,symbol).then(
+        ()=>{
+          let trigger=!transactionTrigger;
+          setTransactionTrigger(trigger);
+        }
+      )
     }
   }
   return (

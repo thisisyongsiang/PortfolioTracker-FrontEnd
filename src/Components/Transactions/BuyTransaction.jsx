@@ -21,13 +21,20 @@ import { searchAsset } from "../../FinanceRoutes/financeAPI";
 import { useContext } from "react";
 import { UserContext } from "../../util/context";
 import { addUserPortfolioTransaction } from "../../users/userApi";
+import { useParams } from "react-router-dom";
 
 
-export const BuyTransaction = ({closeFn,portfolioName}) => {
-  const [values, setValues] = useState({date:new Date()});
+export const BuyTransaction = ({closeFn,portfolioName}) => {  
+  const routeParam=useParams();
+  const [values, setValues] = useState({
+    price:"",
+    ticker:routeParam.assetId?routeParam.assetId: "",
+    fees:"",
+    quantity:0,
+    date:new Date()});
   const [errors, setErrors] = useState({});
   const[addRecurring,setAddRecurring]=useState(false);
-  const[searchOptions,setSearchOptions]=useState([]);
+  const[searchOptions,setSearchOptions]=useState([routeParam.assetId?routeParam.assetId: null]);
   const {userEmail,portfolios,updatePortfolio,setTransactionTrigger,transactionTrigger}=useContext(UserContext);
   // on element change, unwrapped the element into name and value, the set values, while the rest remains the same
   const handleInputChange = (e) => {
@@ -114,6 +121,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
       <Box sx={{ margin: "0px 20px 20px 20px", fontWeight: "bold" }}> Buy Order </Box>
       <Container>
       <Autocomplete
+          defaultValue={values.ticker}
           fullWidth
           disablePortal
           disableCloseOnSelect
@@ -143,7 +151,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           helperText={errors?.price}
           label="Price Per Unit"
           name="price"
-          value={values?.price}
+          value={values.price}
           onChange={handleInputChange}
         />
         <TextField
@@ -155,7 +163,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           variant="outlined"
           label="Quantity"
           name="quantity"
-          value={values?.quantity}
+          value={values.quantity}
           onChange={handleInputChange}
         />
         <TextField
@@ -172,7 +180,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           }}
           label="Fees"
           name="fees"
-          value={values?.fees}
+          value={values.fees}
           onChange={handleInputChange}
         />
         <FormControl sx={{width:"100%", marginBottom:"10px"}}>
@@ -184,7 +192,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           required
           sx={{width:"100%"}}
           label="Date"
-          value={values?.date}
+          value={values.date}
           error={!!errors.date}
           helperText={errors?.date}
           name="date"
@@ -222,7 +230,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
             error={!!errors.frequency}
             helperText={errors?.frequency}
             name="frequency"
-            value={values?.frequency}
+            value={values.frequency}
             onChange={handleInputChange}
           >
             <MenuItem value="monthly"> Monthly </MenuItem>
