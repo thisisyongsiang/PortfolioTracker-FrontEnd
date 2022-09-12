@@ -2,6 +2,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { numberWithCommas } from "../util/util";
 import { computeAssetNetReturn, computeAssetPnL } from "../util/financeComputations";
+import { useNavigate } from "react-router-dom";
 
 const AssetTableCardForPortfolio = ({ content }) => {
 //   const [open, setOpen] = React.useState(false);
@@ -31,9 +32,15 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
   let netReturn = computeAssetNetReturn(transactions?transactions.transactions:[], value)
   let netPnL = computeAssetPnL(transactions?transactions.transactions:[], value)
 
+  let navigate = useNavigate()
+  const routeChange = (path) => {
+      navigate(path)
+  }
+
   return (
       <div
         className="card mx-1"
+        onClick={() => routeChange(content.route)}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -43,6 +50,7 @@ let {quantity, regularMarketPrice, shortName, symbol, transactions, value} = con
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",
+          cursor: "pointer"
         }}
       >
         <div

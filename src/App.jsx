@@ -5,7 +5,7 @@ import "./App.css";
 import { withAuth0 } from "@auth0/auth0-react";
 import Login from "./auth0/login";
 import { addUser, getUser } from "./users/userApi";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import UserProfile from "./Pages/UserProfile";
 import UserSettings from "./Pages/UserSettings";
 import Feedback from "./Pages/Feedback";
@@ -60,6 +60,7 @@ class App extends React.Component {
     }
   }
   render() {
+
     const { isAuthenticated ,isLoading } = this.props.auth0;
     if (!isAuthenticated&&!isLoading ) {
       return         <Landingpage />
@@ -81,7 +82,7 @@ class App extends React.Component {
           <div className="row  overflow-auto" style={{ height: "90vh" }}>
             <div className="col-12 col-sm-2 col-xl-2  d-flex sticky-top p-0">
               <div className="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start text-white">
-                <Sidebar user={this.state.userMongo} />
+                <Sidebar user={this.state.userMongo}/>
               </div>
             </div>
             <div className="col-sm-10 d-flex flex-column h-sm-100">
