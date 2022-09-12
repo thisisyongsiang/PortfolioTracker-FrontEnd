@@ -4,6 +4,7 @@ import * as d3 from "d3";
 import { PlotLine } from "./PlotLine";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
+import { VerticalMarkerChart } from "./VerticalMarkerChart";
 
 
 export const LineChart=({
@@ -23,7 +24,9 @@ export const LineChart=({
     dynamicWidth=false,
     xValue=d=>d,
     yValue=d=>d,
-    yAxisFormat=d=>d
+    yAxisFormat=d=>d,
+    verticalMarkers=null,
+    vertMarkerFormat=d=>d,
 })=>{
     const [dotPosition,setDotPosition]=useState(null);
     const containerRef=useRef(width);
@@ -94,7 +97,15 @@ export const LineChart=({
                     yScale={yScale}
                     innerWidth={innerWidth} />
                 }
+                {verticalMarkers&&
+                <VerticalMarkerChart 
+                    data={verticalMarkers}
+                    innerHeight={innerHeight}
+                    xScale={xScale}
+                    xValue={xValue}
+                    vertMarkerFormat={vertMarkerFormat}
 
+                />}
                 <text className="axisLabel"x={innerWidth/2} y={innerHeight+35}>{displayTitle}</text>
                 <PlotLine 
                     data={data}

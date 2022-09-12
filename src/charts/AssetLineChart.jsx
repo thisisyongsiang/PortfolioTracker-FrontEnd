@@ -21,7 +21,10 @@ export function AssetLineChart({
     dynamicWidth=false,
     yAxisFormat=d=>d,
     endDate,
-    startDate}){
+    startDate,
+    verticalMarkers=null,
+    vertMarkerFormat=d=>d,
+}){
     const data = useGetQuoteData(ticker,startDate,endDate,quoteInterval);
     return <LineChart 
         data={data}
@@ -43,5 +46,7 @@ export function AssetLineChart({
         xValue={d=>new Date(d.date)}
         yValue={d=>d.close}
         yAxisFormat={yAxisFormat}
+        verticalMarkers={verticalMarkers}
+        vertMarkerFormat={vertMarkerFormat}
     />
 }
