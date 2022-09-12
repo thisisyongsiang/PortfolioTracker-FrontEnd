@@ -130,17 +130,18 @@ svg{
 #assetPage #portfolioName{
     color:#a1a1a1
 }
-#assetPage .bdisplay{
-    min-width: 200px;
+ .bdisplay{
+    margin-bottom: 10px;
+    min-width: 100px;
     background-color: #FBFCFF;
 }
-#assetPage .bdisplay:hover{
-    min-width: 200px;
+ .bdisplay:hover{
+    min-width: 100px;
     transform: scale(1.05);
     background-color: #B9C4E2;
 }
-#assetPage .bdisplay.bactive{
-    min-width: 200px;
+.bdisplay.bactive{
+    min-width: 100px;
     background-color: #B9C4E2;
 }
 #transactionPaper{

@@ -14,7 +14,7 @@ import AssetTableCardForAsset from "./AssetTableCard_Asset"
 import { TransactionButton } from './Transactions/TransactionButton';
 import { UserContext } from "../util/context";
 
-const AssetTable = ({ mode, data }) => {
+const AssetTable = ({ mode, data,misc }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = React.useState(false);
   const {portfolios}=useContext(UserContext);
@@ -205,9 +205,9 @@ const AssetTable = ({ mode, data }) => {
             if (mode === "Overall Portfolio") {
               return <AssetTableCard content={e} />;
             } else if (mode === "Single Portfolio") {
-                return <AssetTableCardForPortfolio content={e} />;
+                return <AssetTableCardForPortfolio content={e} portfolioName={misc}/>;
             } else if (mode === "Single Asset") {
-                return <AssetTableCardForAsset content={e} />;
+                return <AssetTableCardForAsset content={e} portfolioName={misc} />;
             }
           })}
       </div>

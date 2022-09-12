@@ -45,3 +45,31 @@ export function searchAsset(search){
         return [];
     });
 }
+export function getStockSplit(symbol,startDate){
+    return axiosInstance.request({
+        url:'financeapi/split/'+symbol,
+        method:'get',
+        params:{
+            startdate:startDate,
+        }
+    }).then((res)=>{
+        return res.data;
+    }).catch(err=>{
+        console.error('error occurred '+err );
+        return [];
+    });
+}
+export function getDividend(symbol,startDate){
+    return axiosInstance.request({
+        url:'financeapi/dividend/'+symbol,
+        method:'get',
+        params:{
+            startdate:startDate,
+        }
+    }).then((res)=>{
+        return res.data;
+    }).catch(err=>{
+        console.error('error occurred '+err );
+        return [];
+    });
+}

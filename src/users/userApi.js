@@ -23,11 +23,12 @@ export function addUser(user) {
       return null;
     });
 }
-export function addUserPortfolio(email,portfolioName,buy=[],sell=[]) {
+export function addUserPortfolio(email,portfolioName,buy=[],sell=[],cash=[]) {
   let pf={emailAddress:email,
     portfolio: portfolioName,
     buy:buy,
-    sell: sell
+    sell: sell,
+    cash:cash
   }
   return axiosInstance
     .post(url + "portfolio/add", pf, {
@@ -222,6 +223,7 @@ export function deleteUserPortfolioTransaction(email,portfolioName,transactionTy
     transactionType:transactionType,
     transaction:transaction
   }
+  console.log('hello');
   return axiosInstance
     .put(url+"portfolio/transaction/del",body,{
       headers: {

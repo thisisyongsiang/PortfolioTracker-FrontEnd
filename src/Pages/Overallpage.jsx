@@ -19,6 +19,7 @@ import {
 } from "../util/financeComputations";
 import { useContext } from "react";
 import { UserContext } from "../util/context";
+import { MultiLineChart } from "../charts/MulitLineChart";
 
 export const Overallpage = () => {
 
@@ -27,6 +28,8 @@ export const Overallpage = () => {
     useState(null);
   const[{overallPfValue,portfoliosHistory,portfolioList,lineChartWidth},setPfInfo]=
   useState({overallPfValue:0,portfoliosHistory:null,portfolioList:[],lineChartWidth:1000});
+  const selectDisplay=useRef(null);
+  const[displayChartType,setDisplayChartType]=useState("overallValue");
 
   const {userEmail,portfolios}=useContext(UserContext);
   useEffect(() => {
@@ -100,10 +103,25 @@ export const Overallpage = () => {
   if(portfoliosHistory){
     portfolioVolatility = computeVolatility(portfoliosHistory);
   }
-
+  const handleChangeDisplay=(e)=>{   
+    for(let child of selectDisplay.current.childNodes){
+      if(child===e.target){
+        child.classList.add("bactive");
+      }
+      else{
+        child.classList.remove("bactive");
+      }
+    }
+    if (e.target.id==='overallValue'){
+      setDisplayChartType("overallValue");
+    }
+    else{
+      setDisplayChartType("allAssets");
+    }
+   };
   return (
     <React.Fragment>
-      <Container id="container">
+      <Container id="container"  maxWidth={false}>
         <div className="position-relative mt-2">
           <div>
             <h2>
@@ -126,8 +144,18 @@ export const Overallpage = () => {
             </div>
           </div>
         </div>
+        {/* <div className="d-grid col-3" ref={selectDisplay}>
+        <button  className="btn btn-light me-1 bdisplay bactive" id="overallValue" onClick={handleChangeDisplay}>
+          Portfolio Value
+        </button>    
+        <button className="btn btn-light me-1 bdisplay" id="allAssets"  onClick={handleChangeDisplay}>
+          Display all Asset Value
+        </button>    
+      </div> */}
         <div className="row">
           <div className="col p-0" ref={lineChartContainer}>
+            
+          {displayChartType==="overallValue"&&
             <LineChart
               data={portfoliosHistory}
               dynamicWidth={true}
@@ -141,7 +169,10 @@ export const Overallpage = () => {
               displayTitle="OverallPortfolio"
               yAxisFormat={(d) => `$${numberWithCommas(d.toFixed(2))}`}
             />
+  }
+
           </div>
+          
         </div>
         <hr />
         <AssetTable

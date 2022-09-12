@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "@mui/system";
 import { LineChart } from "../charts/LineChart";
 import AssetTable from "../Components/AssetTable";
@@ -22,60 +22,65 @@ import {
   computeVolatility,
   computeAssetAnnualisedReturns,
 } from "../util/financeComputations";
+import { UserContext } from "../util/context";
 
 
-export const Assetpage=(user)=>{
-  const userData=user.user;
+export const Assetpage=()=>{
+  const{userEmail,transactionTrigger}=useContext(UserContext);
   const {assetId,portfolioId}=useParams();
-  const [assetValue,setAssetValue]=useState(0);
-  const [transactions,setTransactions]=useState(null);
-  const [assetValueHistory,setAssetValueHistory]=useState([]);
-  const [assetQuote,setAssetQuote]=useState(null);
   const lineChartContainer=useRef(null);
-  const [lineChartWidth,setLineChartWidth]=useState(1000);
+  const navigate= useNavigate();
+  const[{assetQuote,assetValueHistory,transactions,lineChartWidth,assetValue},setAssetObj]=useState({
+    assetQuote:null,
+    assetValueHistory:null,
+    transactions:null,
+    lineChartWidth:1000,
+    assetValue:0
+  });
 
   const[displayChartType,setDisplayChartType]=useState(true);
 
   const selectDisplay=useRef(null);
   useEffect(()=>{
-    if(lineChartContainer.current){
-      setLineChartWidth(lineChartContainer.current.offsetWidth);
-    }
-    if (userData && assetId && portfolioId) {
-      getAssetQuote(assetId).then((q) => {
-        setAssetQuote(q);
-      });
-      getUserPortfolioOneAssetHistoricalValue(
-        userData.emailAddress,
-        portfolioId,
-        assetId,
-        new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-        new Date()
-      ).then((d) => {
-        setAssetValueHistory(d);
-      });
-      getUserPortfolioAssetsTransactions(
-        userData.emailAddress,
-        portfolioId,
-        assetId
-      ).then((d) => {
-        setTransactions(d);
-      });
-      getUserPortfolioOneAssetValue(
-        userData.emailAddress,
-        portfolioId,
-        assetId
-      ).then((d) => {
-        setAssetValue(d.value);
-      });
-    }
-  }, [userData, assetId, portfolioId]);
+    if (userEmail && assetId && portfolioId&&lineChartContainer.current) {
+      (async()=>{ 
+        let quote = await getAssetQuote(assetId);
+        let histVal=await getUserPortfolioOneAssetHistoricalValue(
+          userEmail,
+          portfolioId,
+          assetId,
+          new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          new Date()
+        );
+        let t=await getUserPortfolioAssetsTransactions(
+          userEmail,
+          portfolioId,
+          assetId
+        );
 
-  let netReturn = computeAssetNetReturn(transactions?transactions.transactions:[], assetValue)
-  let netPnL = computeAssetPnL(transactions?transactions.transactions:[], assetValue)
-  let annualisedReturn = computeAssetAnnualisedReturns(transactions?transactions.transactions:[], assetValue)
-  let assetVolatility = computeVolatility(assetValueHistory)
+        let aVal=await getUserPortfolioOneAssetValue(
+          userEmail,
+          portfolioId,
+          assetId
+        );
+          
+        setAssetObj({
+          assetQuote:quote,
+          assetValueHistory:histVal,
+          transactions:t,
+          lineChartWidth:lineChartContainer.current.offsetWidth,
+          assetValue:aVal.value
+        })
 
+      })();
+    }
+  }, [userEmail, assetId, portfolioId,transactionTrigger]);
+
+
+  let netReturn = transactions?computeAssetNetReturn(transactions.transactions, assetValue):0;
+  let netPnL = transactions?computeAssetPnL(transactions.transactions, assetValue):0;
+  let annualisedReturn = transactions?computeAssetAnnualisedReturns(transactions.transactions, assetValue):0;
+  let assetVolatility = assetValueHistory?computeVolatility(assetValueHistory):0;
  const handleChangeDisplay=(e)=>{   
   for(let child of selectDisplay.current.childNodes){
     if(child===e.target){
@@ -92,18 +97,22 @@ export const Assetpage=(user)=>{
     setDisplayChartType(false);
   }
  };
+ if(transactions?.transactions.length===0){
+  navigate(`/portfolio/${portfolioId}`);
+ }
   return (
     <React.Fragment>
-      <Container id="assetPage">
+      <Container id="assetPage"  maxWidth={false}>
         <div className="position-relative mt-2">
           <div>
-          <h5 id="portfolioName">
-            Portfolio {portfolioId}
-          </h5>
-            <h2>
+          <h2>
+            {portfolioId}
+            <br />
+          </h2>
+            <h3>
               {assetQuote ? assetQuote["shortName"] : "Asset"} Value:
               <br />${numberWithCommas(assetValue.toFixed(2))}
-            </h2>
+            </h3>
           </div>
           <div className="position-absolute top-0 end-0">
             <div className="d-flex h-100 p-1">
@@ -168,7 +177,7 @@ export const Assetpage=(user)=>{
           Current Price: $
           {assetQuote ? assetQuote["regularMarketPrice"].toFixed(2) : "0.00"}
         </h4>
-        < AssetTable data={transactions?transactions.transactions:[]} mode={"Single Asset"}/>
+        < AssetTable data={transactions?transactions.transactions:[]} mode={"Single Asset"} misc={portfolioId} />
         {/* <ul className="list-group">
           {transactions &&
             transactions.transactions.map((t) => {

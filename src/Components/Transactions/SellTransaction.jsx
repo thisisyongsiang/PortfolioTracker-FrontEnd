@@ -45,9 +45,10 @@ export const SellTransaction = ({closeFn,portfolioName}) => {
     temp.quantity = /^[0-9]+\.?[0-9]*$/.test(values.quantity)
       ? ""
       : "Quantity is not valid.";
-    temp.quantity=values.quantity<=pfAssets.quantity
-      ?temp.quantity
-      : "Quantity more than available"
+      console.log(pfAssets.quantity);
+    // temp.quantity=values.quantity<=pfAssets.quantity
+    //   ?temp.quantity
+    //   : "Quantity more than available"
     temp.fees = /^[0-9]+\.?[0-9]*$/.test(values.fees)
       ? ""
       : "Fees is not valid.";
