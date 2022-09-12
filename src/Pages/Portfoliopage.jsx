@@ -166,11 +166,11 @@ return (
             </div>
           </div>
         <hr />
-        <div className="d-flex flex-row-reverse p-2">
+        <div className="d-flex flex-row" style={{alignItems: "center"}}>
           <div className="dropdown">
           <BsFillGearFill 
           onClick={handleSettingsClicked} 
-          style={{cursor:'pointer'}} 
+          style={{cursor:'pointer', color: "#3c158c"}}
           id="setting-button"
           aria-controls={open ? 'setting-menu' : undefined}
           aria-haspopup="true"
@@ -190,6 +190,7 @@ return (
 
           </Menu>
           </div>
+          <div style={{marginLeft: "5px", color: "gray", fontSize: '1.1vw'}}>Edit/Delete Portfolio</div>
         </div>
 
 

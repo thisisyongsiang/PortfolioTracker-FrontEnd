@@ -12,6 +12,7 @@ import { Settings } from "@mui/icons-material";
 import { Logout } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import altImage from "../profile-icon.png";
 
 export default function ProfileMenu() {
   const { user, logout } = useAuth0();
@@ -35,9 +36,9 @@ export default function ProfileMenu() {
           aria-expanded={open ? "true" : undefined}
         >
           <img
-            src={user.picture}
-            alt="Generic placeholder"
-            style={{ width: "60px", borderRadius: "10px", float: "right" }}
+            src={user.picture?user.picture:altImage}
+            alt="user profile"
+            style={{ width: "60px", borderRadius: "10px", float: "right", color: "white" }}
           />
         </IconButton>
       </Tooltip>
