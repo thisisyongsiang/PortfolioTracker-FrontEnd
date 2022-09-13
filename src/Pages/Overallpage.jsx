@@ -180,6 +180,8 @@ export const Overallpage = () => {
           data={individualPortfolioStats}
           mode="Overall Portfolio"
         />
+        <br />
+        <br />
       </Container>
     </React.Fragment>
   );
