@@ -44,7 +44,7 @@ This action is not reversible!
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px"
+    fontSize: "20px",
   };
   return (
       deleted?<></>:
@@ -85,7 +85,8 @@ This action is not reversible!
             width: "30%",
             verticalAlign: "middle",
             justifyContent: "left",
-            padding: "0",}} 
+            padding: "0",
+            overflow:"hidden",}} 
             ref={chartTableWidth}>
 
               <LineChart

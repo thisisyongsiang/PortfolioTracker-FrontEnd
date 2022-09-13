@@ -113,10 +113,11 @@ This action is not reversible!
             alignContent: "center",
           }}
         >
-          <div className="subHeader" style={  {  
+          <div className="subHeader" style={  { 
             width: "30%",
             verticalAlign: "middle",
             justifyContent: "left",
+            overflow:"hidden",
             padding: "0",}} 
             ref={chartTableWidth}>
           <AssetLineChart
