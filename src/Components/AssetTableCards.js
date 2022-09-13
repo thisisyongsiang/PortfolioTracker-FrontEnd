@@ -80,13 +80,15 @@ This action is not reversible!
             alignContent: "center",
           }}
         >
+                        <Tooltip title="1 Month Portfolio value">
           <div className="subHeader" style={  {  
             width: "30%",
             verticalAlign: "middle",
             justifyContent: "left",
             padding: "0",}} 
             ref={chartTableWidth}>
-          <LineChart
+
+              <LineChart
               data={content.portfolioHistory}
               dynamicWidth={true}
               displayDiff={true}
@@ -101,7 +103,9 @@ This action is not reversible!
               displayXTicks={false}
               displayYTicks={false}
              />
+
           </div>
+          </Tooltip>
           <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             ${numberWithCommas(content.value.toFixed(0))}
           </div>

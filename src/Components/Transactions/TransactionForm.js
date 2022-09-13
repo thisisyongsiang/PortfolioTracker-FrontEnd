@@ -40,7 +40,7 @@ export const TransactionForm = ({portfolioName,closeFn}) => {
     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
         <Tab label="Buy"  id={`tab`} />
         <Tab label="Sell"  id={`tab`}/>
-        <Tab label="Transfer"  id={`tab`}/>
+        {/* <Tab label="Transfer"  id={`tab`}/> */}
     </Tabs>
     </Box>
         {value===0&&
