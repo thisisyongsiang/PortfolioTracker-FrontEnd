@@ -49,13 +49,13 @@ This action is not reversible!
 
   return (
       <div
-        className="card mx-1"
+        className="card"
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           width: "100%",
-          margin: "10px",
+          margin: "10px 0px",
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",

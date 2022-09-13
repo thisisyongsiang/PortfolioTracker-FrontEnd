@@ -84,14 +84,14 @@ This action is not reversible!
   return (
     <>
       <div
-        className="card mx-1"
+        className="card"
         onClick={cardClicked}
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           width: "100%",
-          margin: "10px",
+          margin: "10px 0px",
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",
@@ -149,7 +149,7 @@ This action is not reversible!
           <div className="subHeader" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
             {netPnL>0?`$${numberWithCommas(netPnL.toFixed(0))}`:`-$${numberWithCommas(netPnL.toFixed(0)*-1)}`}
           </div>
-          <div className="subHeader" style={{...cardStyleWithoutWidthOrMargin, margin: "auto 0px auto 15px", width: "15%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
+          <div className="subHeader" style={{...cardStyleWithoutWidthOrMargin, margin: "auto", width: "20%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             {numberWithCommas(netReturn.toFixed(1))}%
           </div>
 
@@ -160,7 +160,7 @@ This action is not reversible!
             verticalAlign: "middle",
             justifyContent: "center",
             textAlign: "center",
-            padding: "20px",
+            padding: "0px",
             margin: "auto",
           }}
         >
