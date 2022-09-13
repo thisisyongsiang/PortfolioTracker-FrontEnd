@@ -62,15 +62,15 @@ This action is not reversible!
         }}
       >
         <div
-          className="card-body mainName"
-          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : (type==="sell"? "red": "black")}}
+          // className="card-body mainName"
+          style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : (type==="sell"? "red": "black")}}
         >
           {type ? type.toUpperCase() : ""}
         </div>
         <div
           className="remainingHeaders"
           style={{
-            width: "80%",
+            width: "100%",
             display: "flex",
             justifyContent: "center",
             alignContent: "center",

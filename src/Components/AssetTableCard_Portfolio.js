@@ -10,18 +10,20 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip, Button } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { deleteUserPortfolioOneAsset } from "../users/userApi";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserContext } from "../util/context";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Transaction } from "./Transactions/Transaction";
 import DialogActions from "@mui/material/DialogActions";
+import { AssetLineChart } from "../charts/AssetLineChart";
 
 const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
   const [open, setOpen] = useState(false);
   let navigate = useNavigate();
   const { userEmail, transactionTrigger, setTransactionTrigger } =
     useContext(UserContext);
+  const chartTableWidth=useRef();
   //   const [open, setOpen] = React.useState(false);
   //   const handleClickOpen = () => {
   //     setOpen(true);
@@ -79,84 +81,75 @@ This action is not reversible!
     }
   };
   return (
-    <div
-      className="card mx-1"
-      onClick={() => routeChange(content.route)}
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%",
-        margin: "10px",
-        background: "#F1F1F1",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
-        borderRadius: "10px",
-        cursor: "pointer",
-      }}
-    >
       <div
-        className="card-body mainName"
+        className="card mx-1"
+        onClick={() => routeChange(content.route)}
         style={{
-          width: "40%",
-          verticalAlign: "middle",
-          margin: "auto",
-          paddingLeft: "16px",
-        }}
-      >
-        {shortName ? `${shortName} (${symbol})` : ""}
-      </div>
-      <div
-        className="remainingHeaders"
-        style={{
-          width: "80%",
           display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+          margin: "10px",
+          background: "#F1F1F1",
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
+          borderRadius: "10px",
+          cursor: "pointer"
         }}
       >
-        <div className="subHeader" style={cardStyle}>
-          Chart Placeholder
-        </div>
-        <div className="subHeader" style={{ ...cardStyle, fontWeight: "bold" }}>
-          ${numberWithCommas(regularMarketPrice.toFixed(2))}
-        </div>
         <div
-          className="subHeader"
-          style={{ ...cardStyle, fontWeight: "bold", paddingLeft: "2px" }}
+          // className="card-body mainName"
+          style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
-          {numberWithCommas(quantity.toFixed(1))}
+          {shortName ? `${shortName} (${symbol})`: ""}
         </div>
         <div
-          className="subHeader"
-          style={{ ...cardStyle, fontWeight: "bold", paddingLeft: "2px" }}
-        >
-          ${numberWithCommas(value.toFixed(2))}
-        </div>
-        <div
-          className="subHeader"
+          className="remainingHeaders"
           style={{
-            ...cardStyle,
-            color: netPnL > 0 ? "#2C7E12" : "red",
-            fontWeight: "bold",
-            paddingLeft: "2px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
           }}
         >
-          {netPnL > 0
-            ? `$${numberWithCommas(netPnL.toFixed(0))}`
-            : `-$${numberWithCommas(netPnL.toFixed(0) * -1)}`}
-        </div>
-        <div
-          className="subHeader"
-          style={{
-            ...cardStyleWithoutWidthOrMargin,
-            margin: "auto 0px auto 15px",
-            width: "15%",
-            color: netReturn > 0 ? "#2C7E12" : "red",
-            fontWeight: "bold",
-          }}
-        >
-          {numberWithCommas(netReturn.toFixed(1))}%
-        </div>
+          <div className="subHeader" style={  {  
+            width: "30%",
+            verticalAlign: "middle",
+            justifyContent: "left",
+            padding: "0",}} 
+            ref={chartTableWidth}>
+          <AssetLineChart
+             ticker={symbol}  
+             displayDiff={true}
+             dynamicWidth={true}
+             trackMouse={false}
+             margin={{right:10,left:10,bottom:10,top:10}}
+             lineWidth='2px'
+             width={chartTableWidth.current?chartTableWidth.current.offsetWidth:200}   
+             height={80}   
+             quoteInterval='1wk'
+             yAxisTicks={0}
+             yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
+             endDate={new Date()}
+             startDate={new Date(new Date().setFullYear(new Date().getFullYear()-1))}
+             displayXTicks={false}
+             displayYTicks={false}
+             />
+          </div>
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
+            ${numberWithCommas(regularMarketPrice.toFixed(2))}
+          </div>
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            {numberWithCommas(quantity.toFixed(1))}
+          </div>
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            ${numberWithCommas(value.toFixed(2))}
+          </div>
+          <div className="subHeader" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
+            {netPnL>0?`$${numberWithCommas(netPnL.toFixed(0))}`:`-$${numberWithCommas(netPnL.toFixed(0)*-1)}`}
+          </div>
+          <div className="subHeader" style={{...cardStyleWithoutWidthOrMargin, margin: "auto 0px auto 15px", width: "15%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
+            {numberWithCommas(netReturn.toFixed(1))}%
+          </div>
 
         <div
           className="actionIcons"

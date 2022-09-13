@@ -264,7 +264,8 @@ export function getUserPortfolioHistoricalValue(
   email,
   portfolioName,
   startDate,
-  endDate
+  endDate,
+  interval="1d"
 ) {
 
   return axios
@@ -274,6 +275,7 @@ export function getUserPortfolioHistoricalValue(
         portfolioName: portfolioName,
         startDate: startDate,
         endDate: endDate,
+        interval:interval
       },
     })
     .then((res) => {
@@ -291,7 +293,8 @@ export function getUserPortfolioHistoricalValue(
 export function getUserOverallPortfolioHistoricalValue(
   email,
   startDate,
-  endDate
+  endDate,
+  interval="1d"
 ) {
 
   return axios
@@ -300,6 +303,7 @@ export function getUserOverallPortfolioHistoricalValue(
         email: email,
         startDate: startDate,
         endDate: endDate,
+        interval:interval
       },
     })
     .then((res) => {
@@ -443,6 +447,7 @@ export function getUserPortfolioOneAssetHistoricalValue(
   assetSymbol,       
   startDate,
   endDate,
+  interval="1d"
 ) {
   return axios
     .get(url + "portfolio/selectoneasset/timeperiod", {
@@ -452,6 +457,7 @@ export function getUserPortfolioOneAssetHistoricalValue(
         assetSymbol:assetSymbol,
         startDate: startDate,
         endDate: endDate,
+        interval:interval
       },
     })
     .then((res) => {
