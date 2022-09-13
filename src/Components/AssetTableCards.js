@@ -121,7 +121,7 @@ This action is not reversible!
           ref={chartTableWidth}
           style={{
             ...cardStyle,
-            color: content.value > 0 ? "#2C7E12" : "red",
+            color: "black",
             fontWeight: "bold",
           }}
         >
