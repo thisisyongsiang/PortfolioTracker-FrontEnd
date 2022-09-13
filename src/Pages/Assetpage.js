@@ -57,7 +57,7 @@ export const Assetpage=()=>{
           portfolioId,
           assetId
         );
-
+        
         let aVal=await getUserPortfolioOneAssetValue(
           userEmail,
           portfolioId,
@@ -193,7 +193,11 @@ export const Assetpage=()=>{
           Current Price: $
           {assetQuote ? assetQuote["regularMarketPrice"].toFixed(2) : "0.00"}
         </h4>
-        < AssetTable data={transactions?transactions.transactions:[]} mode={"Single Asset"} misc={portfolioId} />
+        < AssetTable data={transactions?transactions.transactions:[]} 
+        mode={"Single Asset"}
+         misc={{portfolioName:portfolioId,
+          assetDisplay:`${assetId},${assetQuote?.shortName}`
+        }} />
         {/* <ul className="list-group">
           {transactions &&
             transactions.transactions.map((t) => {

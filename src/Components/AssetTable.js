@@ -18,6 +18,7 @@ const AssetTable = ({ mode, data,misc }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = React.useState(false);
   const {portfolios}=useContext(UserContext);
+  let asset=null;
   //   const [individualPortfolioStats, setIndividualPortfolioStats] = useState(null);
   let assetTableTitle = "Portfolio Holdings";
   let buttonText = "ADD TRANSACTIONS";
@@ -53,6 +54,7 @@ const AssetTable = ({ mode, data,misc }) => {
       "Net PnL",
       "Net Return",
     ];
+    
   }
 
   const handleClickOpen = () => {
@@ -105,7 +107,7 @@ const AssetTable = ({ mode, data,misc }) => {
             {assetTableTitle}
           </h2>
           <TransactionButton 
-          
+          asset={misc.assetDisplay}
           buttonText={buttonText}/>
         </div>
 
@@ -208,9 +210,9 @@ const AssetTable = ({ mode, data,misc }) => {
             if (mode === "Overall Portfolio") {
               return <AssetTableCard content={e} />;
             } else if (mode === "Single Portfolio") {
-                return <AssetTableCardForPortfolio content={e} portfolioName={misc}/>;
+                return <AssetTableCardForPortfolio content={e} portfolioName={misc.portfolioName}/>;
             } else if (mode === "Single Asset") {
-                return <AssetTableCardForAsset content={e} portfolioName={misc} />;
+                return <AssetTableCardForAsset content={e} portfolioName={misc.portfolioName} />;
             }
           })}
       </div>
