@@ -18,7 +18,7 @@ const AssetTableCardForAsset = ({ content,portfolioName }) => {
 //     setOpen(false);
 //   };
 const {userEmail,transactionTrigger,setTransactionTrigger}=useContext(UserContext);
-let {date, price, quantity, ticker, type} = content;
+let {date, price, quantity, value, ticker, type} = content;
 const handleDelete=()=>{
   let confirmDelete=window.confirm(`Delete Transaction : ${ticker}: ${type} | ${new Date(date).toDateString()}?
 This action is not reversible!
@@ -77,10 +77,13 @@ This action is not reversible!
           }}
         >
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
-            {numberWithCommas(quantity.toFixed(1))}
+            {quantity?numberWithCommas(quantity.toFixed(1)):"NA"}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
-            ${numberWithCommas(price.toFixed(2))}
+            ${price?numberWithCommas(price.toFixed(2)):"NA"}
+          </div>
+          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+            ${value?numberWithCommas(value.toFixed(2)):"NA"}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
             {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()}`}

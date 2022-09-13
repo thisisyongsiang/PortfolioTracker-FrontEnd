@@ -112,15 +112,16 @@ export function computeAssetAnnualisedReturns(transactions, assetValue) {
   let cashflowAndTiming = [];
 try {
   transactions.forEach((t) => {
-    t.type && t.type === "buy"
-      ? cashflowAndTiming.push({
-          amount: t.quantity * t.price * -1,
+    if (t.type && t.type === "buy") {
+      cashflowAndTiming.push({
+          amount: t.value * -1,
           when: new Date(t.date),
-        })
-      : cashflowAndTiming.push({
-          amount: t.quantity * t.price,
+        })}
+    else {
+          cashflowAndTiming.push({
+          amount: t.value,
           when: new Date(t.date),
-        });
+        })}
   });
 
   cashflowAndTiming.push({

@@ -39,7 +39,7 @@ const AssetTable = ({ mode, data,misc }) => {
     assetTableTitle = "Asset Transactions";
     buttonText = "ADD TRANSACTION";
     searchLabel = "Search for your asset";
-    tableHeaders = ["Transaction", "Quantity", "Price", "Date"];
+    tableHeaders = ["Transaction", "Quantity", "Price", "Value", "Date"];
   } else {
     assetTableTitle = "Portfolio Holdings";
     buttonText = "ADD TRANSACTION";
@@ -76,7 +76,7 @@ const AssetTable = ({ mode, data,misc }) => {
       );
     } else if (mode === "Single Asset") {
       return data.filter(
-          (p) => p.price.toString().includes(search) || p.type.toLowerCase().includes(search.toLowerCase()) || p.quantity.toString().includes(search)
+          (p) => (p.price&&p.price.toString().includes(search)) || p.type.toLowerCase().includes(search.toLowerCase()) || (p.quantity&&p.quantity.toString().includes(search)) || (p.value&&p.value.toString().includes(search))
       );
     }
   };
