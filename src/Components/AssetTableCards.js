@@ -151,6 +151,16 @@ This action is not reversible!
         >
           {content.netReturn.toFixed(1)}%
         </div>
+        <div
+          className="subHeader"
+          style={{
+            ...cardStyle,
+            color: content.volatility < 1 ? "#2C7E12" : "red",
+            fontWeight: "bold",
+          }}
+        >
+          {content.volatility.toFixed(1)}%
+        </div>
 
         <div
           className="actionIcons"
