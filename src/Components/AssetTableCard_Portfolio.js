@@ -188,7 +188,7 @@ This action is not reversible!
     </div>
     <Dialog open={open} onClose={handleClose}
     >
-    <DialogContent> <Transaction 
+    <DialogContent> <Transaction asset={`${symbol},${shortName} `}
       closeFn={handleClose}/> </DialogContent>
         <Button id="transactionCloseButton" onClick={handleClose} startIcon={<CancelIcon />}> </Button>
     </Dialog>

@@ -21,20 +21,18 @@ import { searchAsset } from "../../FinanceRoutes/financeAPI";
 import { useContext } from "react";
 import { UserContext } from "../../util/context";
 import { addUserPortfolioTransaction } from "../../users/userApi";
-import { useParams } from "react-router-dom";
 
 
-export const BuyTransaction = ({closeFn,portfolioName}) => {  
-  const routeParam=useParams();
+export const BuyTransaction = ({closeFn,portfolioName,asset}) => {  
   const [values, setValues] = useState({
     price:"",
-    ticker:routeParam.assetId?routeParam.assetId: "",
+    ticker:asset?asset: "",
     fees:"",
     quantity:0,
     date:new Date()});
   const [errors, setErrors] = useState({});
   const[addRecurring,setAddRecurring]=useState(false);
-  const[searchOptions,setSearchOptions]=useState([routeParam.assetId?routeParam.assetId: null]);
+  const[searchOptions,setSearchOptions]=useState([asset?asset: null]);
   const {userEmail,portfolios,updatePortfolio,setTransactionTrigger,transactionTrigger}=useContext(UserContext);
   // on element change, unwrapped the element into name and value, the set values, while the rest remains the same
   const handleInputChange = (e) => {

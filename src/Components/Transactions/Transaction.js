@@ -4,7 +4,7 @@ import { Paper } from '@mui/material';
 import { AddPortfolioForm } from './AddPortfolioForm';
 import { useParams } from 'react-router-dom';
 import { UserContext } from '../../util/context';
-export const Transaction = ({closeFn}) => {
+export const Transaction = ({closeFn,asset}) => {
   const {userEmail}=useContext(UserContext); 
   const routeParam=useParams();
 
@@ -13,7 +13,7 @@ export const Transaction = ({closeFn}) => {
     <>
     <Paper id="transactionPaper" sx={{minHeight:ht}}>
         {routeParam["portfolioId"]?
-            <TransactionForm closeFn={closeFn} portfolioName={routeParam["portfolioId"]}/>:
+            <TransactionForm closeFn={closeFn} asset={asset} portfolioName={routeParam["portfolioId"]}/>:
             <AddPortfolioForm closeFn={closeFn}/>
         }
         

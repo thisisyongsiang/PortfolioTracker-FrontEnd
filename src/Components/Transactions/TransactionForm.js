@@ -1,30 +1,15 @@
 import { Container } from "@mui/system";
 import {
   Box,
-  Button,
-  TextField,
-  RadioGroup,
-  FormControl,
-  FormLabel,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
-  Radio,
-  Select,
   Tabs,
   Tab,
 } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import React from "react";
 import { BuyTransaction } from "./BuyTransaction";
 import { SellTransaction } from "./SellTransaction";
-import { UserContext } from "../../util/context";
 
 
-export const TransactionForm = ({portfolioName,closeFn}) => {
+export const TransactionForm = ({portfolioName,closeFn,asset}) => {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -44,9 +29,9 @@ export const TransactionForm = ({portfolioName,closeFn}) => {
     </Tabs>
     </Box>
         {value===0&&
-        <BuyTransaction closeFn={closeFn} portfolioName={portfolioName}/>
+        <BuyTransaction closeFn={closeFn} portfolioName={portfolioName}  asset={asset} />
 }        {value===1&&
-        <SellTransaction closeFn={closeFn} portfolioName={portfolioName}/>
+        <SellTransaction closeFn={closeFn} portfolioName={portfolioName} asset={asset}/>
 }
     </Container>
   );

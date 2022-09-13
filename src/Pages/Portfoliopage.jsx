@@ -225,7 +225,7 @@ return (
         </div>
 
 
-        < AssetTable data={allAssetTableStats} mode="Single Portfolio" misc={portfolioId}/>
+        < AssetTable data={allAssetTableStats} mode="Single Portfolio" misc={{portfolioName:portfolioId}}/>
         {openEditDialog&&
         <EditPortfolioForm 
         closeFn={handleCloseEditDialog} 

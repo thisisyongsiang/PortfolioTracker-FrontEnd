@@ -16,20 +16,16 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { deBounce } from "../../util/util";
-import { searchAsset } from "../../FinanceRoutes/financeAPI";
 import { useContext } from "react";
 import { UserContext } from "../../util/context";
 import { addUserPortfolioTransaction, getUserPortfolioAssets } from "../../users/userApi";
-import { useParams } from "react-router-dom";
 
 
-export const SellTransaction = ({closeFn,portfolioName}) => {  
-  const routeParam=useParams();
+export const SellTransaction = ({closeFn,portfolioName,asset}) => {  
 
   const [values, setValues] = useState({
       price:"",
-      ticker:routeParam.assetId?routeParam.assetId: "",
+      ticker:asset?asset: "",
       fees:"",
       quantity:0,
       date:new Date()});
@@ -53,7 +49,6 @@ export const SellTransaction = ({closeFn,portfolioName}) => {
     temp.quantity = /^[0-9]+\.?[0-9]*$/.test(values.quantity)
       ? ""
       : "Quantity is not valid.";
-      console.log(pfAssets.quantity);
     // temp.quantity=values.quantity<=pfAssets.quantity
     //   ?temp.quantity
     //   : "Quantity more than available"

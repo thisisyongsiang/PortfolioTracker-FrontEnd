@@ -33,7 +33,7 @@ export const TransactionButton=({buttonText,asset})=>{
         variant="contained"
     startIcon={<AddCircleOutlineIcon />} onClick={handleClickOpen}>{buttonText}</Button>
     <Dialog open={open} onClose={handleClose}>
-        <DialogContent> <Transaction 
+        <DialogContent> <Transaction  asset={asset}
           closeFn={handleClose}/> </DialogContent>
             <Button id="transactionCloseButton" onClick={handleClose} startIcon={<CancelIcon />}> </Button>
     </Dialog>
