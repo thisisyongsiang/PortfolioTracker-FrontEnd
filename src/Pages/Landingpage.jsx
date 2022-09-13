@@ -62,15 +62,15 @@ function Landingpage() {
     <div className="row text-center">
       <div className="col-md-4">
         <h4 className="service-heading">Multi-Portfolio</h4>
-        <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <p className="text-muted">All-Weather, Wall Street Bets, Retirement Funds</p>
       </div>
       <div className="col-md-4">
         <h4 className="service-heading">Multi-Asset Class</h4>
-        <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <p className="text-muted">Equities, Cryptocurrency, Funds, Derivatives</p>
       </div>
       <div className="col-md-4">
         <h4 className="service-heading">Tracks Buy-Sell-Transfer</h4>
-        <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <p className="text-muted">Individual Buy, Sell, Cash Flow</p>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ function Landingpage() {
     <div className="row">
       <div className="col-lg-12 text-center">
         <h2 className="section-heading text-uppercase">Roadmap</h2>
-        <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h3 className="section-subheading text-muted">The journey begins</h3>
       </div>
     </div>
     <div className="row">
@@ -101,7 +101,7 @@ function Landingpage() {
                 <h4 className="subheading">Phase 1 - Starting Out</h4>
               </div>
               <div className="timeline-body">
-                <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                <p className="text-muted">Portfolio, asset and transaction functionality.</p>
               </div>
             </div>
           </li>
@@ -115,7 +115,7 @@ function Landingpage() {
                 <h4 className="subheading">Phase 2 - Scaling to Multi-Asset</h4>
               </div>
               <div className="timeline-body">
-                <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                <p className="text-muted">Expanding asset Coverage to private funds, cryptocurrency and beyond U.S.</p>
               </div>
             </div>
           </li>
@@ -129,7 +129,7 @@ function Landingpage() {
                 <h4 className="subheading">Phase 3 - Trading Modules</h4>
               </div>
               <div className="timeline-body">
-                <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                <p className="text-muted">Integrate plug-and-play investment strategies</p>
               </div>
             </div>
           </li>
@@ -143,7 +143,7 @@ function Landingpage() {
                 <h4 className="subheading">Phase 4 - Scaling to Derivatives</h4>
               </div>
               <div className="timeline-body">
-                <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                <p className="text-muted">Time to ride the volatility waves!</p>
               </div>
             </div>
           </li>
@@ -166,7 +166,7 @@ function Landingpage() {
     <div className="row">
       <div className="col-lg-12 text-center">
         <h2 className="section-heading text-uppercase">Our Amazing Team</h2>
-        <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h3 className="section-subheading text-muted">Presenting.</h3>
       </div>
     </div>
     <div className="row">
@@ -269,7 +269,7 @@ function Landingpage() {
     </div>
     <div className="row">
       <div className="col-lg-8 mx-auto text-center">
-        <p className="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+        <p className="large text-muted">Ma hola!</p>
       </div>
     </div>
   </div>
@@ -309,7 +309,7 @@ function Landingpage() {
     <div className="row">
       <div className="col-lg-12 text-center">
         <h2 className="section-heading text-uppercase">Contact Us</h2>
-        <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h3 className="section-subheading text-muted">Fill in details below.</h3>
       </div>
     </div>
     <div className="row">
@@ -353,7 +353,7 @@ function Landingpage() {
   <div className="container">
     <div className="row align-items-center">
       <div className="col-md-4">
-        <span className="copyright">Copyright &copy; Your Website 2019</span>
+        <span className="copyright">Copyright &copy; Your Website 2022</span>
       </div>
       <div className="col-md-4">
         <ul className="list-inline social-buttons">
