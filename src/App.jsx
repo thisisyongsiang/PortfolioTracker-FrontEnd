@@ -76,7 +76,7 @@ class App extends React.Component {
         setTransactionTrigger:this.onSetTransactionTrigger,
         updatePortfolio:this.onUpdatePortfolioList}}>
         <div className="container-fluid overflow-hidden ">
-          <div className="row" style={{ boxShadow: "0 0px 5px grey",height: "10vh" }}>
+          <div className="row" style={{ boxShadow: "0 0px 5px grey",height: "10vh", backgroundColor: "rgb(51, 51, 51)" }}>
             <Header />
           </div>
           <div className="row  overflow-auto" style={{ height: "90vh" }}>
