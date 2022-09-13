@@ -44,7 +44,8 @@ export const Overallpage = () => {
           portfolio.portfolio,
           new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
           // startDate,
-          new Date()
+          new Date(),
+          "1wk"
         );
         const route = `/portfolio/${portfolio.portfolio}`
         let output = {

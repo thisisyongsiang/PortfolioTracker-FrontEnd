@@ -4,12 +4,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { numberWithCommas } from "../util/util";
 import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserContext } from "../util/context";
 import { deleteUserPortfolio } from "../users/userApi";
+import { LineChart } from "../charts/LineChart";
 
 const AssetTableCard = ({ content }) => {
-
+  const chartTableWidth=useRef();
   const [deleted,setDeleted]=useState(false);
   const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
   const handleDelete=()=>{
@@ -64,8 +65,8 @@ This action is not reversible!
       >
         
         <div
-          className="card-body mainName"
-          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
+          // className="card-body mainName"
+          style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
           {content.portfolioName ? content.portfolioName : ""}
 
@@ -73,14 +74,33 @@ This action is not reversible!
         <div
           className="remainingHeaders"
           style={{
-            width: "80%",
+            width: "100%",
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
           }}
         >
-          <div className="subHeader" style={cardStyle}>
-            Chart Placeholder
+          <div className="subHeader" style={  {  
+            width: "30%",
+            verticalAlign: "middle",
+            justifyContent: "left",
+            padding: "0",}} 
+            ref={chartTableWidth}>
+          <LineChart
+              data={content.portfolioHistory}
+              dynamicWidth={true}
+              displayDiff={true}
+              trackMouse={false}
+              margin={{right:10,left:10,bottom:10,top:10}}
+              height={80}
+              lineWidth='2px'
+              width={chartTableWidth.current?chartTableWidth.current.offsetWidth:200}    
+              xValue={d=>new Date(d.date)}
+              yValue={d=>d.value}
+              yAxisFormat={d=>`$${numberWithCommas(d.toFixed(2))}`}
+              displayXTicks={false}
+              displayYTicks={false}
+             />
           </div>
           <div className="subHeader" style={{...cardStyle, color: content.value>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             ${numberWithCommas(content.value.toFixed(0))}

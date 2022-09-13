@@ -142,9 +142,9 @@ const AssetTable = ({ mode, data,misc }) => {
           }}
         >
           <div
-            className="card-body mainName"
+            // className="card-body mainName"
             style={{
-              width: "40%",
+              width: "35%",
               verticalAlign: "middle",
               margin: "auto",
               fontSize: "14px",
@@ -157,20 +157,23 @@ const AssetTable = ({ mode, data,misc }) => {
           <div
             className="remainingHeaders"
             style={{
-              width: "80%",
+              width: "100%",
               display: "flex",
               justifyContent: "center",
               alignContent: "center",
-              paddingLeft: "5px",
               fontSize: "14px",
               color: "rgba(54, 56, 60, 0.8)",
             }}
           >
-            {tableHeaders.map((e) => (
-              <div
+            {tableHeaders.map((e) => {
+              let hWidth="20%"
+              if(e==="Chart"){
+                console.log(e);
+                hWidth="30%"}
+              return(<div
                 className="subHeader"
                 style={{
-                  width: "20%",
+                  width: hWidth,
                   verticalAlign: "middle",
                   justifyContent: "center",
                   textAlign: "center",
@@ -181,8 +184,9 @@ const AssetTable = ({ mode, data,misc }) => {
                 }}
               >
                 {e}
-              </div>
-            ))}
+              </div>)
+              }
+            )}
             <div
               className="actionIcons"
               style={{
