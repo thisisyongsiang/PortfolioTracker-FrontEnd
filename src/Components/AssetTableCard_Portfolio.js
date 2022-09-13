@@ -17,6 +17,7 @@ import DialogContent from "@mui/material/DialogContent";
 import { Transaction } from "./Transactions/Transaction";
 import DialogActions from "@mui/material/DialogActions";
 import { AssetLineChart } from "../charts/AssetLineChart";
+import { TransactionButton } from "./Transactions/TransactionButton";
 
 const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
   const [open, setOpen] = useState(false);
@@ -64,10 +65,10 @@ const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
     transactions ? transactions.transactions : [],
     value
   );
+  const cardClicked=()=>{
+    navigate(content.route);
+  }
 
-  const routeChange = (path) => {
-    navigate(path);
-  };
   const handleDelete = () => {
     let confirmDelete =
       window.confirm(`Delete Asset : ${shortName} in ${portfolioName}}?
@@ -81,9 +82,10 @@ This action is not reversible!
     }
   };
   return (
+    <>
       <div
         className="card mx-1"
-        onClick={() => routeChange(content.route)}
+        onClick={cardClicked}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -171,20 +173,7 @@ This action is not reversible!
               }}
             />
           </Tooltip>
-          <Dialog
-            open={open}
-            onClick={(e) => e.stopPropagation()}
-            onClose={handleClose}
-          >
-            <DialogContent>
-              {" "}
-              <Transaction closeFn={handleClose} />{" "}
-            </DialogContent>
 
-            <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-            </DialogActions>
-          </Dialog>
           <Tooltip title="Delete Asset">
             <CancelIcon
               id="deleteCardIcon"
@@ -197,6 +186,13 @@ This action is not reversible!
         </div>
       </div>
     </div>
+    <Dialog open={open} onClose={handleClose}
+    >
+    <DialogContent> <Transaction 
+      closeFn={handleClose}/> </DialogContent>
+        <Button id="transactionCloseButton" onClick={handleClose} startIcon={<CancelIcon />}> </Button>
+    </Dialog>
+    </>
   );
 };
 
