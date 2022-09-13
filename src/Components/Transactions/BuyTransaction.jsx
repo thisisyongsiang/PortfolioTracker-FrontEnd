@@ -130,7 +130,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           options={searchOptions}
           onClose={handleTicker}
           filterOptions={(x)=>x}
-          getOptionLabel={(x)=>x}
+          getOptionLabel={(x)=>x?x:""}
           renderInput={(params)=>{
             return <TextField {...params}
             required
