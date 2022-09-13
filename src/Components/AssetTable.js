@@ -35,6 +35,7 @@ const AssetTable = ({ mode, data,misc }) => {
       "Value",
       "Net PnL",
       "Net Return",
+      "Volatility"
     ];
   } else if (mode === "Single Asset") {
     assetTableTitle = "Asset Transactions";

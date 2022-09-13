@@ -175,3 +175,7 @@ svg{
     cursor: pointer;
     color:rgb(0, 228, 0)
 }
+/* for front-end testing/design purposes
+/* * {
+    border:1px solid red !important;
+    } */

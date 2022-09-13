@@ -52,6 +52,7 @@ export const Overallpage = () => {
           value: pfValue,
           netPnL: computePortfolioPnL([portfolio], pfValue),
           netReturn: computePortfolioNetReturn([portfolio], pfValue),
+          volatility: computeVolatility(chartData),
           portfolioName: portfolio.portfolio,
           portfolioHistory: chartData,
           route: route

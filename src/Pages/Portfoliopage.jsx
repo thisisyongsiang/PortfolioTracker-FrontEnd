@@ -197,7 +197,7 @@ return (
             
           </div>
         <hr />
-        <div className="d-flex flex-row" style={{alignItems: "center"}}>
+        <div className="d-flex flex-row" style={{alignItems: "center", margin: "auto"}}>
           <div className="dropdown">
           <BsFillGearFill 
           onClick={handleSettingsClicked} 
@@ -221,7 +221,7 @@ return (
 
           </Menu>
           </div>
-          <div style={{marginLeft: "5px", color: "gray", fontSize: '1.1vw'}}>Edit/Delete Portfolio</div>
+          <div style={{marginLeft: "5px", color: "gray", fontSize: '1.02vw'}}>Edit/Delete Portfolio</div>
         </div>
 
 
