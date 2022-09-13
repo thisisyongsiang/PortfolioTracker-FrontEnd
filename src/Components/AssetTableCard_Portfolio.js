@@ -114,7 +114,7 @@ This action is not reversible!
           }}
         >
           <div className="subHeader" style={  {  
-            width: "30%",
+            width: "22%",
             verticalAlign: "middle",
             justifyContent: "left",
             padding: "0",}} 
