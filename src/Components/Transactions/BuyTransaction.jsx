@@ -81,6 +81,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
         price:values.price,
         ticker:values.ticker,
         fees:values.fees,
+        value:values.price*values.quantity,
         quantity:values.quantity,
         date:`${values.date.getUTCFullYear()}-${values.date.getUTCMonth()+1}-${values.date.getUTCDate()}`,
         currency:"usd",
