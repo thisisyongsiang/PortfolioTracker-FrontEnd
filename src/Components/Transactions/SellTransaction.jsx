@@ -73,7 +73,6 @@ export const SellTransaction = ({closeFn,portfolioName}) => {
 
   useEffect(()=>{
     getUserPortfolioAssets(userEmail,portfolioName).then(d=>{
-      console.log(d);
       setPfAssets(d.map(f=>{return `${f.symbol},${f.shortName}`}));
     })
   },[userEmail,portfolioName]);

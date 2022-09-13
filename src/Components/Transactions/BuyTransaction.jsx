@@ -209,7 +209,7 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
           />
         </LocalizationProvider>
         </FormControl>
-        <FormControl>
+        {/* <FormControl>
           <FormLabel>
             <Box sx={{ pt: 2, fontWeight: "bold" }}> Recurring Purchase </Box>{" "}
           </FormLabel>
@@ -219,32 +219,32 @@ export const BuyTransaction = ({closeFn,portfolioName}) => {
                 label="Add Recurring Purchase"
                 onChange={handleRecurringPurchaseClicked}
             />
-        </FormControl>
+        </FormControl> */}
         
-        {addRecurring&&
-        <>
-        <FormControl sx={{width:"100%"}}>
-          <FormLabel sx={{width:"100%", marginBottom:"10px"}}>
-            <Box sx={{ pt: 2, fontWeight: "bold" }}>Frequency</Box>
-          </FormLabel>
-          <Select 
-          sx={{width:"100%"}}
-            error={!!errors.frequency}
-            helperText={errors?.frequency}
-            name="frequency"
-            value={values.frequency}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="monthly"> Monthly </MenuItem>
-            <MenuItem value="quarterly"> Quarterly </MenuItem>
-            <MenuItem value="halfYearly"> Half-Yearly </MenuItem>
-            <MenuItem value="yearly"> Yearly </MenuItem>
-            {/* getFrequency.map(
-                        item => (<MenuItem value={item.id}> {item.title} </MenuItem>)) */}
-          </Select>
-        </FormControl >
-        
-        </>
+        {
+        // addRecurring&&
+        // <>
+        // <FormControl sx={{width:"100%"}}>
+        //   <FormLabel sx={{width:"100%", marginBottom:"10px"}}>
+        //     <Box sx={{ pt: 2, fontWeight: "bold" }}>Frequency</Box>
+        //   </FormLabel>
+        //   <Select 
+        //   sx={{width:"100%"}}
+        //     error={!!errors.frequency}
+        //     helperText={errors?.frequency}
+        //     name="frequency"
+        //     value={values.frequency}
+        //     onChange={handleInputChange}
+        //   >
+        //     <MenuItem value="monthly"> Monthly </MenuItem>
+        //     <MenuItem value="quarterly"> Quarterly </MenuItem>
+        //     <MenuItem value="halfYearly"> Half-Yearly </MenuItem>
+        //     <MenuItem value="yearly"> Yearly </MenuItem>
+        //     {/* getFrequency.map(
+        //                 item => (<MenuItem value={item.id}> {item.title} </MenuItem>)) */}
+        //   </Select>
+        // </FormControl >
+        // </>
         }
         
       </Container>

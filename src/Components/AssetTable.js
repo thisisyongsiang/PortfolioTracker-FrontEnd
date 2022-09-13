@@ -168,7 +168,6 @@ const AssetTable = ({ mode, data,misc }) => {
             {tableHeaders.map((e) => {
               let hWidth="20%"
               if(e==="Chart"){
-                console.log(e);
                 hWidth="30%"}
               return(<div
                 className="subHeader"

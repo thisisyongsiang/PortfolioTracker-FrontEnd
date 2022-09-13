@@ -42,10 +42,10 @@ export const Overallpage = () => {
         let chartData = await getUserPortfolioHistoricalValue(
           userEmail,
           portfolio.portfolio,
-          new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          new Date(new Date().setMonth(new Date().getMonth() - 1)),
           // startDate,
           new Date(),
-          "1wk"
+          "1d"
         );
         const route = `/portfolio/${portfolio.portfolio}`
         let output = {

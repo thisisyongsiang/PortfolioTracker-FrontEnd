@@ -267,7 +267,6 @@ export function getUserPortfolioHistoricalValue(
   endDate,
   interval="1d"
 ) {
-
   return axios
     .get(url + "portfolio/selectonevalue/timeperiod", {
       params: {
