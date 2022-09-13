@@ -231,7 +231,9 @@ return (
         closeFn={handleCloseEditDialog} 
         open={openEditDialog}
         portfolioId={portfolioId}/>
-}
+}       
+       <br />
+        <br />
         </Container>
 
 }
