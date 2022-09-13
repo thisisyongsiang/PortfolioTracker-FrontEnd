@@ -107,7 +107,7 @@ const AssetTable = ({ mode, data,misc }) => {
             {assetTableTitle}
           </h2>
           <TransactionButton 
-          asset={misc.assetDisplay}
+          asset={misc?.assetDisplay}
           buttonText={buttonText}/>
         </div>
 
@@ -167,11 +167,12 @@ const AssetTable = ({ mode, data,misc }) => {
               color: "rgba(54, 56, 60, 0.8)",
             }}
           >
-            {tableHeaders.map((e) => {
+            {tableHeaders.map((e,i) => {
               let hWidth="20%"
               if(e==="Chart"){
                 hWidth="30%"}
               return(<div
+              key={i}
                 className="subHeader"
                 style={{
                   width: hWidth,
@@ -206,13 +207,13 @@ const AssetTable = ({ mode, data,misc }) => {
           </div>
         </div>
         {data &&
-          handleSearch().map((e) => {
+          handleSearch().map((e , i) => {
             if (mode === "Overall Portfolio") {
-              return <AssetTableCard content={e} />;
+              return <AssetTableCard content={e} key ={i} />;
             } else if (mode === "Single Portfolio") {
-                return <AssetTableCardForPortfolio content={e} portfolioName={misc.portfolioName}/>;
+                return <AssetTableCardForPortfolio content={e} key ={i} portfolioName={misc.portfolioName}/>;
             } else if (mode === "Single Asset") {
-                return <AssetTableCardForAsset content={e} portfolioName={misc.portfolioName} />;
+                return <AssetTableCardForAsset content={e} key ={i} portfolioName={misc.portfolioName} />;
             }
           })}
       </div>
