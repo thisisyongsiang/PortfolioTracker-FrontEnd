@@ -63,7 +63,7 @@ This action is not reversible!
       >
         <div
           className="card-body mainName"
-          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : "red"}}
+          style={{ width: "40%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : (type==="sell"? "red": "black")}}
         >
           {type ? type.toUpperCase() : ""}
         </div>
@@ -80,10 +80,10 @@ This action is not reversible!
             {quantity?numberWithCommas(quantity.toFixed(1)):"NA"}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
-            ${price?numberWithCommas(price.toFixed(2)):"NA"}
+            {price?`$${numberWithCommas(price.toFixed(2))}`:"NA"}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
-            ${value?numberWithCommas(value.toFixed(2)):"NA"}
+            {value?`$${numberWithCommas(value.toFixed(2))}`:"NA"}
           </div>
           <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
             {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()}`}
