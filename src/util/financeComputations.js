@@ -1,4 +1,4 @@
-var xirr = require("xirr");
+const { xirr, convertRate } = require('node-irr')
 
 export function computePortfolioNetReturn(portfolios, overallPfValue) {
   let totalSellCashflow = 0;
@@ -80,25 +80,33 @@ export function computePortfolioAnnualisedReturns(portfolios, currentPfValue) {
       p.buy.forEach((b) => {
         cashflowAndTiming.push({
           amount: b.quantity * b.price * -1,
-          when: new Date(b.date),
+          date: new Date(b.date),
         });
       });
   
       p.sell.forEach((s) => {
         cashflowAndTiming.push({
           amount: s.quantity * s.price,
-          when: new Date(s.date),
+          date: new Date(s.date),
         });
       });
+      p.cash.forEach((c) => {
+        if (c.type === "Dividend") {
+          cashflowAndTiming.push({
+            amount: c.value,
+            date: new Date(c.date)
+          })
+        }
+      })
     });
   
     cashflowAndTiming.push({
       amount: currentPfValue,
-      when: new Date(),
+      date: new Date(),
     });
     if (cashflowAndTiming.length > 1) {
-      let rate = xirr(cashflowAndTiming);
-      return rate * 100;
+      let calc = xirr(cashflowAndTiming);
+      return convertRate(calc.rate, "year") * 100;
     }
     return 0;
   } catch (error) {
@@ -115,22 +123,22 @@ try {
     if (t.type && t.type === "buy") {
       cashflowAndTiming.push({
           amount: t.value * -1,
-          when: new Date(t.date),
+          date: new Date(t.date),
         })}
     else {
           cashflowAndTiming.push({
           amount: t.value,
-          when: new Date(t.date),
+          date: new Date(t.date),
         })}
   });
 
   cashflowAndTiming.push({
     amount: assetValue,
-    when: new Date(),
+    date: new Date(),
   });
   if (cashflowAndTiming.length > 1) {
-    let rate = xirr(cashflowAndTiming);
-    return rate * 100;
+    let calc = xirr(cashflowAndTiming);
+    return convertRate(calc.rate, "year") * 100;
   }
   return 0;
 } catch (error) {
