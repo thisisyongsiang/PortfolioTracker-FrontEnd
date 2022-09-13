@@ -92,6 +92,7 @@ This action is not reversible!
               verticalAlign: "middle",
               justifyContent: "left",
               padding: "0",
+              overflow:"hidden",
             }}
             ref={chartTableWidth}
           >
