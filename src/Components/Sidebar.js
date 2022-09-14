@@ -1,4 +1,4 @@
-import React, { useEffect ,useRef, useContext } from 'react'
+import React, { useEffect ,useRef, useContext, useState } from 'react'
 import '../App.css'
 import { getUserPortfolioNames } from '../users/userApi';
 import { AiFillPlusCircle } from "react-icons/ai";
@@ -15,37 +15,33 @@ import {
 import { Transaction } from './Transactions/Transaction';
 import { UserContext } from '../util/context';
 
-function Sidebar(props) {
-    const {userEmail,portfolios,updatePortfolio}=useContext(UserContext);
+function Sidebar() {
+    const {userEmail,portfolios}=useContext(UserContext);
     const [open, setOpen] = React.useState(false);
     const [activeElem, setActiveElem] = React.useState(null);
     const location = useLocation();
     let listRef=useRef(null);
-
-    useEffect(()=>{
-        if (userEmail){
-            getUserPortfolioNames(userEmail)
-            .then(pfNames=>{
-                updatePortfolio(pfNames);
-            });
-        }
-    },[userEmail]);
-
+    const [sbData,setSbData]=useState([]);
     useEffect(()=>{
         if(listRef.current){
            let childNodes= listRef.current.childNodes;
            for(let child of childNodes){
-            if(child.id==="active"){
-                setActiveElem(child);
+                if(child.id==="active"){
+                    setActiveElem(child);
+                }
             }
-           }
         }
+        if(portfolios){
+            let tempSbData=portfolios.map(name=>{
+                return {name:name,route:`/portfolio/${name}`}
+            });
+            tempSbData.unshift({name:'Overall',route:'/Overall'});
+            setSbData(tempSbData);
+        }
+    
     },[listRef, portfolios, location.pathname]);
 
-    let sbData=portfolios.map(name=>{
-        return {name:name,route:`/portfolio/${name}`}
-    });
-    sbData.unshift({name:'Overall',route:'/Overall'});
+
 
     const handleClickOpen = () => {
         setOpen(true);
