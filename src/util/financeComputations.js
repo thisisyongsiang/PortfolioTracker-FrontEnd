@@ -7,12 +7,17 @@ export function computePortfolioNetReturn(portfolios, overallPfValue) {
 
   portfolios.forEach((p) => {
     p.sell.forEach((s) => {
-      totalSellCashflow = totalSellCashflow + s.price * s.quantity;
+      totalSellCashflow = totalSellCashflow + s.value;
     });
 
     p.buy.forEach((b) => {
-      totalBuyCashflow = totalBuyCashflow + b.price * b.quantity;
+      totalBuyCashflow = totalBuyCashflow + b.value;
     });
+
+    if (p.cash) {
+    p.cash.forEach((c) => {
+      totalSellCashflow = totalSellCashflow + c.value
+    })}
   });
 
   netReturn =
@@ -30,8 +35,8 @@ export function computeAssetNetReturn(transactions, assetValue) {
 
   transactions.forEach((t) => {
     t.type && t.type === "buy"
-      ? (totalBuyCashflow += t.price * t.quantity)
-      : (totalSellCashflow += t.price * t.quantity);
+      ? (totalBuyCashflow += t.value)
+      : (totalSellCashflow += t.value);
   });
   netReturn =
     ((totalSellCashflow - totalBuyCashflow + assetValue) / totalBuyCashflow) *
@@ -42,16 +47,22 @@ export function computeAssetNetReturn(transactions, assetValue) {
 export function computePortfolioPnL(portfolios, overallPfValue) {
   let totalSellCashflow = 0;
   let totalBuyCashflow = 0;
+
   let overallPnL = 0;
 
   portfolios.forEach((p) => {
     p.sell.forEach((s) => {
-      totalSellCashflow = totalSellCashflow + s.price * s.quantity;
+      totalSellCashflow = totalSellCashflow + s.value;
     });
 
     p.buy.forEach((b) => {
-      totalBuyCashflow = totalBuyCashflow + b.price * b.quantity;
+      totalBuyCashflow = totalBuyCashflow + b.value;
     });
+
+    if (p.cash) {
+    p.cash.forEach((c) => {
+      totalSellCashflow = totalSellCashflow + c.value
+    })}
   });
 
   overallPnL = totalSellCashflow - totalBuyCashflow + overallPfValue;
@@ -66,8 +77,8 @@ export function computeAssetPnL(transactions, assetValue) {
 
   transactions.forEach((t) => {
     t.type && t.type === "buy"
-      ? (totalBuyCashflow += t.price * t.quantity)
-      : (totalSellCashflow += t.price * t.quantity);
+      ? (totalBuyCashflow += t.value)
+      : (totalSellCashflow += t.value);
   });
   netPnL = totalSellCashflow - totalBuyCashflow + assetValue;
   return netPnL;

@@ -7,14 +7,14 @@ const CardWidget = ({ type, value }) => {
     case "netReturn":
       data = {
         subtitle: "Net Return",
-        metric: value + '%',
+        metric: isNaN(value)?"NA":value + '%',
         isPositive: value > 0 ? true : false
       };
       break;
     case "annReturn":
       data = {
         subtitle: "Ann. Return",
-        metric: value + '%',
+        metric: isNaN(value)?"NA":value + '%',
         isPositive: value > 0 ? true : false
       };
       break;
@@ -28,7 +28,7 @@ const CardWidget = ({ type, value }) => {
     case "volatility":
       data = {
         subtitle: "Volatility",
-        metric: value + "%",
+        metric: isNaN(value)?"NA":value + '%',
         isPositive: value > 0.5 ? false : true
       };
       break;
