@@ -74,7 +74,6 @@ This action is not reversible!
     }
   }
   useEffect(()=>{
-    console.log(portfolios);
     if (userEmail && portfolioId && portfolios){
       
         if(!portfolios.includes(portfolioId)){
