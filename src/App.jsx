@@ -5,7 +5,7 @@ import "./App.css";
 import { withAuth0 } from "@auth0/auth0-react";
 import Login from "./auth0/login";
 import { addUser, getUser } from "./users/userApi";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import UserProfile from "./Pages/UserProfile";
 import UserSettings from "./Pages/UserSettings";
 import Feedback from "./Pages/Feedback";
@@ -92,9 +92,7 @@ class App extends React.Component {
                     <Routes>
                           <Route
                             path='/'
-                            element={
-                              <Overallpage user={this.state.userMongo} />
-                            }/>
+                            element={<Navigate to ="/overall" replace />}/>
                           <Route path="overall" element={
                               <Overallpage user={this.state.userMongo} />} />
                           <Route path="portfolio/:portfolioId" element={

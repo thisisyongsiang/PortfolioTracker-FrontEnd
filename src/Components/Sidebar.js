@@ -75,7 +75,7 @@ function Sidebar(props) {
             <li
             key={key}
             className="row"
-            id={path === `${val.name}` ? "active" : ""}
+            id={path.toUpperCase() === `${val.name.toUpperCase()}` ? "active" : ""}
             >
             <Link to={val.route} onClick={onLinkSelected}>{val.name}</Link>
             </li>
