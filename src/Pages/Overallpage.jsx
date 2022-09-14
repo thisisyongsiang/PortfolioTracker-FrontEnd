@@ -64,7 +64,7 @@ export const Overallpage = () => {
     // console.log('linechart',lineChartContainer.current.offsetWidth);
     // console.log('email',userEmail);
     // console.log('portfolios',portfolios);
-    if (userEmail &&lineChartContainer.current && portfolios.length>0) {
+    if (userEmail &&lineChartContainer.current && portfolios) {
       (async()=>{
         console.log('run api calls in overallpage');
 

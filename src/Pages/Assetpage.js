@@ -6,6 +6,7 @@ import AssetTable from "../Components/AssetTable";
 import PortfolioCharts from "../Components/PortfolioCharts";
 import {
   getOneUserPortfolioValue,
+  getUserPortfolioAssets,
   getUserPortfolioAssetsTransactions,
   getUserPortfolioHistoricalValue,
   getUserPortfolioOneAssetHistoricalValue,
@@ -26,7 +27,7 @@ import { UserContext } from "../util/context";
 
 
 export const Assetpage=()=>{
-  const{userEmail,transactionTrigger}=useContext(UserContext);
+  const{userEmail,portfolios,transactionTrigger}=useContext(UserContext);
   const {assetId,portfolioId}=useParams();
   const lineChartContainer=useRef(null);
   const navigate= useNavigate();
@@ -37,13 +38,21 @@ export const Assetpage=()=>{
     lineChartWidth:1000,
     assetValue:0
   });
-
   const[displayChartType,setDisplayChartType]=useState(true);
-
   const selectDisplay=useRef(null);
   useEffect(()=>{
-    if (userEmail && assetId && portfolioId&&lineChartContainer.current) {
+    if (userEmail && assetId && portfolioId&&lineChartContainer.current&&portfolios) {
       (async()=>{ 
+        if(!portfolios.includes(portfolioId)){
+          navigate('/');
+          return;
+        }
+        let assets =await getUserPortfolioAssets(userEmail,portfolioId);
+        console.log(assets);
+        if (!assets.find(x=>x.symbol===assetId)){
+          navigate(`/portfolio/${portfolioId}`);
+          return;
+        }
         let quote = await getAssetQuote(assetId);
         let histVal=await getUserPortfolioOneAssetHistoricalValue(
           userEmail,
@@ -85,7 +94,7 @@ export const Assetpage=()=>{
 
       })();
     }
-  }, [userEmail, assetId, portfolioId,transactionTrigger]);
+  }, [userEmail, assetId, portfolioId,transactionTrigger,portfolios]);
 
 
   let netReturn = transactions?computeAssetNetReturn(transactions.transactions, assetValue):0;

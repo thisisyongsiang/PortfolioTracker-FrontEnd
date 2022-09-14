@@ -22,10 +22,12 @@ import { MultiLineChart } from "../charts/MulitLineChart";
 export const PortfolioPage=()=>{
   const{userEmail,portfolios,updatePortfolio,transactionTrigger}=useContext(UserContext);
   const {portfolioId}=useParams();
+  const navigate=useNavigate();
+
+
   const lineChartContainer=useRef(null);
   const [allAssetTableStats, setAllAssetTableStats] = useState(null)
   const[anchorEl,setAnchorEl]=useState(null);
-  const navigate=useNavigate();
   const [openEditDialog,setOpenEditDialog]=useState(false);
   const selectDisplay=useRef(null);
   const[displayChartType,setDisplayChartType]=useState("overallValue");
@@ -71,9 +73,14 @@ This action is not reversible!
       );
     }
   }
-
   useEffect(()=>{
-    if (userEmail && portfolioId){
+    if (userEmail && portfolioId && portfolios){
+      
+        if(!portfolios.includes(portfolioId)){
+          navigate('/');
+          return;
+        }
+
     (async()=>{
       console.log('run');
       let lineWidth=1000;
@@ -95,9 +102,10 @@ This action is not reversible!
         lineChartWidth:lineWidth,
         pfValue:pfVal
       })
+      
     })()
       
-      getUserPortfolioAllAssetTableStats(
+    getUserPortfolioAllAssetTableStats(
         userEmail,
         portfolioId
       )
@@ -108,14 +116,14 @@ This action is not reversible!
         setAllAssetTableStats(assetsWithRoutes)
       })
     }
-  },[userEmail,portfolioId,transactionTrigger]);
+  },[userEmail,portfolioId,transactionTrigger,portfolios]);
   let portfolioExists=false;
 
 let netReturn = 0;
 let netPnL = 0;
 let annualisedReturn = 0;
 let portfolioVolatility = 0;
-if(portfolios.includes(portfolioId)){
+if(portfolios?.includes(portfolioId)){
   portfolioExists=true;
   if (portfolio && pfValue){
    netReturn = computePortfolioNetReturn(portfolio, pfValue)
