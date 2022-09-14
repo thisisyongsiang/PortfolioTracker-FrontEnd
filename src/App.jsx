@@ -63,7 +63,13 @@ class App extends React.Component {
 
     const { isAuthenticated ,isLoading } = this.props.auth0;
     if (!isAuthenticated&&!isLoading ) {
-      return         <Landingpage />
+      return(        
+      <Routes>
+      <Route path='/'
+      element={<Landingpage />}/>
+      <Route path='*'element={<Navigate to ="/" replace />} />
+      </Routes>
+      )
     }
     if(isAuthenticated&&!isLoading){
     return( 
