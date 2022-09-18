@@ -5,18 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { BrowserRouter as Router } from "react-router-dom";
+import axios from "axios";
 
+const url = process.env.REACT_APP_APIURL;
+axios.defaults.baseURL=url;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const domain=process.env.REACT_APP_AUTH0DOMAIN;
 const clientId=process.env.REACT_APP_AUTH0ID;
-
+const audience=process.env.REACT_APP_AUTH0_AUDIENCE;
 root.render(
   <React.StrictMode>
     <Router>
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.origin}>
+      redirectUri={window.location.origin}
+      audience={audience}
+      >
       <App />
     </Auth0Provider>
     </Router>

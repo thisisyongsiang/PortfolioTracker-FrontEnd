@@ -1,14 +1,7 @@
 import axios from "axios";
 
-const url=process.env.REACT_APP_APIURL;
-const axiosInstance=axios.create({
-    baseURL:url,
-    // timeout:1000,
-
-});
-
 export function getHistoricalDailyQuotes(symbol,startDate,endDate,interval){
-    return axiosInstance.request({
+    return axios.request({
         url:'financeapi/historical/'+symbol,
         method:'get',
         params:{
@@ -24,7 +17,7 @@ export function getHistoricalDailyQuotes(symbol,startDate,endDate,interval){
     });
 }
 export function getAssetQuote(symbol){
-    return axiosInstance.request({
+    return axios.request({
         url:'financeapi/quote/'+symbol,
         method:'get',
     }).then((res)=>{
@@ -35,7 +28,7 @@ export function getAssetQuote(symbol){
     });
 }
 export function searchAsset(search){
-    return axiosInstance.request({
+    return axios.request({
         url:'financeapi/searchsymbols/'+search,
         method:'get',
     }).then((res)=>{
@@ -46,7 +39,7 @@ export function searchAsset(search){
     });
 }
 export function getStockSplit(symbol,startDate){
-    return axiosInstance.request({
+    return axios.request({
         url:'financeapi/split/'+symbol,
         method:'get',
         params:{
@@ -60,7 +53,7 @@ export function getStockSplit(symbol,startDate){
     });
 }
 export function getDividend(symbol,startDate){
-    return axiosInstance.request({
+    return axios.request({
         url:'financeapi/dividend/'+symbol,
         method:'get',
         params:{

@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const url = process.env.REACT_APP_APIURL;
-const axiosInstance = axios.create({
-  baseURL: url,
-});
+
 export function addUser(user) {
-  return axiosInstance
+  
+  return axios
     .post(url + "user/add", user, {
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +29,7 @@ export function addUserPortfolio(email,portfolioName,buy=[],sell=[],cash=[]) {
     sell: sell,
     cash:cash
   }
-  return axiosInstance
+  return axios
     .post(url + "portfolio/add", pf, {
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +49,7 @@ export function addUserPortfolio(email,portfolioName,buy=[],sell=[],cash=[]) {
 }
 export function deleteUserPortfolio(email,portfolioName) {
 
-  return axiosInstance
+  return axios
     .delete(url + "portfolio/del", {
       params:{     
         email :email,
@@ -73,7 +72,7 @@ export function editUserPortfolioName(email,portfolioName,newName) {
     portfolioName: portfolioName,
     newName:newName,
   }
-  return axiosInstance
+  return axios
     .put(url + "portfolio/edit", pf, {
       headers: {
         "Content-Type": "application/json",
@@ -105,6 +104,7 @@ export async function getAllUsers() {
   }
 }
 export function getUser(email) {
+
   return axios
     .get(url + "user/select", {
       params: { email: email },
@@ -198,7 +198,7 @@ export function addUserPortfolioTransaction(email,portfolioName,transactionType,
     transactionType:transactionType,
     transaction:transaction
   }
-  return axiosInstance
+  return axios
     .put(url + "portfolio/transaction/update", body, {
       headers: {
         "Content-Type": "application/json",
@@ -223,8 +223,7 @@ export function deleteUserPortfolioTransaction(email,portfolioName,transactionTy
     transactionType:transactionType,
     transaction:transaction
   }
-  console.log('hello');
-  return axiosInstance
+  return axios
     .put(url+"portfolio/transaction/del",body,{
       headers: {
         "Content-Type": "application/json",
