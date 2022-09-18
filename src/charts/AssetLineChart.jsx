@@ -1,4 +1,6 @@
-import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import React, { useContext } from "react";
+import { UserContext } from "../util/context";
 import { useGetQuoteData } from "../util/customHooks";
 import { LineChart } from "./LineChart";
 import { LineChartBaseParams } from "./LineChart";
@@ -25,6 +27,7 @@ export function AssetLineChart({
     verticalMarkers=null,
     vertMarkerFormat=d=>d,
 }){
+
     const data = useGetQuoteData(ticker,startDate,endDate,quoteInterval);
     return <LineChart 
         data={data}

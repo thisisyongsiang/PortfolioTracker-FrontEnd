@@ -10,16 +10,49 @@ import UserSettings from "./UserSettings";
 import Feedback from "./Feedback";
 import Tutorial from "./Tutorial";
 import { PortfolioPage } from "./Portfoliopage";
-import { getUserPortfolioNames } from "../users/userApi";
+import { addUser, getUser, getUserPortfolioNames } from "../users/userApi";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { useState } from "react";
 
 export const MainPage=()=>{
     const{userEmail,updatePortfolio}=useContext(UserContext);
+    const{user,getAccessTokenSilently}=useAuth0();
+    const [tokenLoaded,setTokenLoaded] = useState(false);
 
     useEffect(()=>{
+      (async()=>{
+        console.log(user);
+        const token = await getAccessTokenSilently();
+        axios.defaults.headers.common["Authorization"]=`Bearer ${token}`; 
+        setTokenLoaded(true);
+        let userObj = {
+          lastName: user.family_name,
+          firstName: user.given_name,
+          emailAddress: user.email,
+        };
+        getUser(user.email)
+          .then((res) => {
+            if (res) {
+              return false;
+              
+            }
+            return true;
+          })
+          .then((newUser) => {
+            if (newUser) {
+              addUser(userObj).then((res) => {
+                this.setState({ userMongo: res });
+              });
+            }
+          });
         getUserPortfolioNames(userEmail).then(pf=>{
             updatePortfolio(pf);
         });
-    },[])
+      })();
+      
+    },[user]);
+    if(!tokenLoaded)return<></>
     return(
         <div>
 
