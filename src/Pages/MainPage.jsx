@@ -22,7 +22,6 @@ export const MainPage=()=>{
 
     useEffect(()=>{
       (async()=>{
-        console.log(user);
         const token = await getAccessTokenSilently();
         axios.defaults.headers.common["Authorization"]=`Bearer ${token}`; 
         setTokenLoaded(true);
