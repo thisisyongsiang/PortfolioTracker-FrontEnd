@@ -153,27 +153,29 @@ return (
   <React.Fragment>
     {portfolioExists&&
     <Container id="container" maxWidth={false}>
-      <div className="position-relative mt-2">
-        <div>
-          <h2>
+      {/* <div className="position-relative mt-2"> */}
+      <div className="title-and-summary">
+        <div className="portfolio-name-and-value">
+          <h2 style={{textAlign: "left"}}>
             {portfolioId}
             <br />
           </h2>
-        <h3>
+        <h4>
             Portfolio Value:
             <br />${numberWithCommas(pfValue.toFixed(2))}
-        </h3>
+        </h4>
 
         </div>
         
-        <div className="position-absolute top-0 end-0">
-          <div className="d-flex h-100 p-1">
+        {/* <div className="position-absolute top-0 end-0"> */}
+        {/* <div className="position-absolute top-0 end-0"> */}
+          <div className="widgets-panel">
             <CardWidget type="annReturn" value={annualisedReturn.toFixed(1)}/>
             <CardWidget type="netReturn" value={netReturn.toFixed(1)}/>
             <CardWidget type="netPnL" value={netPnL.toFixed(0)}/>
             <CardWidget type="volatility" value={portfolioVolatility.toFixed(1)}/>
           </div>
-        </div>
+        {/* </div> */}
       </div>
       {/* <div className="d-grid col-3" ref={selectDisplay}>
         <button  className="btn btn-light me-1 bdisplay bactive" id="overallValue" onClick={handleChangeDisplay}>
@@ -229,7 +231,7 @@ return (
 
           </Menu>
           </div>
-          <div style={{marginLeft: "5px", color: "gray", fontSize: '1.02vw'}}>Edit/Delete Portfolio</div>
+          <div style={{marginLeft: "5px", color: "gray", fontSize: '12px'}}>Edit/Delete Portfolio</div>
         </div>
 
 

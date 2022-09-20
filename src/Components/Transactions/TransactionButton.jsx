@@ -21,7 +21,7 @@ export const TransactionButton=({buttonText,asset})=>{
     <>
     <Button
     style={{
-        paddingRight: "10px",
+        padding: "10px",
         marginRight: "10px",
         height: "50%",
         justifyContent: "right",

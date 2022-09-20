@@ -175,6 +175,151 @@ svg{
     cursor: pointer;
     color:rgb(0, 228, 0)
 }
+
+.widgetcard {
+    border: none;
+    margin: 2px;
+    padding: 2px;
+    
+}
+
+.widgetbody {
+    font-size: 0.5vw;
+}
+
+.widgets-panel {
+    display: flex;
+    height: 100%;
+    padding: 1px;
+    width: 80%;
+    justify-content: right;
+}
+
+.title-and-summary {
+    /* position: relative;
+    margin-top: 2px; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.portfolio-name-and-value {
+    width: 20%;
+}
+
+.widget-title {
+    font-size: 4vw
+}
+
+.widget-subtitle {
+    font-size: 1.5vw;
+}
+
+.webpage-title {
+    color: white;
+}
+
+.webpage-tagline {
+    /* font-size: 5px; */
+    color: darkgray
+}
+
+.navbar-contents {
+    display: flex;
+    justify-content: space-between;
+}
+
+.assetTableTitle {
+    padding-top: 5px;
+    font-size: 25px;
+}
+
+.table-title-and-button {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.search-text-field {
+    margin: auto
+}
+
+.table-header-asset-name {
+    font-size: 14px;
+}
+
+.subHeader {
+    font-size: 14px;
+}
+
+@media screen and (max-width: 900px) {
+
+    .title-and-summary {
+        flex-direction: column;
+    }
+
+    .widgets-panel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .widgetcard {
+        width: 100%;
+        height: auto;
+    }
+
+    .widget-subtitle {
+        font-size: 10px;
+    }
+
+    .portfolio-name-and-value {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .widget-title {
+        font-size: 25px;
+    }
+
+    .table-title-and-button {
+        flex-direction: column;
+        margin: 5px 0px
+    }
+
+    .assetTableTitle {
+        font-size: 1rem;
+        text-align: left;
+        justify-content: left;
+        margin-bottom: -10px;
+    }
+
+    #search-text-field {
+        margin: 0px 30px 0px 0px;
+    } 
+
+    .table-header-asset-name {
+        font-size: 10px;
+    }
+
+    .subHeader {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .webpage-tagline {
+        font-size: 12px;
+        gap: 0px;
+        vertical-align: auto;
+    }
+}
+
 /* for front-end testing/design purposes */
 /* * {
     border:1px solid red !important;
