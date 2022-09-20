@@ -52,7 +52,7 @@ const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
     padding: "0",
     margin: "auto",
     fontSize: "20px",
-    fontSize: "1.2vw",
+    fontSize: "12px",
   };
 
   let { width, margin, ...cardStyleWithoutWidthOrMargin } = cardStyle;
@@ -99,7 +99,6 @@ This action is not reversible!
         }}
       >
         <div
-          // className="card-body mainName"
           style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
           {shortName ? `${shortName} (${symbol})`: ""}

@@ -97,17 +97,13 @@ const AssetTable = ({ mode, data,misc }) => {
         }}
       >
         <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className="table-title-and-button"
         >
-          <h2 className="assetTableTitle" style={{ paddingTop: "5px" }}>
+          <h2 className="assetTableTitle">
             {assetTableTitle}
           </h2>
           <TransactionButton 
+          id="add-transaction-btn"
           asset={misc?.assetDisplay}
           buttonText={buttonText}/>
         </div>
@@ -115,8 +111,9 @@ const AssetTable = ({ mode, data,misc }) => {
 
 
 
-        <div>
+        <div className="search-field">
           <TextField
+            id="search-text-field"
             label={searchLabel}
             variant="outlined"
             sx={{
@@ -145,12 +142,11 @@ const AssetTable = ({ mode, data,misc }) => {
           }}
         >
           <div
-            // className="card-body mainName"
+            className="table-header-asset-name"
             style={{
               width: "35%",
               verticalAlign: "middle",
               margin: "auto",
-              fontSize: "14px",
               paddingLeft: "16px",
               color: "rgba(54, 56, 60, 0.8)",
             }}
@@ -158,7 +154,7 @@ const AssetTable = ({ mode, data,misc }) => {
             {tableHeaders.shift()}
           </div>
           <div
-            className="remainingHeaders"
+            className="remaining-table-headers"
             style={{
               width: "100%",
               display: "flex",
@@ -182,7 +178,6 @@ const AssetTable = ({ mode, data,misc }) => {
                   textAlign: "center",
                   padding: "0",
                   margin: "auto",
-                  fontSize: "14px",
                   color: "rgba(54, 56, 60, 0.8)",
                 }}
               >

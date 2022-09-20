@@ -40,21 +40,22 @@ const CardWidget = ({ type, value }) => {
   data.isPositive ? fColor = "green" : fColor = "red"
 
   return (
-    <div className="card mx-1" style={{ width: "auto", border: "none" }}>
+    <div className="widgetcard">
       <div
-        className="card-body"
+        className="widgetbody"
         style={{
           textAlign: "center",
           width: "auto",
           backgroundImage: "linear-gradient(to bottom right, #2858FE, #7B1DFF)",
           borderRadius: "10px",
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          padding: "5px"
         }}
       >
-        <h5 className="card-title" style={{ "fontSize": "40px" , "color": data.isPositive ? "#53E827" : "red"}}>
+        <h5 className="widget-title card-title" style={{"color": data.isPositive ? "#53E827" : "red"}}>
           {data.metric}
         </h5>
-        <h6 className="card-subtitle text-white">{data.subtitle}</h6>
+        <h6 className="widget-subtitle card-subtitle text-white">{data.subtitle}</h6>
       </div>
     </div>
   );
