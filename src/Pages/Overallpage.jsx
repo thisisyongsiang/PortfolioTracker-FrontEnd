@@ -124,15 +124,18 @@ export const Overallpage = () => {
   return (
     <React.Fragment>
       <Container id="container"  maxWidth={false}>
-        <div className="position-relative mt-2">
-          <div>
-            <h2>
-              Overall Value:
+        <div className="title-and-summary">
+          <div className="portfolio-name-and-value">
+          <h2 style={{textAlign: "left"}}>
+            Overall Summary
+            <br />
+          </h2>
+            <h4>
+              Portfolio Value:
               <br />${numberWithCommas(overallPfValue.toFixed(2))}
-            </h2>
+            </h4>
           </div>
-          <div className="position-absolute top-0 end-0">
-            <div className="d-flex h-100 p-1">
+            <div className="widgets-panel">
               <CardWidget
                 type="annReturn"
                 value={annualisedReturn.toFixed(1)}
@@ -144,16 +147,7 @@ export const Overallpage = () => {
                 value={portfolioVolatility.toFixed(1)}
               />
             </div>
-          </div>
         </div>
-        {/* <div className="d-grid col-3" ref={selectDisplay}>
-        <button  className="btn btn-light me-1 bdisplay bactive" id="overallValue" onClick={handleChangeDisplay}>
-          Portfolio Value
-        </button>    
-        <button className="btn btn-light me-1 bdisplay" id="allAssets"  onClick={handleChangeDisplay}>
-          Display all Asset Value
-        </button>    
-      </div> */}
         <div className="row">
           <div className="col p-0" ref={lineChartContainer}>
             

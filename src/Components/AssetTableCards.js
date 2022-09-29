@@ -43,8 +43,8 @@ This action is not reversible!
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px",
-    fontSize: "1.2vw",
+    // fontSize: "20px",
+    // fontSize: "12px",
   };
   return deleted ? (
     <></>
@@ -59,6 +59,7 @@ This action is not reversible!
         width: "100%",
         margin: "10px 0px 10px 0px",
         background: "#F1F1F1",
+        minHeight: "80px",
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
         borderRadius: "10px",
         cursor: "pointer",
@@ -86,7 +87,7 @@ This action is not reversible!
       >
         <Tooltip title="1 Month Portfolio value">
           <div
-            className="subHeader"
+            className="asset-table-stats"
             style={{
               width: "30%",
               verticalAlign: "middle",
@@ -117,7 +118,7 @@ This action is not reversible!
           </div>
           </Tooltip>
         <div
-          className="subHeader"
+          className="asset-table-stats"
           ref={chartTableWidth}
           style={{
             ...cardStyle,
@@ -130,7 +131,7 @@ This action is not reversible!
             : `-$${numberWithCommas(content.value.toFixed(0) * -1)}`}
         </div>
         <div
-          className="subHeader"
+          className="asset-table-stats"
           style={{
             ...cardStyle,
             color: content.netPnL > 0 ? "#2C7E12" : "red",
@@ -142,7 +143,7 @@ This action is not reversible!
             : `-$${numberWithCommas(content.netPnL.toFixed(0) * -1)}`}
         </div>
         <div
-          className="subHeader"
+          className="asset-table-stats"
           style={{
             ...cardStyle,
             color: content.netReturn > 0 ? "#2C7E12" : "red",
@@ -152,7 +153,7 @@ This action is not reversible!
           {content.netReturn.toFixed(1)}%
         </div>
         <div
-          className="subHeader"
+          className="asset-table-stats low-priority"
           style={{
             ...cardStyle,
             color: content.volatility < 1 ? "#2C7E12" : "red",
