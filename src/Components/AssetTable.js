@@ -166,11 +166,15 @@ const AssetTable = ({ mode, data,misc }) => {
           >
             {tableHeaders.map((e,i) => {
               let hWidth="20%"
+              let cName = "subTableHeader"
               if(e==="Chart"){
                 hWidth="30%"}
+                else if (e === "Price" || e==="Quantity" || e==="Volatility") {
+                  cName = "subTableHeader low-priority"
+                }
               return(<div
               key={i}
-                className="subHeader"
+                className={cName}
                 style={{
                   width: hWidth,
                   verticalAlign: "middle",

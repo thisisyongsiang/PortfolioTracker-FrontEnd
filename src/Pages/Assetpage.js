@@ -123,8 +123,8 @@ export const Assetpage=()=>{
   return (
     <React.Fragment>
       <Container id="assetPage"  maxWidth={false}>
-        <div className="position-relative mt-2">
-          <div>
+        <div className="title-and-summary">
+          <div className="portfolio-name-and-value">
           <h2>
             {portfolioId}
             <br />
@@ -134,8 +134,7 @@ export const Assetpage=()=>{
               <br />${numberWithCommas(assetValue.toFixed(2))}
             </h3>
           </div>
-          <div className="position-absolute top-0 end-0">
-            <div className="d-flex h-100 p-1">
+          <div className="widgets-panel">
               <CardWidget
                 type="annReturn"
                 value={annualisedReturn.toFixed(0)}
@@ -146,7 +145,6 @@ export const Assetpage=()=>{
                 type="volatility"
                 value={assetVolatility.toFixed(1)}
               />
-            </div>
           </div>
         </div>
       <div className="d-flex" ref={selectDisplay}>

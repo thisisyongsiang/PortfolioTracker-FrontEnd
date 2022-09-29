@@ -39,8 +39,6 @@ This action is not reversible!
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px",
-    fontSize: "1.5vw"
   };
 
   let {width, margin, ...cardStyleWithoutWidthOrMargin} = cardStyle
@@ -59,10 +57,11 @@ This action is not reversible!
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",
+          minHeight: "80px"
         }}
       >
         <div
-          // className="card-body mainName"
+          className="asset-table-assetname"
           style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px", fontWeight: "bold", color: type==="buy"? "#2C7E12" : (type==="sell"? "red": "black")}}
         >
           {type ? type.toUpperCase() : ""}
@@ -76,28 +75,27 @@ This action is not reversible!
             alignContent: "center",
           }}
         >
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
+          <div className="asset-table-stats low-priority" style={{...cardStyle, fontWeight: "bold"}}>
             {quantity?numberWithCommas(quantity.toFixed(1)):"NA"}
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats low-priority" style={{...cardStyle, fontWeight: "bold"}}>
             {price?`$${numberWithCommas(price.toFixed(2))}`:"NA"}
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats" style={{...cardStyle, fontWeight: "bold"}}>
             {value?`$${numberWithCommas(value.toFixed(2))}`:"NA"}
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats" style={{...cardStyle, fontWeight: "bold"}}>
             {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()}`}
           </div>
 
           <div
             className="actionIcons"
             style={{
-              width: "20%",
+              minWidth: "20%",
               verticalAlign: "middle",
               justifyContent: "center",
               textAlign: "right",
-              padding: "20px",
-              margin: "0",
+              margin: "auto",
             }}
           >
             <Tooltip title="Delete Transaction">

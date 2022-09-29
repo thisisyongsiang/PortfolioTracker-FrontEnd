@@ -51,8 +51,8 @@ const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    fontSize: "20px",
-    fontSize: "12px",
+    // fontSize: "20px",
+    // fontSize: "12px",
   };
 
   let { width, margin, ...cardStyleWithoutWidthOrMargin } = cardStyle;
@@ -95,10 +95,12 @@ This action is not reversible!
           background: "#F1F1F1",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 5px 15px",
           borderRadius: "10px",
-          cursor: "pointer"
+          cursor: "pointer",
+          minHeight: "80px"
         }}
       >
         <div
+          className="asset-table-assetname"
           style={{ width: "35%", verticalAlign: "middle", margin: "auto" , paddingLeft: "16px"}}
         >
           {shortName ? `${shortName} (${symbol})`: ""}
@@ -112,7 +114,7 @@ This action is not reversible!
             alignContent: "center",
           }}
         >
-          <div className="subHeader" style={  { 
+          <div className="asset-table-stats" style={  { 
             width: "30%",
             verticalAlign: "middle",
             justifyContent: "left",
@@ -137,19 +139,19 @@ This action is not reversible!
              displayYTicks={false}
              />
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold"}}>
+          <div className="asset-table-stats low-priority" style={{...cardStyle, fontWeight: "bold"}}>
             ${numberWithCommas(regularMarketPrice.toFixed(2))}
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats low-priority" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
             {numberWithCommas(quantity.toFixed(1))}
           </div>
-          <div className="subHeader" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
             ${numberWithCommas(value.toFixed(2))}
           </div>
-          <div className="subHeader" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
+          <div className="asset-table-stats" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
             {netPnL>0?`$${numberWithCommas(netPnL.toFixed(0))}`:`-$${numberWithCommas(netPnL.toFixed(0)*-1)}`}
           </div>
-          <div className="subHeader" style={{...cardStyleWithoutWidthOrMargin, margin: "auto", width: "20%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
+          <div className="asset-table-stats" style={{...cardStyleWithoutWidthOrMargin, margin: "auto", width: "20%", color: netReturn>0? "#2C7E12" : "red", fontWeight: "bold"}}>
             {numberWithCommas(netReturn.toFixed(1))}%
           </div>
 

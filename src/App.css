@@ -251,7 +251,15 @@ svg{
     font-size: 14px;
 }
 
-.subHeader {
+.asset-table-stats {
+    font-size: 16px;
+}
+
+.subTableHeader {
+    font-size: 14px;
+}
+
+.asset-table-assetname {
     font-size: 14px;
 }
 
@@ -307,8 +315,15 @@ svg{
         font-size: 10px;
     }
 
-    .subHeader {
+    .subTableHeader {
         font-size: 10px;
+    }
+
+    .asset-table-stats {
+        font-size: 12px;
+    }
+    .asset-table-assetname {
+        font-size: 12px;
     }
 }
 
@@ -317,6 +332,15 @@ svg{
         font-size: 12px;
         gap: 0px;
         vertical-align: auto;
+    }
+    .asset-table-stats {
+        font-size: 11px;
+    }
+    .low-priority {
+        display: none;
+    }
+    .asset-table-assetname {
+        font-size: 12px;
     }
 }
 
