@@ -85,7 +85,7 @@ This action is not reversible!
             {value?`$${numberWithCommas(value.toFixed(2))}`:"NA"}
           </div>
           <div className="asset-table-stats" style={{...cardStyle, fontWeight: "bold"}}>
-            {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()}`}
+            {`${dateFormat.getDate()}/${dateFormat.getMonth()+1}/${dateFormat.getFullYear()%100}`}
           </div>
 
           <div
