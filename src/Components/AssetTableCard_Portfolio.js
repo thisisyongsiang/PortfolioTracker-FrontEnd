@@ -51,8 +51,6 @@ const AssetTableCardForPortfolio = ({ content, portfolioName }) => {
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    // fontSize: "20px",
-    // fontSize: "12px",
   };
 
   let { width, margin, ...cardStyleWithoutWidthOrMargin } = cardStyle;
@@ -146,7 +144,7 @@ This action is not reversible!
             {numberWithCommas(quantity.toFixed(1))}
           </div>
           <div className="asset-table-stats" style={{...cardStyle, fontWeight: "bold", paddingLeft: "2px"}}>
-            ${numberWithCommas(value.toFixed(2))}
+            ${numberWithCommas(value.toFixed(0))}
           </div>
           <div className="asset-table-stats" style={{...cardStyle, color: netPnL>0? "#2C7E12" : "red", fontWeight: "bold", paddingLeft: "2px"}}>
             {netPnL>0?`$${numberWithCommas(netPnL.toFixed(0))}`:`-$${numberWithCommas(netPnL.toFixed(0)*-1)}`}

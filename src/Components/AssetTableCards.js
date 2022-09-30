@@ -43,8 +43,6 @@ This action is not reversible!
     textAlign: "center",
     padding: "0",
     margin: "auto",
-    // fontSize: "20px",
-    // fontSize: "12px",
   };
   return deleted ? (
     <></>
